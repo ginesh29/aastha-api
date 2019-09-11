@@ -1,5 +1,5 @@
 ﻿using AASTHA2.Entities;
-using AASTHA2.Repositories.Interfaces;
+using AASTHA2.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController, Authorize]
+    [ApiController]
     public class UsersController : ControllerBase
     {
         public IConfiguration _configuration { get; }
@@ -23,8 +23,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
-            _unitOfWork.Save();
-            return _unitOfWork.User.FindAll();
+            return _unitOfWork.Users.Find();
         }
 
         // GET: api/Users/5
@@ -75,26 +74,23 @@ namespace AASTHA2.Controllers
         [HttpPost]
         public ActionResult PostUser(User user)
         {
-            _unitOfWork.User.Create(user);
-            _unitOfWork.Save();
+            _unitOfWork.Users.Create(user);
+            _unitOfWork.SaveChanges();
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        //// DELETE: api/Users/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<User>> DeleteUser(int id)
-        //{
-        //    var user = await _context.Users.FindAsync(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Users.Remove(user);
-        //    await _context.SaveChangesAsync();
-
-        //    return user;
-        //}
+        // DELETE: api/Users/5
+        [HttpDelete("{id}")]
+        public ActionResult<User> DeleteUser(int id)
+        {
+            var user = _unitOfWork.Users.FirstOrDefault(m => m.Id == id);
+            user.IsDeleted = false;
+            user.Password = "123";
+            user.Username = "123";
+            _unitOfWork.Users.Update(user, m=>m.IsDeleted);
+            _unitOfWork.SaveChanges();
+            return user;
+        }
 
         //private bool UserExists(int id)
         //{

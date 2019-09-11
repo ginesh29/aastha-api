@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AASTHA2.Repositories.Interfaces
+namespace AASTHA2.Interfaces
 {
     public interface IUnitOfWork
     {
-        IUserRepository User { get; }
-        void Save();
+        IUserRepository Users { get; }
+        void SaveChanges();
     }
 }

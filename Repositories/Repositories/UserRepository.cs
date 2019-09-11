@@ -1,12 +1,12 @@
 ﻿using AASTHA2.Entities;
-using AASTHA2.Repositories.Interfaces;
+using AASTHA2.Interfaces;
 
-namespace AASTHA2.Repositories.Repositories
+namespace AASTHA2.Repositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public UserRepository(AASTHAContext repositoryContext)
-            : base(repositoryContext)
+        public UserRepository(AASTHAContext AASTHAContext)
+            : base(AASTHAContext)
         {
         }
     }

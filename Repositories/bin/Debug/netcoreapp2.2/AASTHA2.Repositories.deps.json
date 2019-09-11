@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v2.2": {
       "AASTHA2.Repositories/1.0.0": {
         "dependencies": {
-          "AASTHA2.Entities": "1.0.0"
+          "AASTHA2.Entities": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0.0"
         },
         "runtime": {
           "AASTHA2.Repositories.dll": {}
@@ -516,6 +517,14 @@
           "AASTHA2.Entities.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Mvc.ViewFeatures/2.2.0.0": {
+        "runtime": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Http.Abstractions.Reference/2.2.0.0": {
         "runtime": {
           "Microsoft.AspNetCore.Http.Abstractions.dll": {
@@ -910,6 +919,11 @@
     },
     "AASTHA2.Entities/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.Mvc.ViewFeatures/2.2.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

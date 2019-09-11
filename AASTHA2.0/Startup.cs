@@ -1,6 +1,6 @@
 ﻿using AASTHA2.Entities;
-using AASTHA2.Repositories.Interfaces;
-using AASTHA2.Repositories.Repositories;
+using AASTHA2.Interfaces;
+using AASTHA2.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

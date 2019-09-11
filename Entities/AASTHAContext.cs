@@ -20,14 +20,14 @@ namespace AASTHA2.Entities
         public override int SaveChanges()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
-            JwtTokenHelper jwt = new JwtTokenHelper(_httpContextAccessor);
-            var UserId = Convert.ToInt64(jwt.ExtractToken("UserId"));
+            //JwtTokenHelper jwt = new JwtTokenHelper(_httpContextAccessor);
+            //var UserId = Convert.ToInt64(jwt.ExtractToken("UserId"));
             foreach (EntityEntry entry in entities)
             {
                 if (entry.State == EntityState.Added)
                 {
                     ((BaseEntity)entry.Entity).CreatedDate = DateTime.UtcNow;
-                    ((BaseEntity)entry.Entity).CreatedBy = UserId;
+                    //((BaseEntity)entry.Entity).CreatedBy = UserId;
                     ((BaseEntity)entry.Entity).IsDeleted = false;
                 }
                 else
@@ -37,9 +37,8 @@ namespace AASTHA2.Entities
                     entry.Property("CreatedBy").IsModified = false;
                     entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
                 }
-
                 ((BaseEntity)entry.Entity).ModifiedDate = DateTime.UtcNow;
-                ((BaseEntity)entry.Entity).ModifiedBy = UserId;
+                //((BaseEntity)entry.Entity).ModifiedBy = UserId;
             }
             var errors = new List<ValidationResult>(); // all errors are here
             foreach (var e in entities)

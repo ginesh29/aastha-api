@@ -14,3 +14,5 @@ D:\Ginesh\AASTHA2.0\Repositories\bin\Debug\netcoreapp2.2\AASTHA2.Common.dll
 D:\Ginesh\AASTHA2.0\Repositories\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.dll
 D:\Ginesh\AASTHA2.0\Repositories\bin\Debug\netcoreapp2.2\AASTHA2.Common.pdb
 D:\Ginesh\AASTHA2.0\Repositories\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
+D:\Ginesh\AASTHA2.0\Repositories\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.ViewFeatures.dll
+D:\Ginesh\AASTHA2.0\Repositories\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.ViewFeatures.xml
