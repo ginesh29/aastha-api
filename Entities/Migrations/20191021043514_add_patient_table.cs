@@ -4,20 +4,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AASTHA2.Entities.Migrations
 {
-    public partial class addfield_user : Migration
+    public partial class add_patient_table : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Patients",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),                    
-                    Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    Role = table.Column<int>(nullable: false),
-                    IsSuperAdmin = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Firstname = table.Column<string>(nullable: false),
+                    Middelname = table.Column<string>(nullable: false),
+                    Lastname = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    Mobile = table.Column<string>(nullable: false),
+                    Age = table.Column<string>(nullable: false),
                     CreatedBy = table.Column<long>(nullable: false),
                     ModifiedBy = table.Column<long>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -25,14 +28,14 @@ namespace AASTHA2.Entities.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Patients", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Patients");
         }
     }
 }

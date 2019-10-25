@@ -31,6 +31,15 @@ namespace AASTHA2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
                 {
@@ -87,7 +96,8 @@ namespace AASTHA2
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
-            //app.UseAPIResponseWrapperMiddleware();
+            app.UseAPIResponseWrapperMiddleware();
+            app.UseCors("AllowAnyOrigin");
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

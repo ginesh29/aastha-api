@@ -7,6 +7,7 @@ namespace AASTHA2.Interfaces
     public interface IUnitOfWork
     {
         IUserRepository Users { get; }
+        IPatientRepository Patients { get; }
         void SaveChanges();
     }
 }

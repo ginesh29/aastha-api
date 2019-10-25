@@ -10,7 +10,7 @@ namespace AASTHA2.Repositories
     {
         private AASTHAContext _AASTHAContext;
         private IUserRepository _user;
-
+        private IPatientRepository _patient;
         public IUserRepository Users
         {
             get
@@ -21,6 +21,18 @@ namespace AASTHA2.Repositories
                 }
 
                 return _user;
+            }
+        }
+        public IPatientRepository Patients
+        {
+            get
+            {
+                if (_patient == null)
+                {
+                    _patient = new PatientRepository(_AASTHAContext);
+                }
+
+                return _patient;
             }
         }
         public UnitOfWork(AASTHAContext AASTHAContext)

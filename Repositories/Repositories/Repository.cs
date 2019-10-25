@@ -52,17 +52,18 @@ namespace AASTHA2.Repositories
                 return query;
             }
         }
-
         public T FirstOrDefault(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
         {
             return Find(filter, orderBy, includeProperties, take, skip).FirstOrDefault();
         }
-
+        public bool IsExist(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
+        {
+            return Find(filter, orderBy, includeProperties, take, skip).Any();
+        }
         public void Create(T entity)
         {
             this._AASTHAContext.Set<T>().Add(entity);
         }
-
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
         {
             
@@ -119,11 +120,9 @@ namespace AASTHA2.Repositories
                 return await query.ToListAsync();
             }
         }
-
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
         {
             return await Find(filter, orderBy, includeProperties, take, skip).FirstOrDefaultAsync();
         }
-
     }
 }
