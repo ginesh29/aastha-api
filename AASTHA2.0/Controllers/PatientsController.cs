@@ -1,9 +1,12 @@
-﻿using AASTHA2.Entities;
+﻿using AASTHA2.Common.Helpers;
+using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AASTHA2._0.Controllers
 {
@@ -18,10 +21,25 @@ namespace AASTHA2._0.Controllers
         }
 
         // GET: api/Patients
+
         [HttpGet]
-        public ActionResult<IEnumerable<Patient>> GetPatients()
+        public ActionResult<IEnumerable<Patient>> GetPatients(string Fields, string Filter, string Sort, int Skip, int Take)
         {
-            return _unitOfWork.Patients.Find(m => !m.IsDeleted).ToList();
+            Fields = "Firstname,Middlename,Lastname";
+            Filter = "Firstname=G,Lastname=T";
+            Sort = "Lastname desc,Firstname asc";
+
+            var sortCriteria = OrederByHelper.GenerateSortModel(Sort);
+
+            List<FilterModel> filter1 = new List<FilterModel>();
+            filter1.Add(new FilterModel { PropertyName = "Fistname", Operation = Op.Equals, Value = "G" });
+            filter1.Add(new FilterModel { PropertyName = "Laststname", Operation = Op.Equals, Value = "T" });
+            var filterCriteria = ExpressionBuilder.GetExpression<Patient>(filter1).Compile();
+
+
+            Expression<Func<Patient, bool>> whereFunc = filterCriteria.Invoke;            
+
+            return _unitOfWork.Patients.Find(filterCriteria, null, null, Take, Skip).ToList();
         }
 
         // GET: api/Patients/5

@@ -3,6 +3,7 @@ using AASTHA2.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 
 namespace AASTHA2.Controllers
@@ -23,6 +24,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
+            throw new Exception("Error");
             return _unitOfWork.Users.Find();
         }
 

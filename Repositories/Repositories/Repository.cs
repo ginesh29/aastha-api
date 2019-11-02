@@ -28,6 +28,11 @@ namespace AASTHA2.Repositories
                 query = query.Where(filter);
             }
 
+            if (orderBy != null)
+            {
+                return orderBy(query);
+            }
+
             if (skip > 0)
             {
                 query = query.Skip(skip);
@@ -37,20 +42,12 @@ namespace AASTHA2.Repositories
                 query = query.Take(take);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query);
-            }
-            else
-            {
-                return query;
-            }
+            if (includeProperties != null)
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            return query;
         }
         public T FirstOrDefault(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
         {
@@ -66,7 +63,7 @@ namespace AASTHA2.Repositories
         }
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
         {
-            
+
             //var entry = _AASTHAContext.Entry(entity);
             //this._AASTHAContext.Set<T>().Attach(entity);
             ////var updatedFields = entry.Properties.Where(m => m.IsModified == true).ToList();

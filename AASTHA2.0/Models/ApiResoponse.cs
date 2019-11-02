@@ -1,32 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace AASTHA2.Models
 {
-    [DataContract]
-    public class ApiResponse
+    public class CommonApiResponse
     {
-        [DataMember]
-        public string Version { get { return "1.2.3"; } }
-
-        [DataMember]
-        public int StatusCode { get; set; }
-
-        [DataMember(EmitDefaultValue = false)]
-        public string ErrorMessage { get; set; }
-
-        [DataMember(EmitDefaultValue = false)]
-        public object Result { get; set; }
-
-        public ApiResponse(HttpStatusCode statusCode, object result = null, string errorMessage = null)
+        protected CommonApiResponse(HttpStatusCode statusCode, object result = null, string message = null, object validation = null, object error = null)
         {
             StatusCode = (int)statusCode;
             Result = result;
-            ErrorMessage = errorMessage;
+            Message = message;
+            ValidationSummary = validation;
+            StatusDescription = Enum.GetName(typeof(HttpStatusCode), statusCode);
+            Errors = error;
         }
+        public static CommonApiResponse Create(HttpStatusCode statusCode, object result = null, string message = null, object validation = null, object error = null)
+        {
+            return new CommonApiResponse(statusCode, result, message, validation, error);
+        }
+
+        public string Version => "1.0.0";
+        public int StatusCode { get; set; }
+        public string StatusDescription { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public object Result { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Message { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public object ValidationSummary { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public object Errors { get; set; }
+    }
+    public class Error
+    {
+        public string ErrorMessage { get; set; }
+        public string ErrorDescription { get; set; }
     }
 }

@@ -1,8 +1,6 @@
 D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\AASTHA2.Common.deps.json
 D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\AASTHA2.Common.dll
 D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\AASTHA2.Common.pdb
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Configuration.Abstractions.xml
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csprojAssemblyReference.cache
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csproj.CoreCompileInputs.cache
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfoInputs.cache

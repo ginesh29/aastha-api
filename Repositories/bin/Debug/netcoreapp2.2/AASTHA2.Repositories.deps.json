@@ -502,6 +502,9 @@
         }
       },
       "AASTHA2.Common/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "2.2.6"
+        },
         "runtime": {
           "AASTHA2.Common.dll": {}
         }

@@ -1,5 +1,6 @@
 ﻿using AASTHA2.Entities;
 using AASTHA2.Interfaces;
+using AASTHA2.Middleware;
 using AASTHA2.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -9,13 +10,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Serilog;
+using Serilog.Events;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VMD.RESTApiResponseWrapper.Core.Extensions;
 
 namespace AASTHA2
 {
@@ -42,11 +46,10 @@ namespace AASTHA2
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
-                {
-                    var resolver = option.SerializerSettings.ContractResolver;
-                    if (resolver != null)
-                        (resolver as DefaultContractResolver).NamingStrategy = null;
-                });
+                    {
+                        option.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                        //option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    });
             services.AddDbContext<AASTHAContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("AASTHADB"));
@@ -89,22 +92,29 @@ namespace AASTHA2
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            Log.Logger = new LoggerConfiguration()
+           .WriteTo.File($"Logs/Events/EventLog-{DateTime.Now.ToString("ddMMyyyy")}.log")
+           .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Error || y.Level == LogEventLevel.Fatal)
+           .WriteTo.File($"Logs/Exceptions/ExceptionLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
+           .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Warning)
+           .WriteTo.File($"Logs/Warnings/WarningLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
+           .CreateLogger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
-            app.UseAPIResponseWrapperMiddleware();
             app.UseCors("AllowAnyOrigin");
-            app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "AASTHA API V1");
             });
-
+            app.UseResponseWrapper();
+            app.UseExceptionWrapper();
+            app.UseMvc();
         }
     }
 }
