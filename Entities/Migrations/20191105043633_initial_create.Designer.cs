@@ -4,14 +4,16 @@ using AASTHA2.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AASTHA2.Entities.Migrations
 {
     [DbContext(typeof(AASTHAContext))]
-    partial class AASTHAContextModelSnapshot : ModelSnapshot
+    [Migration("20191105043633_initial_create")]
+    partial class initial_create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace AASTHA2.Entities.Migrations
                     b.Property<string>("Age")
                         .IsRequired();
 
-                    b.Property<long?>("CreatedBy");
+                    b.Property<long>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -48,7 +50,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<string>("Mobile");
 
-                    b.Property<long?>("ModifiedBy");
+                    b.Property<long>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
@@ -67,7 +69,7 @@ namespace AASTHA2.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CreatedBy");
+                    b.Property<long>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -75,7 +77,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<bool>("IsSuperAdmin");
 
-                    b.Property<long?>("ModifiedBy");
+                    b.Property<long>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
@@ -100,22 +102,26 @@ namespace AASTHA2.Entities.Migrations
                 {
                     b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
                         .WithMany()
-                        .HasForeignKey("CreatedBy");
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy");
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.User", b =>
                 {
                     b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
                         .WithMany()
-                        .HasForeignKey("CreatedBy");
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy");
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

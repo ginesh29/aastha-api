@@ -7,6 +7,5 @@ namespace AASTHA2.Interfaces
 {
     public interface IPatientRepository : IRepository<Patient>
     {
-       
     }
 }

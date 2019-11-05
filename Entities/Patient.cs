@@ -7,7 +7,7 @@ namespace AASTHA2.Entities
         [Required]
         public string Firstname { get; set; }
         [Required]
-        public string Middelname { get; set; }
+        public string Middlename { get; set; }
         [Required]
         public string Lastname { get; set; }
         [Required]

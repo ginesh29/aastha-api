@@ -2,10 +2,9 @@
 using AASTHA2.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AASTHA2.Repositories
 {
@@ -19,43 +18,31 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
+        public IQueryable<T> Find(Expression<Func<T, bool>> filter = null, string order = null, int skip = 0, int take = 0)
         {
             IQueryable<T> query = _dbSet;
 
             if (filter != null)
-            {
                 query = query.Where(filter);
-            }
 
-            if (orderBy != null)
-            {
-                return orderBy(query);
-            }
+            if (!string.IsNullOrEmpty(order))
+                query = query.OrderBy(order);
 
             if (skip > 0)
-            {
                 query = query.Skip(skip);
-            }
-            if (take > 0)
-            {
-                query = query.Take(take);
-            }
 
-            if (includeProperties != null)
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProperty);
-                }
+            if (take > 0)
+                query = query.Take(take);
+
             return query;
         }
-        public T FirstOrDefault(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
+        public T FirstOrDefault(Expression<Func<T, bool>> filter = null, string order = null, int skip = 0, int take = 0)
         {
-            return Find(filter, orderBy, includeProperties, take, skip).FirstOrDefault();
+            return Find(filter, order, skip, take).FirstOrDefault();
         }
-        public bool IsExist(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
+        public bool IsExist(Expression<Func<T, bool>> filter = null, string order = null, int skip = 0, int take = 0)
         {
-            return Find(filter, orderBy, includeProperties, take, skip).Any();
+            return Find(filter, order, skip, take).Any();
         }
         public void Create(T entity)
         {
@@ -83,43 +70,24 @@ namespace AASTHA2.Repositories
         {
             this._AASTHAContext.Set<T>().Remove(entity);
         }
+        //public async Task<ICollection<T>> FindAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
+        //{
+        //    IQueryable<T> query = _dbSet;
 
-        public async Task<ICollection<T>> FindAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
-        {
-            IQueryable<T> query = _dbSet;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (skip > 0)
-            {
-                query = query.Skip(skip);
-            }
-            if (take > 0)
-            {
-                query = query.Take(take);
-            }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return await orderBy(query).ToListAsync();
-            }
-            else
-            {
-                return await query.ToListAsync();
-            }
-        }
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int take = 0, int skip = 0)
-        {
-            return await Find(filter, orderBy, includeProperties, take, skip).FirstOrDefaultAsync();
-        }
+        //    if (filter != null)
+        //    {
+        //        query = query.Where(filter);
+        //    }
+        //    foreach (var includeProperty in includeProperties.Split
+        //        (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        //    {
+        //        query = query.Include(includeProperty);
+        //    }
+        //    return await query.ToListAsync();
+        //}
+        //public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
+        //{
+        //    return await Find(filter).FirstOrDefaultAsync();
+        //}
     }
 }

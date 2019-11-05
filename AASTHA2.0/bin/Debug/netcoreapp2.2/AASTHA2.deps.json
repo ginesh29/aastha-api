@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "027ddc3944cb40f8e5602ba2f11fb330062e9e99"
+    "signature": "1419685766b13a4b392aa9aa9e649d535f4d16d0"
   },
   "compilationOptions": {
     "defines": [
@@ -32,7 +32,8 @@
           "Microsoft.NETCore.App": "2.2.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3",
           "Serilog.AspNetCore": "3.1.0",
-          "Swashbuckle.AspNetCore": "4.0.1"
+          "Swashbuckle.AspNetCore": "4.0.1",
+          "System.Linq.Dynamic.Core": "1.0.19"
         },
         "runtime": {
           "AASTHA2.dll": {}
@@ -716,6 +717,17 @@
           "lib/netstandard2.0/System.Interactive.Async.dll": {}
         }
       },
+      "System.Linq.Dynamic.Core/1.0.19": {
+        "runtime": {
+          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
+            "assemblyVersion": "1.0.19.0",
+            "fileVersion": "1.0.19.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {}
+        }
+      },
       "System.Linq.Parallel/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -771,7 +783,8 @@
       },
       "AASTHA2.Common/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.6"
+          "Microsoft.EntityFrameworkCore": "2.2.6",
+          "System.Linq.Dynamic.Core": "1.0.19"
         },
         "runtime": {
           "AASTHA2.Common.dll": {}
@@ -795,7 +808,8 @@
       },
       "AASTHA2.Repositories/1.0.0": {
         "dependencies": {
-          "AASTHA2.Entities": "1.0.0"
+          "AASTHA2.Entities": "1.0.0",
+          "System.Linq.Dynamic.Core": "1.0.19"
         },
         "runtime": {
           "AASTHA2.Repositories.dll": {}
@@ -4183,6 +4197,13 @@
       "sha512": "sha512-C07p0dAA5lGqYUPiPCK3paR709gqS4aMDDsje0v0pvffwzLaxmsn5YQTfZbyNG5qrudPx+BCxTqISnncQ3wIoQ==",
       "path": "system.interactive.async/3.2.0",
       "hashPath": "system.interactive.async.3.2.0.nupkg.sha512"
+    },
+    "System.Linq.Dynamic.Core/1.0.19": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GFYslLz/1ZZ0+gbqYED2zlD0H95BIK4hOpIcEEEfTDDXAcKE5vpXQQseOGduNVjcJZOF3Wx+4npa2EjdFpuDgA==",
+      "path": "system.linq.dynamic.core/1.0.19",
+      "hashPath": "system.linq.dynamic.core.1.0.19.nupkg.sha512"
     },
     "System.Linq.Parallel/4.3.0": {
       "type": "package",

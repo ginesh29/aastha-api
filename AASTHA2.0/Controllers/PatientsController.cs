@@ -3,15 +3,15 @@ using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
 
 namespace AASTHA2._0.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class PatientsController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;
@@ -21,25 +21,32 @@ namespace AASTHA2._0.Controllers
         }
 
         // GET: api/Patients
-
-        [HttpGet]
-        public ActionResult<IEnumerable<Patient>> GetPatients(string Fields, string Filter, string Sort, int Skip, int Take)
+        public static object GetPropValue(object src, string propName)
         {
-            Fields = "Firstname,Middlename,Lastname";
-            Filter = "Firstname=G,Lastname=T";
-            Sort = "Lastname desc,Firstname asc";
+            return src.GetType().GetProperty(propName).GetValue(src, null);
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable<dynamic>> GetPatients(string Search = "", string Fields = "", string Sort = "", int Skip = 0, int Take = 0)
+        {
+            Search = "Firstname.Contains({G})";// Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
 
-            var sortCriteria = OrederByHelper.GenerateSortModel(Sort);
+            string query;
+            object[] param;
+            DynamicLinqHelper.DynamicSearchQuery(Search, out query, out param);
+            Search = "Firstname = \"Ginesh\"";
+            //Fields = "Firstname,Middlename,Lastname,CreaterInfo,CreaterInfo.Username";
+            //Sort = "Middlename desc,Firstname asc";
+            //Skip = 0;
+            //Take = 10;
 
-            List<FilterModel> filter1 = new List<FilterModel>();
-            filter1.Add(new FilterModel { PropertyName = "Fistname", Operation = Op.Equals, Value = "G" });
-            filter1.Add(new FilterModel { PropertyName = "Laststname", Operation = Op.Equals, Value = "T" });
-            var filterCriteria = ExpressionBuilder.GetExpression<Patient>(filter1).Compile();
+            IQueryable result = _unitOfWork.Patients.Find(m => !m.IsDeleted, Sort, Skip, Take);
 
+            if (!string.IsNullOrEmpty(query))
+                result = result.DynamicSearch(query, param);
 
-            Expression<Func<Patient, bool>> whereFunc = filterCriteria.Invoke;            
-
-            return _unitOfWork.Patients.Find(filterCriteria, null, null, Take, Skip).ToList();
+            if (!string.IsNullOrEmpty(Fields))
+                result = result.DynamicSelect(Fields);
+            return result.ToDynamicList();
         }
 
         // GET: api/Patients/5

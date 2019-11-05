@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AASTHA2.Entities.Migrations
 {
     [DbContext(typeof(AASTHAContext))]
-    [Migration("20191021043514_add_patient_table")]
-    partial class add_patient_table
+    [Migration("20191105045025_nullable")]
+    partial class nullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace AASTHA2.Entities.Migrations
                     b.Property<string>("Age")
                         .IsRequired();
 
-                    b.Property<long>("CreatedBy");
+                    b.Property<long?>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -45,17 +45,20 @@ namespace AASTHA2.Entities.Migrations
                     b.Property<string>("Lastname")
                         .IsRequired();
 
-                    b.Property<string>("Middelname")
+                    b.Property<string>("Middlename")
                         .IsRequired();
 
-                    b.Property<string>("Mobile")
-                        .IsRequired();
+                    b.Property<string>("Mobile");
 
-                    b.Property<long>("ModifiedBy");
+                    b.Property<long?>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ModifiedBy");
 
                     b.ToTable("Patients");
                 });
@@ -66,7 +69,7 @@ namespace AASTHA2.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("CreatedBy");
+                    b.Property<long?>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -74,7 +77,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<bool>("IsSuperAdmin");
 
-                    b.Property<long>("ModifiedBy");
+                    b.Property<long?>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
@@ -88,7 +91,33 @@ namespace AASTHA2.Entities.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ModifiedBy");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.Patient", b =>
+                {
+                    b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy");
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.User", b =>
+                {
+                    b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy");
                 });
 #pragma warning restore 612, 618
         }
