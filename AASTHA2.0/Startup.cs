@@ -2,6 +2,8 @@
 using AASTHA2.Interfaces;
 using AASTHA2.Middleware;
 using AASTHA2.Repositories;
+using AASTHA2.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +45,13 @@ namespace AASTHA2
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
 
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
                     {
@@ -55,6 +63,7 @@ namespace AASTHA2
                 option.UseSqlServer(Configuration.GetConnectionString("AASTHADB"));
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ServicesWrapper>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters

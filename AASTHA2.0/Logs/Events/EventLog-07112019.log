@@ -1,0 +1,165 @@
+2019-11-07 09:53:15.173 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 09:53:15.212 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 09:53:15.542 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 09:53:16.020 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 09:53:16.303 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 09:53:17.326 +05:30 [INF] Executed DbCommand (70ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 09:53:17.451 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1902.9278000000002ms.
+2019-11-07 09:53:17.459 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 09:53:17.466 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2249.5514000000003ms
+2019-11-07 09:53:17.466 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 09:55:52.996 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 09:55:53.033 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 09:55:53.341 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 09:55:53.804 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 09:55:54.083 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 09:55:55.099 +05:30 [INF] Executed DbCommand (70ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 09:55:55.184 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1836.702ms.
+2019-11-07 09:55:55.191 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 09:55:55.197 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2160.1625ms
+2019-11-07 09:55:55.197 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 09:59:29.287 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 09:59:29.326 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 09:59:29.636 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 09:59:30.110 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 09:59:30.397 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 09:59:31.422 +05:30 [INF] Executed DbCommand (69ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 09:59:31.505 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1864.1105ms.
+2019-11-07 09:59:31.513 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 09:59:31.519 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2189.585ms
+2019-11-07 09:59:31.520 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:00:12.445 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:00:12.445 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:00:12.446 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:00:12.447 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:00:12.471 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:00:12.473 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 26.590200000000003ms.
+2019-11-07 10:00:12.473 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:00:12.473 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 28.0725ms
+2019-11-07 10:00:12.473 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:02:44.829 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:02:44.866 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:02:45.179 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:02:45.654 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 10:02:45.932 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:02:47.052 +05:30 [INF] Executed DbCommand (68ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:02:47.136 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1951.0161ms.
+2019-11-07 10:02:47.144 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:02:47.150 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2280.4134ms
+2019-11-07 10:02:47.151 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:03:05.076 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:03:05.077 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:03:05.078 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:03:05.079 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:03:05.098 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:03:05.100 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 22.045ms.
+2019-11-07 10:03:05.100 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:03:05.100 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 23.4312ms
+2019-11-07 10:03:05.100 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:04:04.249 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:04:04.249 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:04:04.249 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:04:04.249 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:04:04.251 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:04:04.253 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3.8506ms.
+2019-11-07 10:04:04.253 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:04:04.253 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 4.6173ms
+2019-11-07 10:04:04.254 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:06:08.673 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:06:08.711 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:06:09.022 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:06:09.506 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 10:06:09.785 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:06:10.975 +05:30 [INF] Executed DbCommand (72ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:06:11.060 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2032.2448000000002ms.
+2019-11-07 10:06:11.067 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:06:11.073 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2358.8304000000003ms
+2019-11-07 10:06:11.074 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:07:19.705 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:07:19.744 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:07:20.018 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:07:20.509 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 10:07:20.786 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:07:21.806 +05:30 [INF] Executed DbCommand (69ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:07:21.890 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1866.3363000000002ms.
+2019-11-07 10:07:21.897 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:07:21.904 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2156.0929ms
+2019-11-07 10:07:21.904 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:08:54.131 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:08:54.168 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:08:54.441 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:08:54.919 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 10:08:55.191 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:08:56.194 +05:30 [INF] Executed DbCommand (69ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:08:56.277 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1829.9205000000002ms.
+2019-11-07 10:08:56.285 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:08:56.290 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2118.8544ms
+2019-11-07 10:08:56.291 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:10:07.589 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:10:07.626 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:10:07.899 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:10:08.373 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 10:10:08.645 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:10:09.639 +05:30 [INF] Executed DbCommand (69ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:10:09.722 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1817.5009ms.
+2019-11-07 10:10:09.729 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:10:09.735 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2105.1337000000003ms
+2019-11-07 10:10:09.736 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:13:11.598 +05:30 [INF] Executing endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'
+2019-11-07 10:13:11.636 +05:30 [INF] Route matched with {action = "GetPatients", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[System.Object]] GetPatients(System.String, System.String, Int32, Int32, System.String) on controller AASTHA2._0.Controllers.PatientsController (AASTHA2).
+2019-11-07 10:13:11.908 +05:30 [INF] Executing action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) - Validation state: "Valid"
+2019-11-07 10:13:12.377 +05:30 [WRN] Navigations 'User.CreaterInfo' and 'User.ModifierInfo' were separated into two relationships as ForeignKeyAttribute was specified on navigations on both sides.
+2019-11-07 10:13:12.653 +05:30 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'AASTHAContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-11-07 10:13:13.664 +05:30 [INF] Executed DbCommand (68ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[Address], [p].[Age], [p].[CreatedBy], [p].[CreatedDate], [p].[Firstname], [p].[IsDeleted], [p].[Lastname], [p].[Middlename], [p].[Mobile], [p].[ModifiedBy], [p].[ModifiedDate]
+FROM [Patients] AS [p]
+WHERE (([p].[Firstname] = N'Ginesh1') OR ([p].[Lastname] = N'Tandel1')) OR ([p].[Middlename] = N'Balkrushana1')
+ORDER BY [p].[Middlename] DESC, [p].[Firstname]
+2019-11-07 10:13:13.749 +05:30 [INF] Executed action method AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1835.0462ms.
+2019-11-07 10:13:13.757 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-11-07 10:13:13.764 +05:30 [INF] Executed action AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2) in 2123.4451ms
+2019-11-07 10:13:13.764 +05:30 [INF] Executed endpoint 'AASTHA2._0.Controllers.PatientsController.GetPatients (AASTHA2)'

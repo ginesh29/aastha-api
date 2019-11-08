@@ -2,9 +2,11 @@
 using AASTHA2.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AASTHA2.Controllers
 {
@@ -24,7 +26,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
-            throw new Exception("Error");
+            //throw new Exception("Error");
             return _unitOfWork.Users.Find();
         }
 
@@ -42,7 +44,7 @@ namespace AASTHA2.Controllers
         //    return user;
         //}
 
-        //// PUT: api/Users/5
+        // PUT: api/Users/5
         //[HttpPut("{id}")]
         //public async Task<IActionResult> PutUser(int id, User user)
         //{
@@ -52,21 +54,21 @@ namespace AASTHA2.Controllers
         //    }
 
         //    _context.Entry(user).State = EntityState.Modified;
-
+            
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!UserExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
+        //        //if (!UserExists(id))
+        //        //{
+        //        //    return NotFound();
+        //        //}
+        //        //else
+        //        //{
+        //        //    throw;
+        //        //}
         //    }
 
         //    return NoContent();

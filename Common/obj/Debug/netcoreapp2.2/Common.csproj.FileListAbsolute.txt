@@ -1,6 +1,11 @@
 D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\AASTHA2.Common.deps.json
 D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\AASTHA2.Common.dll
 D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\AASTHA2.Common.pdb
+D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.dll
+D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.dll
+D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
+D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
+D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csprojAssemblyReference.cache
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csproj.CoreCompileInputs.cache
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfoInputs.cache
@@ -8,8 +13,3 @@ D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfo.cs
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csproj.CopyComplete
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\AASTHA2.Common.dll
 D:\Ginesh\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\AASTHA2.Common.pdb
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.dll
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.dll
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
-D:\Ginesh\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml

@@ -2,6 +2,32 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "AutoMapper/9.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        }
+      },
+      "AutoMapper.Extensions.Microsoft.DependencyInjection/7.0.0": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "9.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4975,10 +5001,55 @@
         "runtime": {
           "bin/placeholder/AASTHA2.Repositories.dll": {}
         }
+      },
+      "Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "AASTHA2.Repositories": "1.0.0",
+          "AutoMapper": "9.0.0",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Services.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "AutoMapper/9.0.0": {
+      "sha512": "xCqvoxT4HIrNY/xlXG9W+BA/awdrhWvMTKTK/igkGSRbhOhpl3Q8O8Gxlhzjc9JsYqE7sS6AxgyuUUvZ6R5/Bw==",
+      "type": "package",
+      "path": "automapper/9.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.9.0.0.nupkg.sha512",
+        "automapper.nuspec",
+        "lib/net461/AutoMapper.dll",
+        "lib/net461/AutoMapper.pdb",
+        "lib/net461/AutoMapper.xml",
+        "lib/netstandard2.0/AutoMapper.dll",
+        "lib/netstandard2.0/AutoMapper.pdb",
+        "lib/netstandard2.0/AutoMapper.xml"
+      ]
+    },
+    "AutoMapper.Extensions.Microsoft.DependencyInjection/7.0.0": {
+      "sha512": "szI4yeRIM7GWe9JyekW0dKYehPB0t6M+I55fPeCebN6PhS7zQZa0eG3bgOnOx+eP3caSNoE7KEJs2rk7MLsh8w==",
+      "type": "package",
+      "path": "automapper.extensions.microsoft.dependencyinjection/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
+        "automapper.extensions.microsoft.dependencyinjection.nuspec",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.pdb"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
@@ -13507,18 +13578,23 @@
       "type": "project",
       "path": "../Repositories/Repositories.csproj",
       "msbuildProject": "../Repositories/Repositories.csproj"
+    },
+    "Services/1.0.0": {
+      "type": "project",
+      "path": "../Services/Services.csproj",
+      "msbuildProject": "../Services/Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "AASTHA2.Common >= 1.0.0",
-      "AASTHA2.Entities >= 1.0.0",
       "AASTHA2.Repositories >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.3",
       "Serilog.AspNetCore >= 3.1.0",
+      "Services >= 1.0.0",
       "Swashbuckle.AspNetCore >= 4.0.1",
       "System.Linq.Dynamic.Core >= 1.0.19"
     ]
@@ -13556,11 +13632,11 @@
             "D:\\Ginesh\\AASTHA2.0\\Common\\Common.csproj": {
               "projectPath": "D:\\Ginesh\\AASTHA2.0\\Common\\Common.csproj"
             },
-            "D:\\Ginesh\\AASTHA2.0\\Entities\\Entities.csproj": {
-              "projectPath": "D:\\Ginesh\\AASTHA2.0\\Entities\\Entities.csproj"
-            },
             "D:\\Ginesh\\AASTHA2.0\\Repositories\\Repositories.csproj": {
               "projectPath": "D:\\Ginesh\\AASTHA2.0\\Repositories\\Repositories.csproj"
+            },
+            "D:\\Ginesh\\AASTHA2.0\\Services\\Services.csproj": {
+              "projectPath": "D:\\Ginesh\\AASTHA2.0\\Services\\Services.csproj"
             }
           }
         }

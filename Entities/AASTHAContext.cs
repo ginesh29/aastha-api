@@ -44,9 +44,9 @@ namespace AASTHA2.Entities
                     entry.Property("CreatedDate").IsModified = false;
                     entry.Property("CreatedBy").IsModified = false;
                     entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
-                }
+                }                
                 ((BaseEntity)entry.Entity).ModifiedDate = DateTime.UtcNow;
-                //((BaseEntity)entry.Entity).ModifiedBy = UserId;
+                //((BaseEntity)entry.Entity).ModifiedBy = UserId;                
             }
             var errors = new List<ValidationResult>(); // all errors are here
             foreach (var e in entities)

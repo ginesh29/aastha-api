@@ -39,15 +39,20 @@ namespace AASTHA2.Middleware
                     string message = string.Empty;
                     object validation = null;
                     object error = null;
-                    if (status == (int)HttpStatusCode.OK)
+
+                    if (readToEnd == "[]")
                     {
+                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        message = "No Data Found";
+                        objResult = null;
+                    }
+                    else if (status == (int)HttpStatusCode.OK)
                         objResult = JsonConvert.DeserializeObject(readToEnd);
-                    }                        
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {
                         message = JsonConvert.DeserializeObject(readToEnd).ToString();
                         Log.Warning(message);
-                    }                       
+                    }
                     else if (status == (int)HttpStatusCode.BadRequest)
                     {
                         message = "Validation Error";

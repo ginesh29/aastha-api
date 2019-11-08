@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text.RegularExpressions;
@@ -8,11 +9,11 @@ namespace AASTHA2.Common.Helpers
 {
     public static class DynamicLinqHelper
     {
-        public static IQueryable DynamicSelect(this IQueryable source, string select)
+        public static IEnumerable DynamicSelect(this IEnumerable source, string select)
         {
             var data = source;
             if (!string.IsNullOrEmpty(select))
-                data = source.Select($"new ({select})");
+                data = source.AsQueryable().Select($"new ({select})");
             return data;
         }
         public static void DynamicSearchQuery(string Search, out string query, out object[] param)
@@ -34,13 +35,13 @@ namespace AASTHA2.Common.Helpers
                 i++;
             }
         }
-        public static IQueryable DynamicSearch(this IQueryable source, string search, object[] param)
-        {
-            var data = source;
-            if (!string.IsNullOrEmpty(search))
-                data = source.Where(search, param);
-            return data;
-        }
+        //public static IQueryable DynamicSearch(this IQueryable source, string search, object[] param)
+        //{
+        //    var data = source;
+        //    if (!string.IsNullOrEmpty(search))
+        //        data = source.Where(search, param);
+        //    return data;
+        //}
     }
 
     //public static class OrederByHelper

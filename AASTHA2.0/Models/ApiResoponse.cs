@@ -24,9 +24,9 @@ namespace AASTHA2.Models
         public int StatusCode { get; set; }
         public string StatusDescription { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public object Result { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public object Result { get; set; }        
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object ValidationSummary { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
