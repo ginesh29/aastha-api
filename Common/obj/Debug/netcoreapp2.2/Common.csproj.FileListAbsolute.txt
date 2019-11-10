@@ -21,7 +21,6 @@ E:\Projects\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens
 E:\Projects\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
 E:\Projects\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
 E:\Projects\AASTHA2.0\Common\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
-E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csprojAssemblyReference.cache
 E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfoInputs.cache
 E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfo.cs
 E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csproj.CopyComplete
