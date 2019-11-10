@@ -2,4 +2,5 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/AASTHA2.0/v15/Server/sqlite3
+/.vs/
+/*/obj/

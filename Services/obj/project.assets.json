@@ -3728,23 +3728,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\COMP-112\\.nuget\\packages\\": {},
+    "C:\\Users\\Dell\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Ginesh\\AASTHA2.0\\Services\\Services.csproj",
+      "projectUniqueName": "E:\\Projects\\AASTHA2.0\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "D:\\Ginesh\\AASTHA2.0\\Services\\Services.csproj",
-      "packagesPath": "C:\\Users\\COMP-112\\.nuget\\packages\\",
-      "outputPath": "D:\\Ginesh\\AASTHA2.0\\Services\\obj\\",
+      "projectPath": "E:\\Projects\\AASTHA2.0\\Services\\Services.csproj",
+      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "outputPath": "E:\\Projects\\AASTHA2.0\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\COMP-112\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3757,8 +3757,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\Ginesh\\AASTHA2.0\\Repositories\\Repositories.csproj": {
-              "projectPath": "D:\\Ginesh\\AASTHA2.0\\Repositories\\Repositories.csproj"
+            "E:\\Projects\\AASTHA2.0\\Repositories\\Repositories.csproj": {
+              "projectPath": "E:\\Projects\\AASTHA2.0\\Repositories\\Repositories.csproj"
             }
           }
         }
@@ -3788,10 +3788,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
