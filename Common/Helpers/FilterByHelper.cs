@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using static AASTHA2.Common.Enums;
 
 namespace AASTHA2.Common.Helpers
 {

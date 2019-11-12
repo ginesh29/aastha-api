@@ -26,3 +26,4 @@ E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfo.cs
 E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csproj.CopyComplete
 E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\AASTHA2.Common.dll
 E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\AASTHA2.Common.pdb
+E:\Projects\AASTHA2.0\Common\obj\Debug\netcoreapp2.2\Common.csprojAssemblyReference.cache
