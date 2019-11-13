@@ -47,7 +47,19 @@ namespace AASTHA2.Common
         OperationType,
         OperationDiagnosis,
         GeneralDiagnosis,
-        MedicineType,
+        MedicinType,
         Medicine
+    }
+    public enum RoomType
+    {
+        General,
+        Special,
+        SemiSpecial
+    }
+    public enum IpdType
+    {
+        Delivery,
+        Operaion,
+        General
     }
 }

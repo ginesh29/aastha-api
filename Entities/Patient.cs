@@ -13,6 +13,7 @@ namespace AASTHA2.Entities
         public int Age { get; set; }
 
         public ICollection<Opd> Opds { get; set; }
+        public ICollection<Ipd> Ipds { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
     }
 }

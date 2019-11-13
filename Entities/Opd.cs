@@ -7,7 +7,7 @@ namespace AASTHA2.Entities
 {
     public class Opd : BaseEntity
     {
-        public long PatientId { get; set; }
+        
         public DateTime Date { get; set; }
         public CaseType CaseType { get; set; }
         public long ConsultCharge { get; set; }
@@ -15,6 +15,8 @@ namespace AASTHA2.Entities
         public long UptCharge { get; set; }
         public long InjectionCharge { get; set; }
         public long OtherCharge { get; set; }
+
+        public long PatientId { get; set; }
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
     }

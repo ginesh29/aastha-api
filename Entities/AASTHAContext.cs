@@ -25,6 +25,7 @@ namespace AASTHA2.Entities
         public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Opd> Opds { get; set; }
+        public DbSet<Ipd> Ipds { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Lookup> Lookups { get; set; }
 
