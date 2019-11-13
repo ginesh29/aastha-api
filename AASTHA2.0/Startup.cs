@@ -3,7 +3,9 @@ using AASTHA2.Interfaces;
 using AASTHA2.Middleware;
 using AASTHA2.Repositories;
 using AASTHA2.Services;
+using AASTHA2.Validator;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,12 +54,15 @@ namespace AASTHA2
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
+            services
+                .AddMvc()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PatientValidator>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
                     {
                         option.SerializerSettings.ContractResolver = new DefaultContractResolver();
                         //option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    });
+                    });            
             services.AddDbContext<AASTHAContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("AASTHADB"));
@@ -123,6 +128,7 @@ namespace AASTHA2
             });
             app.UseResponseWrapper();
             app.UseExceptionWrapper();
+
             app.UseMvc();
         }
     }
