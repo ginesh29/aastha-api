@@ -24,7 +24,10 @@ namespace AASTHA2.Entities
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        
+        public DbSet<Opd> Opds { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Lookup> Lookups { get; set; }
+
         public override int SaveChanges()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
@@ -44,7 +47,7 @@ namespace AASTHA2.Entities
                     entry.Property("CreatedDate").IsModified = false;
                     entry.Property("CreatedBy").IsModified = false;
                     entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
-                }                
+                }
                 ((BaseEntity)entry.Entity).ModifiedDate = DateTime.UtcNow;
                 //((BaseEntity)entry.Entity).ModifiedBy = UserId;                
             }

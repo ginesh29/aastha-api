@@ -4,14 +4,16 @@ using AASTHA2.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AASTHA2.Entities.Migrations
 {
     [DbContext(typeof(AASTHAContext))]
-    partial class AASTHAContextModelSnapshot : ModelSnapshot
+    [Migration("20191112181631_table_add1")]
+    partial class table_add1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,15 +33,17 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<bool?>("IsDeleted");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<long?>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<long?>("PatientId");
+                    b.Property<int?>("PatientId");
 
-                    b.Property<int>("Type");
+                    b.Property<long?>("PatientId1");
+
+                    b.Property<long?>("TypeId");
 
                     b.HasKey("Id");
 
@@ -47,7 +51,9 @@ namespace AASTHA2.Entities.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientId1");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Appointments");
                 });
@@ -62,7 +68,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<bool?>("IsDeleted");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<long?>("ModifiedBy");
 
@@ -103,7 +109,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<long>("InjectionCharge");
 
-                    b.Property<bool?>("IsDeleted");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<long?>("ModifiedBy");
 
@@ -144,7 +150,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<string>("Firstname");
 
-                    b.Property<bool?>("IsDeleted");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Lastname");
 
@@ -175,7 +181,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<bool?>("IsDeleted");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("IsSuperAdmin");
 
@@ -210,7 +216,11 @@ namespace AASTHA2.Entities.Migrations
 
                     b.HasOne("AASTHA2.Entities.Patient", "Patient")
                         .WithMany("Appointments")
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientId1");
+
+                    b.HasOne("AASTHA2.Entities.Appointment", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId");
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.Lookup", b =>

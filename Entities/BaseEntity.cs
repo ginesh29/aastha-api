@@ -12,7 +12,7 @@ namespace AASTHA2.Entities
         public long? ModifiedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey("CreatedBy")]
         public User CreaterInfo { get; set; }
