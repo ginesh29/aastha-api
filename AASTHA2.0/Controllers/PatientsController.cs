@@ -43,15 +43,20 @@ namespace AASTHA2._0.Controllers
             return patient;
         }
         [HttpPost]
-        public ActionResult<PatientDTO> PostPatient(PatientDTO patient)
+        public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO)
         {
-            _patientService.PostPatient(patient);
-            return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
+            _patientService.PostPatient(patientDTO);
+            return CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patientDTO);
         }
         [HttpPut]
-        public ActionResult<PatientDTO> PutPatient(PatientDTO patient)
+        public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO)
         {
-            _patientService.PutPatient(patient);
+            var patient = _patientService.GetPatient(patientDTO.Id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            _patientService.PutPatient(patientDTO);
             return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
         }
         [HttpDelete("{id}")]

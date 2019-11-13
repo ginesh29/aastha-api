@@ -10,7 +10,7 @@ namespace AASTHA2.Entities
         public string Lastname { get; set; }
         public string Address { get; set; }
         public string Mobile  { get; set; }
-        public string Age { get; set; }
+        public int Age { get; set; }
 
         public ICollection<Opd> Opds { get; set; }
         public ICollection<Appointment> Appointments { get; set; }

@@ -11,7 +11,8 @@ namespace AASTHA2.Validator
             RuleFor(m => m.Middlename).NotEmpty().When(m => m.Id < 1);
             RuleFor(m => m.Lastname).NotEmpty().When(m => m.Id < 1);
             RuleFor(m => m.Address).NotEmpty().When(m => m.Id < 1);
-            RuleFor(m => m.Age).NotEmpty().When(m => m.Id < 1);
+            RuleFor(m => m.Age).NotEmpty().When(m => m.Id < 1)
+                               .Must(m => m > 0 && m < 100).When(m => m.Age != 0);
         }
     }
 }

@@ -73,8 +73,16 @@ namespace AASTHA2.Repositories
                 {
                     var orgVal = dbEntityEntry.Property(property.Name).OriginalValue;
                     var currVal = dbEntityEntry.Property(property.Name).CurrentValue;
-                    if (orgVal != null && !property.IsPrimaryKey() && !orgVal.Equals(currVal))
+
+
+                    if (currVal != null && !property.IsPrimaryKey() && !orgVal.Equals(currVal))
+                    {
+                        int o;
+                        bool result = Int32.TryParse(Convert.ToString(currVal), out o);
+                        dbEntityEntry.Property(property.Name).CurrentValue = o == 0 ? orgVal : currVal;
                         dbEntityEntry.Property(property.Name).IsModified = true;
+                    }
+
                 }
             }
         }
