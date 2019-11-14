@@ -55,16 +55,16 @@ namespace AASTHA2.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),                    
+                    PatientId = table.Column<int>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    TypeId = table.Column<long>(nullable: true),
+                    PatientId1 = table.Column<long>(nullable: true),
                     CreatedBy = table.Column<long>(nullable: true),
                     ModifiedBy = table.Column<long>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    PatientId = table.Column<int>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    TypeId = table.Column<long>(nullable: true),
-                    PatientId1 = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -100,16 +100,16 @@ namespace AASTHA2.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),                    
+                    Name = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false),
+                    ParentId = table.Column<int>(nullable: true),
+                    ParentId1 = table.Column<long>(nullable: true),
                     CreatedBy = table.Column<long>(nullable: true),
                     ModifiedBy = table.Column<long>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Type = table.Column<int>(nullable: false),
-                    ParentId = table.Column<int>(nullable: true),
-                    ParentId1 = table.Column<long>(nullable: true)
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,12 +139,7 @@ namespace AASTHA2.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<long>(nullable: true),
-                    ModifiedBy = table.Column<long>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),                    
                     PatientId = table.Column<int>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     CaseType = table.Column<int>(nullable: false),
@@ -153,7 +148,12 @@ namespace AASTHA2.Entities.Migrations
                     UptCharge = table.Column<int>(nullable: false),
                     InjectionCharge = table.Column<int>(nullable: false),
                     OtherCharge = table.Column<int>(nullable: false),
-                    PatientId1 = table.Column<long>(nullable: true)
+                    PatientId1 = table.Column<long>(nullable: true),
+                    CreatedBy = table.Column<long>(nullable: true),
+                    ModifiedBy = table.Column<long>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
