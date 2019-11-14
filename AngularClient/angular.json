@@ -26,7 +26,15 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/scripts/jquery.js",
+              "src/assets/scripts/bootstrap.min.js",
+              "src/assets/scripts/jquery.dcjqaccordion.2.7.js",
+              "src/assets/scripts/jquery.scrollTo.min.js",
+              "src/assets/scripts/jquery.slimscroll.js",
+              "src/assets/scripts/jquery.nicescroll.js",
+              "src/assets/scripts/scripts.js"
+            ]
           },
           "configurations": {
             "production": {
