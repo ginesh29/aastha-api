@@ -6,7 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AASTHA2.Entities
 {
     public class Ipd : BaseEntity
-    {        
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string InvoiceNo { get; set; }
         public IpdType Type { get; set; }
         public RoomType RoomType { get; set; }
