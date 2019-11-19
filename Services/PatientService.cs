@@ -32,6 +32,10 @@ namespace AASTHA2.Services
             var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
             return _mapper.Map<PatientDTO>(patient);
         }
+        public int PatientCount(string Search = "", bool ShowDeleted = false)
+        {
+            return _unitOfWork.Patients.Count(null, Search, ShowDeleted);
+        }
         public void PostPatient(PatientDTO patientDto)
         {
             var patient = _mapper.Map<Patient>(patientDto);

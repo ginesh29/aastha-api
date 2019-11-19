@@ -14,6 +14,7 @@ namespace AASTHA2.Interfaces
         void Create(T entity);
         void Update(T entity, params Expression<Func<T, object>>[] updatedProperties);
         void Delete(T entity, bool? deletePhysical = false);
+        int Count(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false);
         IEnumerable<T> GetWithRawSql(string query, params object[] parameters);
 
         //Async Method

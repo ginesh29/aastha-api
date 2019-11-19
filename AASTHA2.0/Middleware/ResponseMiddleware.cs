@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
 using System.IO;
@@ -39,7 +40,7 @@ namespace AASTHA2.Middleware
                     string message = string.Empty;
                     object validation = null;
                     object error = null;
-
+                    int count = 0;
                     if (readToEnd == "[]")
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
@@ -47,7 +48,14 @@ namespace AASTHA2.Middleware
                         objResult = null;
                     }
                     else if (status == (int)HttpStatusCode.OK)
+                    {
                         objResult = JsonConvert.DeserializeObject(readToEnd);
+                        dynamic obj = JObject.Parse(readToEnd.ToString());
+                        count = obj.Count;
+                        obj.Property("Count").Remove();
+                        objResult = obj.Data;
+                    }
+
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {
                         message = JsonConvert.DeserializeObject(readToEnd).ToString();
@@ -65,7 +73,7 @@ namespace AASTHA2.Middleware
                         error = ((dynamic)JsonConvert.DeserializeObject(readToEnd)).Errors;
                         Log.Error(error.ToString());
                     }
-                    var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult, message, validation, error);
+                    var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult, message, validation, error, count);
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
                 }
             }

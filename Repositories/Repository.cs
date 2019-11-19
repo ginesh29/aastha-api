@@ -35,8 +35,8 @@ namespace AASTHA2.Repositories
                 query = query.Where(dynamicQuery, param);
             }
 
-            if ((bool)!ShowDeleted)
-                query = query.Where("IsDeleted=false");
+            if ((bool)ShowDeleted)
+                query = query.Where("IsDeleted!=true");
 
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
@@ -96,6 +96,10 @@ namespace AASTHA2.Repositories
                 dbEntityEntry.Property("IsDeleted").CurrentValue = true;
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
+        }
+        public int Count(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false)
+        {
+            return Find(filter, search, ShowDeleted).Count();
         }
         public IEnumerable<T> GetWithRawSql(string query, params object[] parameters)
         {

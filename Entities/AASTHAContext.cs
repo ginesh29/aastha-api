@@ -19,8 +19,6 @@ namespace AASTHA2.Entities
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BaseEntity>().Property(p => p.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("getdate()");
-            modelBuilder.Entity<BaseEntity>().Property(p => p.ModifiedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("getdate()");
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<User> Users { get; set; }
@@ -39,14 +37,14 @@ namespace AASTHA2.Entities
             {
                 if (entry.State == EntityState.Added)
                 {
-                    //((BaseEntity)entry.Entity).CreatedDate = DateTime.UtcNow;
+                    ((BaseEntity)entry.Entity).CreatedDate = DateTime.UtcNow;
                     //((BaseEntity)entry.Entity).CreatedBy = UserId;
                     ((BaseEntity)entry.Entity).IsDeleted = false;
                 }
                 else
                 {
                     bool isDeleted = (bool)entry.Property("IsDeleted").CurrentValue;
-                    //entry.Property("CreatedDate").IsModified = false;
+                    entry.Property("CreatedDate").IsModified = false;
                     entry.Property("CreatedBy").IsModified = false;
                     entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
                 }

@@ -68,7 +68,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<decimal>("Discount");
 
-                    b.Property<string>("InvoiceNo");
+                    b.Property<string>("InvoiceNo")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool?>("IsDeleted");
 

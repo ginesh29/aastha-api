@@ -1,7 +1,6 @@
 ﻿using AASTHA2.DTO;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
 
 namespace AASTHA2._0.Controllers
@@ -18,15 +17,17 @@ namespace AASTHA2._0.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public ActionResult<IEnumerable<dynamic>> GetPatients(string Search, string Sort, int Skip, int Take, string Fields)
+        public dynamic GetPatients(string Search, string Sort, int skip, int take, string Fields)
         {
-            Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            Fields = "Firstname,Middlename,Lastname";
-            Sort = "Middlename desc,Firstname asc";
-            Skip = 0;
-            Take = 10;
-            var result = _patientService.GetPatients(Search, Sort, true, Skip, Take, Fields);
-            return result.ToDynamicList();
+            //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
+            //Fields = "Firstname,Middlename,Lastname";
+            //Sort = "Middlename desc,Firstname asc";
+            //Skip = 0;
+            //Take = 10;
+            var data = _patientService.GetPatients(Search, Sort, true, skip, take, Fields);
+            var count = _patientService.PatientCount(Search);
+            var result = new { Data = data.ToDynamicList(), Count = count };
+            return Ok(result);
         }
 
         // GET: api/Patients/5
