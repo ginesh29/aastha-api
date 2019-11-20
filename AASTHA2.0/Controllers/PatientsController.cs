@@ -3,7 +3,7 @@ using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
 
-namespace AASTHA2._0.Controllers
+namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
