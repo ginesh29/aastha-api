@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <Compile Remove="AngularClient\**" />
+    <Compile Remove="Scripts\**" />
     <Content Remove="AngularClient\**" />
+    <Content Remove="Scripts\**" />
     <EmbeddedResource Remove="AngularClient\**" />
+    <EmbeddedResource Remove="Scripts\**" />
     <None Remove="AngularClient\**" />
+    <None Remove="Scripts\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +29,6 @@
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Scripts\" />
   </ItemGroup>
 
 </Project>
