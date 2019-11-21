@@ -26,7 +26,7 @@ namespace AASTHA2.Controllers
             //Take = 10;
             var data = _patientService.GetPatients(Search, Sort, true, skip, take, Fields);
             var count = _patientService.PatientCount(Search);
-            var result = new { Data = data.ToDynamicList(), Count = count };
+            var result = new { Data = data.ToDynamicList(), TotalCount = count };
             return Ok(result);
         }
 

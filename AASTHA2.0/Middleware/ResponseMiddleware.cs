@@ -50,12 +50,7 @@ namespace AASTHA2.Middleware
                     else if (status == (int)HttpStatusCode.OK)
                     {
                         objResult = JsonConvert.DeserializeObject(readToEnd);
-                        dynamic obj = JObject.Parse(readToEnd.ToString());
-                        count = obj.Count;
-                        obj.Property("Count").Remove();
-                        objResult = obj.Data;
                     }
-
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {
                         message = JsonConvert.DeserializeObject(readToEnd).ToString();
