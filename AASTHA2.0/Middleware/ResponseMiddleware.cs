@@ -40,7 +40,6 @@ namespace AASTHA2.Middleware
                     string message = string.Empty;
                     object validation = null;
                     object error = null;
-                    int count = 0;
                     if (readToEnd == "[]")
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
@@ -68,7 +67,7 @@ namespace AASTHA2.Middleware
                         error = ((dynamic)JsonConvert.DeserializeObject(readToEnd)).Errors;
                         Log.Error(error.ToString());
                     }
-                    var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult, message, validation, error, count);
+                    var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult, message, validation, error);
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
                 }
             }
