@@ -31,36 +31,36 @@ namespace AASTHA2.Common
     }
     public enum CaseType
     {
-        Old=1,
-        New=2
+        Old = 1,
+        New = 2
     }
     public enum AppointmentType
     {
-        Date,
-        Sonography,
-        Anomally,
-        Ovulation
+        Date = 1,
+        Sonography = 2,
+        Anomaly = 3,
+        Ovulation = 4
     }
     public enum LookupType
     {
-        DeliveryType=1,
-        OperationType=2,
-        OperationDiagnosis=3,
-        GeneralDiagnosis=4,
-        MedicinType=5,
-        Medicine=6,
+        DeliveryType = 1,
+        OperationType = 2,
+        OperationDiagnosis = 3,
+        GeneralDiagnosis = 4,
+        MedicinType = 5,
+        Medicine = 6,
         ChargeType = 7
     }
     public enum RoomType
     {
-        General,
-        Special,
-        SemiSpecial
+        General=1,
+        Special=2,
+        SemiSpecial=3
     }
     public enum IpdType
     {
-        Delivery,
-        Operaion,
-        General
+        Delivery=1,
+        Operation = 2,
+        General=3
     }
 }
