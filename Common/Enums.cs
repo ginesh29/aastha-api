@@ -31,8 +31,8 @@ namespace AASTHA2.Common
     }
     public enum CaseType
     {
-        Old,
-        New
+        Old=1,
+        New=2
     }
     public enum AppointmentType
     {
@@ -43,12 +43,13 @@ namespace AASTHA2.Common
     }
     public enum LookupType
     {
-        DeliveryType,
-        OperationType,
-        OperationDiagnosis,
-        GeneralDiagnosis,
-        MedicinType,
-        Medicine
+        DeliveryType=1,
+        OperationType=2,
+        OperationDiagnosis=3,
+        GeneralDiagnosis=4,
+        MedicinType=5,
+        Medicine=6,
+        ChargeType = 7
     }
     public enum RoomType
     {

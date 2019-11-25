@@ -20,7 +20,7 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false, string order = null, int skip = 0, int take = 0)
+        public IQueryable<T> Find(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false, string order = null, int skip = 0, int take = 15)
         {
             IQueryable<T> query = _dbSet;
 
