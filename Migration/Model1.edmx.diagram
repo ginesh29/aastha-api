@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e9b01a234eb549a694b1ce1626ac5e06" Name="Diagram1">
+        <EntityTypeShape EntityType="AASTHAModel.tbl_appointment" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_shift" Width="1.5" PointX="15" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.C__EFMigrationsHistory" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.delivery_master" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.DeliveryMaster" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.diagnosis_master" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.DiagnosisMaster" Width="1.5" PointX="7.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.general_diagnosis" Width="1.5" PointX="9.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.GeneralDiagnosi" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.IPD_Charge_Details" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.IPD_Charges_Master" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.IpdChargeDetail" Width="1.5" PointX="12.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.IpdChargesMaster" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.medicine_master" Width="1.5" PointX="10" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.MedicineMaster" Width="1.5" PointX="10" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.operation_master" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.OperationMaster" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_delivery" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_general" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_Ipd" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_medicine_type" Width="1.5" PointX="7.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_opd" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_operation" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_patient" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.tbl_user" Width="1.5" PointX="12.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.TblIpd" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.TblMedicineType" Width="1.5" PointX="7.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AASTHAModel.TblPatient" Width="1.5" PointX="7.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="AASTHAModel.FK_tbl_appointment_tbl_patient" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_tbl_shift_tbl_user" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_IPD_Charge_Details_tbl_Ipd" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_IpdChargeDetails_TblIpd_IpdId1" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK__medicine___medic__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK__medicine___medic__51300E55" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_MedicineMaster_TblMedicineType_MedicineTypeNavigationId" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_tbl_delivery_tbl_Ipd" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_tbl_general_tbl_Ipd" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_tbl_Ipd_tbl_patient" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_tbl_operation_tbl_Ipd" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK__tbl_opd__patient__4EFDAD20" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK__tbl_opd__patient__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="AASTHAModel.FK_TblIpd_TblPatient_PatientId1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

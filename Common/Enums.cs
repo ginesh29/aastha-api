@@ -63,4 +63,9 @@ namespace AASTHA2.Common
         Operation = 2,
         General=3
     }
+    public enum Gender
+    {
+        Boy=1,
+        Girl=2
+    }
 }

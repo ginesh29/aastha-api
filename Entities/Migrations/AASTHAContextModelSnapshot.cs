@@ -52,6 +52,82 @@ namespace AASTHA2.Entities.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("AASTHA2.Entities.Charge", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount");
+
+                    b.Property<long?>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<decimal>("Days");
+
+                    b.Property<long>("IpdId");
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<long>("LookupId");
+
+                    b.Property<long?>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<int>("Rate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("IpdId");
+
+                    b.HasIndex("LookupId");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("Charges");
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.Delivery", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("BabyWeight");
+
+                    b.Property<long?>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("Gender");
+
+                    b.Property<long>("IpdId");
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<long?>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<TimeSpan>("Time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("IpdId");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("Deliveries");
+                });
+
             modelBuilder.Entity("AASTHA2.Entities.Ipd", b =>
                 {
                     b.Property<long>("Id")
@@ -89,6 +165,37 @@ namespace AASTHA2.Entities.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Ipds");
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.IpdDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("IpdId");
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<long>("LookupId");
+
+                    b.Property<long?>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("LookupId");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("IpdDetails");
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.Lookup", b =>
@@ -165,6 +272,37 @@ namespace AASTHA2.Entities.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Opds");
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.Operation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<long>("IpdId");
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<long?>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("IpdId");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("Operations");
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.Patient", b =>
@@ -253,6 +391,43 @@ namespace AASTHA2.Entities.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("AASTHA2.Entities.Charge", b =>
+                {
+                    b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
+                        .WithMany()
+                        .HasForeignKey("IpdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AASTHA2.Entities.Lookup", "Lookup")
+                        .WithMany()
+                        .HasForeignKey("LookupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy");
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.Delivery", b =>
+                {
+                    b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
+                        .WithMany()
+                        .HasForeignKey("IpdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy");
+                });
+
             modelBuilder.Entity("AASTHA2.Entities.Ipd", b =>
                 {
                     b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
@@ -267,6 +442,22 @@ namespace AASTHA2.Entities.Migrations
                         .WithMany("Ipds")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.IpdDetail", b =>
+                {
+                    b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("AASTHA2.Entities.Lookup", "Lookup")
+                        .WithMany()
+                        .HasForeignKey("LookupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy");
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.Lookup", b =>
@@ -298,6 +489,22 @@ namespace AASTHA2.Entities.Migrations
                         .WithMany("Opds")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AASTHA2.Entities.Operation", b =>
+                {
+                    b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
+                        .WithMany()
+                        .HasForeignKey("IpdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy");
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.Patient", b =>

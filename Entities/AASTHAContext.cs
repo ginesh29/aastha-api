@@ -27,6 +27,10 @@ namespace AASTHA2.Entities
         public DbSet<Ipd> Ipds { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Lookup> Lookups { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+        public DbSet<IpdDetail> IpdDetails { get; set; }
+        public DbSet<Charge> Charges { get; set; }
 
         public override int SaveChanges()
         {
