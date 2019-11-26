@@ -49,7 +49,8 @@ namespace AASTHA2.Common
         GeneralDiagnosis = 4,
         MedicinType = 5,
         Medicine = 6,
-        ChargeType = 7
+        ChargeType = 7,
+        DeliveryDiagnosis = 8
     }
     public enum RoomType
     {
