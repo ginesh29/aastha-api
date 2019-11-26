@@ -1,29 +1,36 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Migration.Models;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace Migration.Controllers
 {
     public class HomeController : Controller
     {
-        AASTHAEntities db = new AASTHAEntities();
-        public ActionResult Index()
+        public HomeController(IHostingEnvironment env)
+        {
+            _env = env;
+        }
+        AASTHAContext db = new AASTHAContext();
+        private IHostingEnvironment _env;
+        public IActionResult Index()
         {
             return View();
         }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
+        public IActionResult Privacy()
+        {
             return View();
         }
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         public void GenerateScript()
         {
@@ -38,216 +45,218 @@ namespace Migration.Controllers
             ChargeSql(out str8);
             AppointmentSql(out str9);
             var query = "USE AASTHA2" + Environment.NewLine + str1 + Environment.NewLine + str2 + Environment.NewLine + str3 + Environment.NewLine + str4 + Environment.NewLine + str5 + Environment.NewLine + str6 + Environment.NewLine + str7 + Environment.NewLine + str8 + Environment.NewLine + str9;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "10. FinalMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "10. FinalMigrationScript.sql"), query);
+            var script = @"sqlcmd -S.\SQLEXPRESS -i ""10. FinalMigrationScript.sql""" + Environment.NewLine + "@pause";
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "Execute Script.bat"), script);
         }
         public void PatientSql(out string str1)
         {
-            var patients = db.tbl_patient;
+            var patients = db.TblPatient;
 
             var query = "SET IDENTITY_INSERT [dbo].[Patients] ON " + Environment.NewLine;
             foreach (var item in patients)
             {
-                var sp = item.full_name.Split(' ');
-                var mobile = item.mobile > 0 ? item.mobile.ToString() : "null";
-                var age = item.age > 0 ? item.age : 0;
-                query += $@"INSERT INTO [dbo].[Patients] ([Id], [Firstname], [Middlename], [Lastname], [Address], [Mobile], [Age],[CreatedDate], [ModifiedDate]) VALUES ({item.patient_Id},'{sp[0]}','{sp[1]}','{sp[2]}','{item.address}',{mobile},{age},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                var sp = item.FullName.Split(' ');
+                var mobile = item.Mobile > 0 ? item.Mobile.ToString() : "null";
+                var age = item.Age > 0 ? item.Age : 0;
+                query += $@"INSERT INTO [dbo].[Patients] ([Id], [Firstname], [Middlename], [Lastname], [Address], [Mobile], [Age],[CreatedDate], [ModifiedDate]) VALUES ({item.PatientId},'{sp[0]}','{sp[1]}','{sp[2]}','{item.Address}',{mobile},{age},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Patients] OFF";
             str1 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "1. PatientMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "1. PatientMigrationScript.sql"), query);
         }
         public void OpdSql(out string str2)
         {
-            var opd = db.tbl_opd;
+            var opd = db.TblOpd;
 
             var query = "SET IDENTITY_INSERT [dbo].[Opds] ON " + Environment.NewLine;
             foreach (var item in opd)
             {
-                item.case_type = !string.IsNullOrEmpty(item.case_type) ? item.case_type : CaseType.New.ToString();
-                item.consult_charge = item.consult_charge > 0 ? item.consult_charge : 0;
-                item.usg_charge = item.usg_charge > 0 ? item.usg_charge : 0;
-                item.upt_charge = item.upt_charge > 0 ? item.upt_charge : 0;
-                item.inj_charge = item.inj_charge > 0 ? item.inj_charge : 0;
-                item.other_charge = item.other_charge > 0 ? item.other_charge : 0;
-                var casetype = (int)((CaseType)Enum.Parse(typeof(CaseType), item.case_type));
-                query += $@"INSERT INTO [dbo].[Opds] ([Id], [PatientId], [Date], [CaseType], [ConsultCharge], [UsgCharge], [UptCharge], [InjectionCharge], [OtherCharge], [CreatedDate], [ModifiedDate]) VALUES ({item.opd_Id},{item.patient_id},'{item.date}',{casetype},{item.consult_charge},{item.usg_charge},{item.upt_charge},{item.inj_charge},{item.other_charge},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.CaseType = !string.IsNullOrEmpty(item.CaseType) ? item.CaseType : CaseType.New.ToString();
+                item.ConsultCharge = item.ConsultCharge > 0 ? item.ConsultCharge : 0;
+                item.UsgCharge = item.UsgCharge > 0 ? item.UsgCharge : 0;
+                item.UptCharge = item.UptCharge > 0 ? item.UptCharge : 0;
+                item.InjCharge = item.InjCharge > 0 ? item.InjCharge : 0;
+                item.OtherCharge = item.OtherCharge > 0 ? item.OtherCharge : 0;
+                var casetype = (int)((CaseType)Enum.Parse(typeof(CaseType), item.CaseType));
+                query += $@"INSERT INTO [dbo].[Opds] ([Id], [PatientId], [Date], [CaseType], [ConsultCharge], [UsgCharge], [UptCharge], [InjectionCharge], [OtherCharge], [CreatedDate], [ModifiedDate]) VALUES ({item.OpdId},{item.PatientId},'{item.Date}',{casetype},{item.ConsultCharge},{item.UsgCharge},{item.UptCharge},{item.InjCharge},{item.OtherCharge},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Opds] OFF";
             str2 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "2. OpdMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "2. OpdMigrationScript.sql"), query);
         }
         public void LookupSql(out string str3)
         {
             //Delivery type
-            var deliveries = db.delivery_master;
+            var deliveries = db.DeliveryMaster;
             var query = "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in deliveries)
             {
-                item.delivery = item.delivery.Contains("'") ? item.delivery.Replace("'", "''") : item.delivery;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.delivery_typeId},'{item.delivery}',{(int)LookupType.DeliveryType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.Delivery = item.Delivery.Contains("'") ? item.Delivery.Replace("'", "''") : item.Delivery;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DeliveryTypeId},'{item.Delivery}',{(int)LookupType.DeliveryType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Operation Diagnosis + 100
-            var diagnoses = db.diagnosis_master;
+            var diagnoses = db.DiagnosisMaster;
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in diagnoses)
             {
-                item.diagnosis_type = item.diagnosis_type.Contains("'") ? item.diagnosis_type.Replace("'", "''") : item.diagnosis_type;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.digagnosis_typeId + 100},'{item.diagnosis_type}',{(int)LookupType.OperationDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.DiagnosisType = item.DiagnosisType.Contains("'") ? item.DiagnosisType.Replace("'", "''") : item.DiagnosisType;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DigagnosisTypeId + 100},'{item.DiagnosisType}',{(int)LookupType.OperationDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //General Diagnosis + 200
-            var generals = db.general_diagnosis;
+            var generals = db.GeneralDiagnosis;
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in generals)
             {
-                item.general_diagnosis_name = item.general_diagnosis_name.Contains("'") ? item.general_diagnosis_name.Replace("'", "''") : item.general_diagnosis_name;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.general_diagnosis_Id + 200},'{item.general_diagnosis_name}',{(int)LookupType.GeneralDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.GeneralDiagnosisName = item.GeneralDiagnosisName.Contains("'") ? item.GeneralDiagnosisName.Replace("'", "''") : item.GeneralDiagnosisName;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.GeneralDiagnosisId + 200},'{item.GeneralDiagnosisName}',{(int)LookupType.GeneralDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Operation Type +300
-            var operations = db.operation_master;
+            var operations = db.OperationMaster;
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in operations)
             {
-                item.operation_type = item.operation_type.Contains("'") ? item.operation_type.Replace("'", "''") : item.operation_type;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.operation_typeId + 300},'{item.operation_type}',{(int)LookupType.OperationType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.OperationType = item.OperationType.Contains("'") ? item.OperationType.Replace("'", "''") : item.OperationType;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.OperationTypeId + 300},'{item.OperationType}',{(int)LookupType.OperationType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
 
             //Medicine Type + 400
-            var medicine_Types = db.tbl_medicine_type;
+            var medicineTypes = db.TblMedicineType;
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
-            foreach (var item in medicine_Types)
+            foreach (var item in medicineTypes)
             {
-                item.medicine_type = item.medicine_type.Contains("'") ? item.medicine_type.Replace("'", "''") : item.medicine_type;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.medicine_Id + 400},'{item.medicine_type}',{(int)LookupType.MedicinType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.MedicineType = item.MedicineType.Contains("'") ? item.MedicineType.Replace("'", "''") : item.MedicineType;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.MedicineId + 400},'{item.MedicineType}',{(int)LookupType.MedicinType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Medicine + 500
-            var medicines = db.medicine_master.ToList();
+            var medicines = db.MedicineMaster;
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in medicines)
             {
-                item.medicine_name = item.medicine_name.Contains("'") ? item.medicine_name.Replace("'", "''") : item.medicine_name;
-                var parent = item.medicine_type > 0 ? (item.medicine_type + 400).ToString() : "null";
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [ParentId], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.medicine_typeId + 500},'{item.medicine_name}',{parent},{(int)LookupType.Medicine},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.MedicineName = item.MedicineName.Contains("'") ? item.MedicineName.Replace("'", "''") : item.MedicineName;
+                var parent = item.MedicineType > 0 ? (item.MedicineType + 400).ToString() : "null";
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [ParentId], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.MedicineTypeId + 500},'{item.MedicineName}',{parent},{(int)LookupType.Medicine},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Charges Master + 65000
-            var charges_Masters = db.IPD_Charges_Master;
+            var chargesMasters = db.IpdChargesMaster;
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
-            foreach (var item in charges_Masters)
+            foreach (var item in chargesMasters)
             {
-                item.Charge_Title = item.Charge_Title.Contains("'") ? item.Charge_Title.Replace("'", "''") : item.Charge_Title;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.Charge_Id + 65000},'{item.Charge_Title}',{(int)LookupType.ChargeType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.ChargeTitle = item.ChargeTitle.Contains("'") ? item.ChargeTitle.Replace("'", "''") : item.ChargeTitle;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.ChargeId + 65000},'{item.ChargeTitle}',{(int)LookupType.ChargeType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Delivery Diagnosis + 65050
-            var delivery_diagnosis = db.tbl_delivery.Where(m => !string.IsNullOrEmpty(m.diagnosis)).Select(m => m.diagnosis).Distinct().ToList();
+            var deliverydiagnosis = db.TblDelivery.Where(m => !string.IsNullOrEmpty(m.Diagnosis)).Select(m => m.Diagnosis).Distinct();
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             int cnt = 1;
-            foreach (var item in delivery_diagnosis)
+            foreach (var item in deliverydiagnosis)
             {
                 query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({65050 + cnt},'{item}',{(int)LookupType.DeliveryDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 cnt++;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
             str3 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "3. LookupMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "3. LookupMigrationScript.sql"), query);
         }
         public void IpdSql(out string str4)
         {
-            var appointments = db.tbl_Ipd.Where(m => m.patient_id > 0);
+            var appointments = db.TblIpd.Where(m => m.PatientId > 0);
             var query = "SET IDENTITY_INSERT [dbo].[Ipds] ON " + Environment.NewLine;
             foreach (var item in appointments)
             {
-                item.dept_name = !string.IsNullOrEmpty(item.dept_name) ? item.dept_name : IpdType.Delivery.ToString();
-                var type = (int)((IpdType)Enum.Parse(typeof(IpdType), item.dept_name));
+                item.DeptName = !string.IsNullOrEmpty(item.DeptName) ? item.DeptName : IpdType.Delivery.ToString();
+                var type = (int)((IpdType)Enum.Parse(typeof(IpdType), item.DeptName));
 
-                item.room_type = !string.IsNullOrEmpty(item.room_type) ? item.room_type.Replace("-", "") : RoomType.General.ToString();
-                var room_type = (int)((RoomType)Enum.Parse(typeof(RoomType), item.room_type));
-                item.conssesion = item.conssesion > 0 ? item.conssesion : 0;
-                query += $@"INSERT INTO [dbo].[Ipds] ([Id], [Type], [RoomType], [AddmissionDate], [DischargeDate], [Discount], [PatientId], [CreatedDate], [ModifiedDate]) VALUES ({item.ipd_Id},{type},{room_type},'{item.addmission_date}','{item.discharge_date}',{item.conssesion},{item.patient_id},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.RoomType = !string.IsNullOrEmpty(item.RoomType) ? item.RoomType.Replace("-", "") : RoomType.General.ToString();
+                var roomtype = (int)((RoomType)Enum.Parse(typeof(RoomType), item.RoomType));
+                item.Conssesion = item.Conssesion > 0 ? item.Conssesion : 0;
+                query += $@"INSERT INTO [dbo].[Ipds] ([Id], [Type], [RoomType], [AddmissionDate], [DischargeDate], [Discount], [PatientId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{type},{roomtype},'{item.AddmissionDate}','{item.DischargeDate}',{item.Conssesion},{item.PatientId},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Ipds] OFF" + Environment.NewLine + Environment.NewLine;
             str4 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "4. IpdMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "4. IpdMigrationScript.sql"), query);
         }
         public void DeliverySql(out string str5)
         {
-            var deliveries = db.tbl_delivery;
+            var deliveries = db.TblDelivery;
             var query = string.Empty;
             foreach (var item in deliveries)
             {
-                item.baby_gender = !string.IsNullOrEmpty(item.baby_gender) ? item.baby_gender : Gender.Boy.ToString();
-                item.baby_weight = item.baby_weight > 0 ? item.baby_weight : 0;
-                var gender = (int)((Gender)Enum.Parse(typeof(Gender), item.baby_gender));
-                query += $@"INSERT INTO [dbo].[Deliveries] ([IpdId], [Date], [Time], [Gender], [BabyWeight], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},'{item.delivery_date}','{item.delivery_time}',{gender},{item.baby_weight},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                item.BabyGender = !string.IsNullOrEmpty(item.BabyGender) ? item.BabyGender : Gender.Boy.ToString();
+                item.BabyWeight = item.BabyWeight > 0 ? item.BabyWeight : 0;
+                var gender = (int)((Gender)Enum.Parse(typeof(Gender), item.BabyGender));
+                query += $@"INSERT INTO [dbo].[Deliveries] ([IpdId], [Date], [Time], [Gender], [BabyWeight], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},'{item.DeliveryDate}','{item.DeliveryTime}',{gender},{item.BabyWeight},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             str5 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "5. DeliveryMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "5. DeliveryMigrationScript.sql"), query);
         }
         public void OperationSql(out string str6)
         {
-            var deliveries = db.tbl_operation;
+            var deliveries = db.TblOperation;
             var query = string.Empty;
             foreach (var item in deliveries)
             {
-                query += $@"INSERT INTO [dbo].[Operations] ([IpdId], [Date], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},'{item.operation_date}','{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Operations] ([IpdId], [Date], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},'{item.OperationDate}','{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             str6 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "6. OperationMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "6. OperationMigrationScript.sql"), query);
         }
         public void IpdDetailSql(out string str7)
         {
             //Delivery type
-            var deliveries = db.tbl_delivery;
+            var deliveries = db.TblDelivery;
             var query = string.Empty;
             foreach (var item in deliveries)
             {
-                var a = item.delivery_typeId.Split(',');
+                var a = item.DeliveryTypeId.Split(',');
                 foreach (var item1 in a)
                 {
-                    bool b = db.delivery_master.Select(m => m.delivery_typeId).Contains(Convert.ToInt32(item1));
+                    bool b = db.DeliveryMaster.Select(m => m.DeliveryTypeId).Contains(Convert.ToInt32(item1));
                     if (b)
-                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},{item1},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{item1},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
 
             //General Diagnosis
-            var generals = db.tbl_general.Where(m => m.Ipd_Id > 0);
+            var generals = db.TblGeneral.Where(m => m.IpdId > 0);
             query += Environment.NewLine + Environment.NewLine;
             foreach (var item in generals)
             {
-                var a = item.general_diagnosis.Split(',');
+                var a = item.GeneralDiagnosis.Split(',');
                 foreach (var item1 in a)
                 {
                     var lookup = Convert.ToInt32(item1) + 200;
-                    //bool b = db.general_diagnosis.Select(m => m.general_diagnosis_Id).Contains(Convert.ToInt32(item1));
+                    //bool b = db.generaldiagnosis.Select(m => m.generaldiagnosisId).Contains(Convert.ToInt32(item1));
                     //if (b)
-                    query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                    query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
             //Operation Type
-            var operations = db.tbl_operation;
+            var operations = db.TblOperation;
             query += Environment.NewLine + Environment.NewLine;
             foreach (var item in operations)
             {
-                var a = item.operation_type.Split(',');
+                var a = item.OperationType.Split(',');
                 foreach (var item1 in a)
                 {
                     var lookup = Convert.ToInt32(item1) + 300;
-                    bool b = db.operation_master.Select(m => m.operation_typeId).Contains(Convert.ToInt32(item1));
+                    bool b = db.OperationMaster.Select(m => m.OperationTypeId).Contains(Convert.ToInt32(item1));
                     if (b)
-                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
 
@@ -255,7 +264,7 @@ namespace Migration.Controllers
             query += Environment.NewLine + Environment.NewLine;
             foreach (var item in operations)
             {
-                var a = item.operation_type.Split(',');
+                var a = item.OperationType.Split(',');
                 foreach (var item1 in a)
                 {
                     int n;
@@ -265,63 +274,63 @@ namespace Migration.Controllers
                     if (isNumeric)
                     {
                         lookup = Convert.ToInt32(item1);
-                        b = db.diagnosis_master.Select(m => m.digagnosis_typeId).Contains(Convert.ToInt32(item1));
+                        b = db.DiagnosisMaster.Select(m => m.DigagnosisTypeId).Contains(Convert.ToInt32(item1));
                     }
                     else
                     {
-                        lookup = db.diagnosis_master.FirstOrDefault(m => m.diagnosis_type == item1).digagnosis_typeId;
-                        b = db.diagnosis_master.Select(m => m.digagnosis_typeId).Contains(Convert.ToInt32(lookup));
+                        lookup = db.DiagnosisMaster.FirstOrDefault(m => m.DiagnosisType == item1).DigagnosisTypeId;
+                        b = db.DiagnosisMaster.Select(m => m.DigagnosisTypeId).Contains(Convert.ToInt32(lookup));
                     }
                     lookup = lookup + 100;
                     if (b)
-                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
 
-            var delivery_diagnosis = db.tbl_delivery.Where(m => !string.IsNullOrEmpty(m.diagnosis)).Select(m => m.diagnosis).Distinct().ToList();
+            var deliverydiagnosis = db.TblDelivery.Where(m => !string.IsNullOrEmpty(m.Diagnosis)).Select(m => m.Diagnosis).Distinct();
             var list = new List<Model>();
             int cnt = 1;
-            foreach (var item in delivery_diagnosis)
+            foreach (var item in deliverydiagnosis)
             {
                 list.Add(new Model { Id = 65050 + cnt, Value = item });
                 cnt++;
             }
 
-            foreach (var item in deliveries.Where(m => !string.IsNullOrEmpty(m.diagnosis)))
+            foreach (var item in deliveries.Where(m => !string.IsNullOrEmpty(m.Diagnosis)))
             {
-                var a = item.diagnosis.Split(',');
+                var a = item.Diagnosis.Split(',');
                 foreach (var item1 in a)
                 {
                     var lookup = list.FirstOrDefault(m => m.Value == item1).Id;
-                    query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.Ipd_Id},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                    query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
             str7 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "7. IpdDetailMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "7. IpdDetailMigrationScript.sql"), query);
         }
         public void ChargeSql(out string str8)
         {
-            var opd = db.IPD_Charge_Details.Where(m => m.IPD_Id > 0);
+            var opd = db.IpdChargeDetails.Where(m => m.IpdId > 0);
             var query = string.Empty;
             foreach (var item in opd)
             {
-                query += $@"INSERT INTO [dbo].[Charges] ([Days], [Rate], [Amount], [LookupId], [IpdId], [CreatedDate], [ModifiedDate]) VALUES ({item.Days},{item.Rate},{item.Amount},{item.Charge_Id + 65000},{item.IPD_Id},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Charges] ([Days], [Rate], [Amount], [LookupId], [IpdId], [CreatedDate], [ModifiedDate]) VALUES ({item.Days},{item.Rate},{item.Amount},{item.ChargeId + 65000},{item.IpdId},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             str8 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "8. ChargeMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "8. ChargeMigrationScript.sql"), query);
         }
         public void AppointmentSql(out string str9)
         {
-            var appointments = db.tbl_appointment.Where(m => m.Patient_Id > 0);
+            var appointments = db.TblAppointment.Where(m => m.PatientId > 0);
             var query = string.Empty;
             foreach (var item in appointments)
             {
                 item.Type = !string.IsNullOrEmpty(item.Type) ? item.Type : AppointmentType.Date.ToString();
                 var type = (int)((AppointmentType)Enum.Parse(typeof(AppointmentType), item.Type));
-                query += $@"INSERT INTO [dbo].[Appointments] ([PatientId], [Date], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.Patient_Id},'{item.Appointment_Date}',{type},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Appointments] ([PatientId], [Date], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.PatientId},'{item.AppointmentDate}',{type},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             str9 = query;
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/SqlScripts"), "9. AppointmentMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "9. AppointmentMigrationScript.sql"), query);
         }
         public class Model
         {

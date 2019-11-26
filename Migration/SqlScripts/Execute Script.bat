@@ -1,1 +1,0 @@
-sqlcmd -S COMP-112-PC\SQLEXPRESS -i "10. FinalMigrationScript.sql"
