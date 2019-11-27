@@ -1,3 +1,0 @@
-2019-11-04 10:00:58.443 +05:30 [WRN] The LINQ expression 'where Invoke(__f_0, [x])' could not be translated and will be evaluated locally.
-2019-11-04 17:44:48.012 +05:30 [WRN] The LINQ expression 'orderby new {Firstname = [<generated>_1].Firstname, Middlename = [<generated>_1].Middlename, Lastname = [<generated>_1].Lastname} asc' could not be translated and will be evaluated locally.
-2019-11-04 18:55:39.777 +05:30 [WRN] Query: '(from Patient <generated>_1 in DbSet<Patient> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.

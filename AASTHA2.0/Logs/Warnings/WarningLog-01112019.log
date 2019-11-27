@@ -1,8 +1,0 @@
-2019-11-01 11:40:38.531 +05:30 [WRN] Enter valid credential
-2019-11-01 12:14:41.458 +05:30 [WRN] Enter valid credential
-2019-11-01 12:15:09.817 +05:30 [WRN] Enter valid credential
-2019-11-01 12:15:38.464 +05:30 [WRN] Enter valid credential
-2019-11-01 15:54:06.277 +05:30 [WRN] Query: '(from Patient m in DbSet<Patient> where !([m].IsDeleted) select [m]).Skip(__p_0).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-11-01 16:00:34.028 +05:30 [WRN] Query: '(from Patient m in DbSet<Patient> where !([m].IsDeleted) select [m]).Skip(__p_0).Take(__p_1)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-11-01 16:00:54.893 +05:30 [WRN] Query: '(from Patient m in DbSet<Patient> where !([m].IsDeleted) select [m]).Skip(__p_0).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-11-01 16:01:20.829 +05:30 [WRN] Query: '(from Patient m in DbSet<Patient> where !([m].IsDeleted) select [m]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
