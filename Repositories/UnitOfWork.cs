@@ -13,6 +13,7 @@ namespace AASTHA2.Repositories
         private IPatientRepository _patient;
         private IOpdRepository _opd;
         private IIpdRepository _ipd;
+        private ILookupRepository _lookup;
         public UnitOfWork(AASTHAContext AASTHAContext)
         {
             _AASTHAContext = AASTHAContext;
@@ -60,6 +61,17 @@ namespace AASTHA2.Repositories
                     _ipd = new IpdRepository(_AASTHAContext);
                 }
                 return _ipd;
+            }
+        }
+        public ILookupRepository Lookups
+        {
+            get
+            {
+                if (_lookup == null)
+                {
+                    _lookup = new LookupRepository(_AASTHAContext);
+                }
+                return _lookup;
             }
         }
         public void SaveChanges()

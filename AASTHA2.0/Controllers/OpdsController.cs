@@ -1,6 +1,8 @@
-﻿using AASTHA2.DTO;
+﻿using AASTHA2.Common;
+using AASTHA2.DTO;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
@@ -17,7 +19,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Opds
         [HttpGet]
-        public dynamic GetOpds(string filter, string sortOrder, int skip, int take, string fields)
+        public dynamic GetOpds(string filter, string sortOrder, int skip, int take = 15, string fields="")
         {
             int totalCount;
             var data = _OpdService.GetOpds(filter, sortOrder, true, out totalCount, skip, take, fields);
@@ -32,6 +34,7 @@ namespace AASTHA2.Controllers
         {
             var Opd = _OpdService.GetOpd(id, Search, false);
 
+            string stringValue = Enum.GetName(typeof(CaseType), Opd.CaseType);
             if (Opd == null)
             {
                 return NotFound();

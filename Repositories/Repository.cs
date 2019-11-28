@@ -53,8 +53,8 @@ namespace AASTHA2.Repositories
 
             if (take > 0)
                 query = query.Take(take);
-            else
-                query = query.Take(15);
+            //else
+            //    query = query.Take(15);
             return query;
         }
         public T FirstOrDefault(Expression<Func<T, bool>> filter, string search = "", bool ShowDeleted = false, params Expression<Func<T, object>>[] includePropery)
@@ -73,18 +73,17 @@ namespace AASTHA2.Repositories
                 foreach (var property in updatedProperties)
                     dbEntityEntry.Property(property).IsModified = true;
             else
-            {
+            {              
                 foreach (var property in dbEntityEntry.OriginalValues.Properties)
                 {
                     var orgVal = dbEntityEntry.Property(property.Name).OriginalValue;
-                    var currVal = dbEntityEntry.Property(property.Name).CurrentValue;
+                    var currVal = dbEntityEntry.Property(property.Name).CurrentValue;                 
 
-
-                    if (currVal != null && !property.IsPrimaryKey() && !orgVal.Equals(currVal))
+                    if (currVal != null && !property.IsPrimaryKey() && orgVal != currVal)
                     {
-                        int o;
-                        bool result = Int32.TryParse(Convert.ToString(currVal), out o);
-                        dbEntityEntry.Property(property.Name).CurrentValue = o == 0 ? orgVal : currVal;
+                        //int o;
+                        //bool result = Int32.TryParse(Convert.ToString(currVal), out o);
+                        //dbEntityEntry.Property(property.Name).CurrentValue = o == 0 ? orgVal : currVal;
                         dbEntityEntry.Property(property.Name).IsModified = true;
                     }
 

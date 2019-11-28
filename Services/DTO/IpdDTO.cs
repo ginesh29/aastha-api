@@ -8,12 +8,11 @@ namespace AASTHA2.DTO
     public class IpdDTO
     {
         public long Id { get; set; }
-        public string InvoiceNo
-        {
-            get { return $"IPD{this.Id.ToString().PadLeft(7, '0')}"; }
-        }
+        public string InvoiceNo => $"IPD{this.Id.ToString().PadLeft(7, '0')}";
         public IpdType Type { get; set; }
+        public string IpdType => Enum.GetName(typeof(IpdType), this.Type);
         public RoomType RoomType { get; set; }
+        public string RoomTypeName => Enum.GetName(typeof(RoomType), this.RoomType);
         public DateTime AddmissionDate { get; set; }
         public DateTime DischargeDate { get; set; }
         public decimal Discount { get; set; }

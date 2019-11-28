@@ -64,6 +64,7 @@ namespace AASTHA2
                         option.SerializerSettings.ContractResolver = new DefaultContractResolver();
                         option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                        option.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
                     });
             services.AddDbContext<AASTHAContext>(option =>
             {

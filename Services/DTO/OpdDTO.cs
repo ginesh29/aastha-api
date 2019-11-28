@@ -7,7 +7,9 @@ namespace AASTHA2.DTO
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
+        public string InvoiceNo=> $"OPD{this.Id.ToString().PadLeft(7, '0')}";
         public CaseType CaseType { get; set; }
+        public string CaseTypeName => Enum.GetName(typeof(CaseType), this.CaseType);
         public long ConsultCharge { get; set; }
         public long UsgCharge { get; set; }
         public long UptCharge { get; set; }

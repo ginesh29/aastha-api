@@ -52,6 +52,11 @@ namespace AASTHA2.Middleware
                         objResult = JsonConvert.DeserializeObject(readToEnd);
                         message = Messages.FETCH_SUCCESS;
                     }
+                    else if (status == (int)HttpStatusCode.Created)
+                    {
+                        objResult = JsonConvert.DeserializeObject(readToEnd);
+                        message = Messages.RECORD_ADD;
+                    }
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {
                         message = JsonConvert.DeserializeObject(readToEnd).ToString();

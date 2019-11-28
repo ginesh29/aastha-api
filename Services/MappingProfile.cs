@@ -14,6 +14,8 @@ namespace AASTHA2.Services
             CreateMap<OpdDTO, Opd>();
             CreateMap<Ipd, IpdDTO>();
             CreateMap<IpdDTO, Ipd>();
+            CreateMap<Lookup, LookupDTO>();
+            CreateMap<LookupDTO, Lookup>();
         }
     }
 }

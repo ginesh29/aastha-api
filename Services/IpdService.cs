@@ -41,6 +41,7 @@ namespace AASTHA2.Services
             var Ipd = _mapper.Map<Ipd>(IpdDto);
             _unitOfWork.Ipds.Create(Ipd);
             _unitOfWork.SaveChanges();
+            IpdDto.Id = Ipd.Id;
         }
         public void PutIpd(IpdDTO IpdDto)
         {
