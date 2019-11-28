@@ -34,7 +34,7 @@ namespace AASTHA2.Controllers
         [HttpGet("{id}")]
         public ActionResult<PatientDTO> GetPatient(long id, string Search)
         {
-            Search = "Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
+            //Search = "Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             var patient = _patientService.GetPatient(id, Search, false);
 
             if (patient == null)

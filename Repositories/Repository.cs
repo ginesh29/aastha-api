@@ -73,22 +73,7 @@ namespace AASTHA2.Repositories
                 foreach (var property in updatedProperties)
                     dbEntityEntry.Property(property).IsModified = true;
             else
-            {              
-                foreach (var property in dbEntityEntry.OriginalValues.Properties)
-                {
-                    var orgVal = dbEntityEntry.Property(property.Name).OriginalValue;
-                    var currVal = dbEntityEntry.Property(property.Name).CurrentValue;                 
-
-                    if (currVal != null && !property.IsPrimaryKey() && orgVal != currVal)
-                    {
-                        //int o;
-                        //bool result = Int32.TryParse(Convert.ToString(currVal), out o);
-                        //dbEntityEntry.Property(property.Name).CurrentValue = o == 0 ? orgVal : currVal;
-                        dbEntityEntry.Property(property.Name).IsModified = true;
-                    }
-
-                }
-            }
+                this._AASTHAContext.Set<T>().Update(entity);
         }
         public void Delete(T entity, bool? deletePhysical = false)
         {

@@ -43,14 +43,22 @@ namespace AASTHA2.Entities
                 {
                     ((BaseEntity)entry.Entity).CreatedDate = DateTime.UtcNow;
                     //((BaseEntity)entry.Entity).CreatedBy = UserId;
-                    ((BaseEntity)entry.Entity).IsDeleted = false;
                 }
                 else
                 {
-                    //bool isDeleted = Convert.ToBoolean(entry.Property("IsDeleted")?.CurrentValue);
-                    //entry.Property("CreatedDate").IsModified = false;
-                    //entry.Property("CreatedBy").IsModified = false;
-                    //entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
+                    foreach (var property in entry.OriginalValues.Properties)
+                    {
+                        var orgVal = entry.Property(property.Name).OriginalValue;
+                        var currVal = entry.Property(property.Name).CurrentValue;
+
+                        if (currVal == null && property.IsPrimaryKey() && orgVal == currVal)
+                        {
+                            //int o;
+                            //bool result = Int32.TryParse(Convert.ToString(currVal), out o);
+                            //dbEntityEntry.Property(property.Name).CurrentValue = o == 0 ? orgVal : currVal;
+                            entry.Property(property.Name).IsModified = false;
+                        }
+                    }
                 }
                 ((BaseEntity)entry.Entity).ModifiedDate = DateTime.UtcNow;
                 //((BaseEntity)entry.Entity).ModifiedBy = UserId;                
