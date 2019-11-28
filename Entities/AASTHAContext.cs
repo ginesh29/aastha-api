@@ -46,7 +46,11 @@ namespace AASTHA2.Entities
                 }
                 else
                 {
-                    foreach (var property in entry.OriginalValues.Properties)
+                    //bool isDeleted = Convert.ToBoolean(entry.Property("IsDeleted")?.CurrentValue);
+                    //entry.Property("CreatedDate").IsModified = false;
+                    //entry.Property("CreatedBy").IsModified = false;
+                    //entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
+                    foreach (var property in entry.CurrentValues.Properties)
                     {
                         var orgVal = entry.Property(property.Name).OriginalValue;
                         var currVal = entry.Property(property.Name).CurrentValue;

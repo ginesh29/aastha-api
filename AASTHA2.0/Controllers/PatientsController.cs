@@ -47,7 +47,7 @@ namespace AASTHA2.Controllers
         public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO)
         {
             _patientService.PostPatient(patientDTO);
-            return  CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patientDTO);
+            return CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patientDTO);
         }
         [HttpPut]
         public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO)
