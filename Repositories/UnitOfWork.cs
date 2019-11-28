@@ -11,6 +11,13 @@ namespace AASTHA2.Repositories
         private AASTHAContext _AASTHAContext;
         private IUserRepository _user;
         private IPatientRepository _patient;
+        private IOpdRepository _opd;
+        private IIpdRepository _ipd;
+        public UnitOfWork(AASTHAContext AASTHAContext)
+        {
+            _AASTHAContext = AASTHAContext;
+        }
+
         public IUserRepository Users
         {
             get
@@ -19,7 +26,6 @@ namespace AASTHA2.Repositories
                 {
                     _user = new UserRepository(_AASTHAContext);
                 }
-
                 return _user;
             }
         }
@@ -31,13 +37,30 @@ namespace AASTHA2.Repositories
                 {
                     _patient = new PatientRepository(_AASTHAContext);
                 }
-
                 return _patient;
             }
         }
-        public UnitOfWork(AASTHAContext AASTHAContext)
+        public IOpdRepository Opds
         {
-            _AASTHAContext = AASTHAContext;
+            get
+            {
+                if (_opd == null)
+                {
+                    _opd = new OpdRepository(_AASTHAContext);
+                }
+                return _opd;
+            }
+        }
+        public IIpdRepository Ipds
+        {
+            get
+            {
+                if (_ipd == null)
+                {
+                    _ipd = new IpdRepository(_AASTHAContext);
+                }
+                return _ipd;
+            }
         }
         public void SaveChanges()
         {

@@ -2,20 +2,15 @@
 using AASTHA2.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Services.DTO
+namespace AASTHA2.DTO
 {
     public class IpdDTO
     {
         public long Id { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string InvoiceNo
         {
-            get { return this.InvoiceNo; }
-            set { this.InvoiceNo = this.Id.ToString().PadLeft(7); }
-
+            get { return $"IPD{this.Id.ToString().PadLeft(7, '0')}"; }
         }
         public IpdType Type { get; set; }
         public RoomType RoomType { get; set; }
@@ -25,5 +20,6 @@ namespace Services.DTO
 
         public long PatientId { get; set; }
         public Patient Patient { get; set; }
+        public ICollection<Charge> Charges { get; set; }
     }
 }

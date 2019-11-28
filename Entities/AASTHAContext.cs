@@ -47,10 +47,10 @@ namespace AASTHA2.Entities
                 }
                 else
                 {
-                    bool isDeleted = (bool)entry.Property("IsDeleted").CurrentValue;
-                    entry.Property("CreatedDate").IsModified = false;
-                    entry.Property("CreatedBy").IsModified = false;
-                    entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
+                    //bool isDeleted = Convert.ToBoolean(entry.Property("IsDeleted")?.CurrentValue);
+                    //entry.Property("CreatedDate").IsModified = false;
+                    //entry.Property("CreatedBy").IsModified = false;
+                    //entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
                 }
                 ((BaseEntity)entry.Entity).ModifiedDate = DateTime.UtcNow;
                 //((BaseEntity)entry.Entity).ModifiedBy = UserId;                

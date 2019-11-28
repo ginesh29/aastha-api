@@ -20,9 +20,14 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false, string order = null, int skip = 0, int take =0)
+        public IQueryable<T> Find(Expression<Func<T, bool>> filter, string search, bool ShowDeleted, out int totalCount, string order = "", int skip = 0, int take = 15, params Expression<Func<T, object>>[] includePropery)
         {
             IQueryable<T> query = _dbSet;
+
+            if (includePropery != null)
+            {
+                query = includePropery.Aggregate(query, (current, include) => current.Include(include));
+            }
 
             if (filter != null)
                 query = query.Where(filter);
@@ -35,27 +40,27 @@ namespace AASTHA2.Repositories
                 query = query.Where(dynamicQuery, param);
             }
 
-            if ((bool)ShowDeleted)
+            if (Convert.ToBoolean(ShowDeleted))
                 query = query.Where("IsDeleted!=true");
 
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
+
+            totalCount = query.Count();
 
             if (skip > 0)
                 query = query.Skip(skip);
 
             if (take > 0)
                 query = query.Take(take);
-
+            else
+                query = query.Take(15);
             return query;
         }
-        public T FirstOrDefault(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false)
+        public T FirstOrDefault(Expression<Func<T, bool>> filter, string search = "", bool ShowDeleted = false, params Expression<Func<T, object>>[] includePropery)
         {
-            return Find(filter, search, ShowDeleted).FirstOrDefault();
-        }
-        public bool IsExist(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false)
-        {
-            return Find(filter, search, ShowDeleted).Any();
+            int totalCount;
+            return Find(filter, search, ShowDeleted, out totalCount).FirstOrDefault();
         }
         public void Create(T entity)
         {
@@ -96,10 +101,6 @@ namespace AASTHA2.Repositories
                 dbEntityEntry.Property("IsDeleted").CurrentValue = true;
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
-        }
-        public int Count(Expression<Func<T, bool>> filter = null, string search = "", bool? ShowDeleted = false)
-        {
-            return Find(filter, search, ShowDeleted).Count();
         }
         public IEnumerable<T> GetWithRawSql(string query, params object[] parameters)
         {

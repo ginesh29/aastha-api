@@ -14,5 +14,6 @@ namespace AASTHA2.DTO
         public long InjectionCharge { get; set; }
         public long OtherCharge { get; set; }
         public long PatientId { get; set; }
+        public PatientDTO Patient { get; set; }
     }
 }

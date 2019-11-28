@@ -24,9 +24,9 @@ namespace AASTHA2.Controllers
             //Sort = "Middlename desc,Firstname asc";
             //Skip = 0;
             //Take = 10;
-            var data = _patientService.GetPatients(filter, sortOrder, true, skip, take, fields);
-            var count = _patientService.PatientCount(filter);
-            var result = new { TotalCount = count, Data = data.ToDynamicList() };
+            int totalCount;
+            var data = _patientService.GetPatients(filter, sortOrder, true, out totalCount, skip, take, fields);
+            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
 

@@ -10,12 +10,16 @@
 
   <ItemGroup>
     <Compile Remove="AngularClient\**" />
+    <Compile Remove="Logs\**" />
     <Compile Remove="Scripts\**" />
     <Content Remove="AngularClient\**" />
+    <Content Remove="Logs\**" />
     <Content Remove="Scripts\**" />
     <EmbeddedResource Remove="AngularClient\**" />
+    <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="Scripts\**" />
     <None Remove="AngularClient\**" />
+    <None Remove="Logs\**" />
     <None Remove="Scripts\**" />
   </ItemGroup>
 

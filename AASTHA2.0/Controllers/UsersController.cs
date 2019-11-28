@@ -23,12 +23,12 @@ namespace AASTHA2.Controllers
         }
 
         // GET: api/Users
-        [HttpGet]
-        public IEnumerable<User> GetUsers()
-        {
-            //throw new Exception("Error");
-            return _unitOfWork.Users.Find();
-        }
+        //[HttpGet]
+        //public IEnumerable<User> GetUsers()
+        //{
+        //    //throw new Exception("Error");
+        //    return _unitOfWork.Users.Find();
+        //}
 
         // GET: api/Users/5
         //[HttpGet("{id}")]

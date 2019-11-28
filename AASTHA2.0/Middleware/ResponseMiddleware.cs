@@ -1,4 +1,5 @@
-﻿using AASTHA2.Models;
+﻿using AASTHA2.Common;
+using AASTHA2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -40,15 +41,16 @@ namespace AASTHA2.Middleware
                     string message = string.Empty;
                     object validation = null;
                     object error = null;
-                    if (readToEnd == "[]")
+                    if (readToEnd == "[]"|| status == (int)HttpStatusCode.NotFound)
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                        message = "No Data Found";
+                        message = Messages.NO_DATA_FOUND;
                         objResult = null;
                     }
                     else if (status == (int)HttpStatusCode.OK)
                     {
                         objResult = JsonConvert.DeserializeObject(readToEnd);
+                        message = Messages.FETCH_SUCCESS;
                     }
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {
@@ -57,13 +59,13 @@ namespace AASTHA2.Middleware
                     }
                     else if (status == (int)HttpStatusCode.BadRequest)
                     {
-                        message = "Validation Error";
+                        message = Messages.VALIDATION_ERROR;
                         validation = ((dynamic)JsonConvert.DeserializeObject(readToEnd)).errors;
                         Log.Warning(validation.ToString());
                     }
                     else if (status == (int)HttpStatusCode.InternalServerError)
                     {
-                        message = "Internal Server Error";
+                        message = Messages.INTERNAL_SERVER_ERROR;
                         error = ((dynamic)JsonConvert.DeserializeObject(readToEnd)).Errors;
                         Log.Error(error.ToString());
                     }
