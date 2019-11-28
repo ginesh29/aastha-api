@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using Serilog.Events;
@@ -56,13 +57,15 @@ namespace AASTHA2
             services.AddSingleton(mapper);
             services
                 .AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PatientValidator>())
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<OpdValidator>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
                     {
                         option.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                        //option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    });            
+                        option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                        option.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                    });
             services.AddDbContext<AASTHAContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("AASTHADB"));

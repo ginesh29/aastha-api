@@ -12,7 +12,13 @@ namespace AASTHA2.Services
             _IUnitOfWork = IUnitOfWork;
             _mapper = mapper;
             PatientService = new PatientService(_IUnitOfWork, _mapper);
+            OpdService = new OpdService(_IUnitOfWork, _mapper);
+            IpdService = new IpdService(_IUnitOfWork, _mapper);
+            LookupService = new LookupService(_IUnitOfWork, _mapper);
         }
         public PatientService PatientService;
+        public OpdService OpdService;
+        public IpdService IpdService;
+        public LookupService LookupService;
     }
 }

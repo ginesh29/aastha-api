@@ -17,16 +17,16 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients(string filter, string sortOrder, int skip, int take, string fields)
+        public dynamic GetPatients(string filter, string sortOrder, int skip, int take=15, string fields="")
         {
             //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //Fields = "Firstname,Middlename,Lastname";
             //Sort = "Middlename desc,Firstname asc";
             //Skip = 0;
             //Take = 10;
-            var data = _patientService.GetPatients(filter, sortOrder, true, skip, take, fields);
-            var count = _patientService.PatientCount(filter);
-            var result = new { TotalCount = count, Data = data.ToDynamicList() };
+            int totalCount;
+            var data = _patientService.GetPatients(filter, sortOrder, true, out totalCount, skip, take, fields);
+            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
 
@@ -47,7 +47,7 @@ namespace AASTHA2.Controllers
         public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO)
         {
             _patientService.PostPatient(patientDTO);
-            return CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patientDTO);
+            return  CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patientDTO);
         }
         [HttpPut]
         public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO)
@@ -58,7 +58,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _patientService.PutPatient(patientDTO);
-            return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
+            return CreatedAtAction("GetPatient", new { id = patient.Id }, patientDTO);
         }
         [HttpDelete("{id}")]
         public ActionResult<PatientDTO> DeletePatient(long id, bool removePhysical = false)

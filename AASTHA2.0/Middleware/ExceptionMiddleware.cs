@@ -1,4 +1,5 @@
-﻿using AASTHA2.Models;
+﻿using AASTHA2.Common;
+using AASTHA2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -29,7 +30,7 @@ namespace AASTHA2.Middleware
                 var statusCode = (int)HttpStatusCode.InternalServerError;
                 response.ContentType = "application/json";
                 response.StatusCode = statusCode;
-                var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, null, "Internal Server Error", null, new Error { ErrorMessage = ex.Message, ErrorDescription = ex.StackTrace });
+                var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, null, Messages.INTERNAL_SERVER_ERROR, null, new Error { ErrorMessage = ex.Message, ErrorDescription = ex.StackTrace });
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
             }
         }

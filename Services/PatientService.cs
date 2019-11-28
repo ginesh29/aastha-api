@@ -17,30 +17,28 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetPatients(string Search, string Sort, bool ShowDeleted, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetPatients(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, Search, ShowDeleted, Sort, Skip, Take);
+            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take);
             var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
             return mapped.DynamicSelect(Fields).ToDynamicList();
         }
-        public bool IsPatientExist(long Id, string Search = "", bool ShowDeleted = false)
-        {
-            return _unitOfWork.Patients.IsExist(m => m.Id == Id, Search, ShowDeleted);
-        }
+        //public bool IsPatientExist(long Id, string Search = "", bool ShowDeleted = false)
+        //{
+        //    return _unitOfWork.Patients.IsExist(m => m.Id == Id, Search, ShowDeleted);
+        //}
         public PatientDTO GetPatient(long Id, string Search = "", bool ShowDeleted = false)
         {
             var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
             return _mapper.Map<PatientDTO>(patient);
         }
-        public int PatientCount(string Search = "", bool ShowDeleted = false)
-        {
-            return _unitOfWork.Patients.Count(null, Search, ShowDeleted);
-        }
+
         public void PostPatient(PatientDTO patientDto)
         {
             var patient = _mapper.Map<Patient>(patientDto);
             _unitOfWork.Patients.Create(patient);
             _unitOfWork.SaveChanges();
+            patientDto.Id = patient.Id;
         }
         public void PutPatient(PatientDTO patientDto)
         {

@@ -10,6 +10,12 @@ namespace AASTHA2.Services
         {
             CreateMap<Patient, PatientDTO>();
             CreateMap<PatientDTO, Patient>();
+            CreateMap<Opd, OpdDTO>();
+            CreateMap<OpdDTO, Opd>();
+            CreateMap<Ipd, IpdDTO>();
+            CreateMap<IpdDTO, Ipd>();
+            CreateMap<Lookup, LookupDTO>();
+            CreateMap<LookupDTO, Lookup>();
         }
     }
 }
