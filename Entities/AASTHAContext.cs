@@ -47,10 +47,16 @@ namespace AASTHA2.Entities
                 }
                 else
                 {
-                    //bool isDeleted = Convert.ToBoolean(entry.Property("IsDeleted")?.CurrentValue);
-                    //entry.Property("CreatedDate").IsModified = false;
-                    //entry.Property("CreatedBy").IsModified = false;
-                    //entry.Property("IsDeleted").IsModified = isDeleted ? isDeleted : false;
+                    foreach (var item in entry.Properties)
+                    {
+                        var orgVal = item.OriginalValue;
+                        var curVal = item.CurrentValue;
+                        bool isNumeric = int.TryParse(curVal.ToString(), out int n);
+                        if (isNumeric && n > 0)
+                            item.IsModified = false;
+                        else if (curVal == null && curVal == orgVal)
+                            item.IsModified = false;
+                    }
                 }
                 ((BaseEntity)entry.Entity).ModifiedDate = DateTime.UtcNow;
                 //((BaseEntity)entry.Entity).ModifiedBy = UserId;                
