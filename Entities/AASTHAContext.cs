@@ -43,7 +43,6 @@ namespace AASTHA2.Entities
                 {
                     ((BaseEntity)entry.Entity).CreatedDate = DateTime.UtcNow;
                     //((BaseEntity)entry.Entity).CreatedBy = UserId;
-                    ((BaseEntity)entry.Entity).IsDeleted = false;
                 }
                 else
                 {
