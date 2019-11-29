@@ -31,6 +31,9 @@ namespace AASTHA2.Services
 
             CreateMap<Appointment, AppointmentDTO>();
             CreateMap<AppointmentDTO, Appointment>();
+
+            CreateMap<IpdLookup, IpdLookupDTO>();
+            CreateMap<IpdLookupDTO, IpdLookup>();
         }
     }
 }

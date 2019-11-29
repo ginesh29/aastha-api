@@ -127,10 +127,5 @@ namespace AASTHA2.Repositories
         {
             _AASTHAContext.SaveChanges();
         }
-
-        void IUnitOfWork.SaveChanges()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
