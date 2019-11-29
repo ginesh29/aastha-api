@@ -50,10 +50,10 @@ namespace AASTHA2.Entities
                     {
                         var orgVal = item.OriginalValue;
                         var curVal = item.CurrentValue;
-                        bool isNumeric = int.TryParse(curVal.ToString(), out int n);
-                        if (isNumeric && n > 0)
+                        bool isNumeric = int.TryParse(Convert.ToString(curVal), out int n);
+                        if (isNumeric || n <= 0)
                             item.IsModified = false;
-                        else if (curVal == null && curVal == orgVal)
+                        else if (curVal == null || curVal == orgVal)
                             item.IsModified = false;
                     }
                 }
