@@ -53,7 +53,8 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _IpdService.PutIpd(IpdDTO);
-            return CreatedAtAction("GetIpd", new { id = Ipd.Id }, Ipd);
+            Ipd = _IpdService.GetIpd(IpdDTO.Id);
+            return Ipd;
         }
         [HttpDelete("{id}")]
         public ActionResult<IpdDTO> DeleteIpd(long id, bool removePhysical = false)

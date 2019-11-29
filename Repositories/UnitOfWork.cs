@@ -14,6 +14,10 @@ namespace AASTHA2.Repositories
         private IOpdRepository _opd;
         private IIpdRepository _ipd;
         private ILookupRepository _lookup;
+        private IDeliveryRepository _delivery;
+        private IOperationRepository _operation;
+        private IChargeRepository _charge;
+        private IAppointmentRepository _appointment;
         public UnitOfWork(AASTHAContext AASTHAContext)
         {
             _AASTHAContext = AASTHAContext;
@@ -74,9 +78,59 @@ namespace AASTHA2.Repositories
                 return _lookup;
             }
         }
+        public IDeliveryRepository Deliveries
+        {
+            get
+            {
+                if (_delivery == null)
+                {
+                    _delivery = new DeliveryRepository(_AASTHAContext);
+                }
+                return _delivery;
+            }
+        }
+        public IOperationRepository Operations
+        {
+            get
+            {
+                if (_operation == null)
+                {
+                    _operation = new OperationRepository(_AASTHAContext);
+                }
+                return _operation;
+            }
+        }
+        public IChargeRepository Charges
+        {
+            get
+            {
+                if (_charge == null)
+                {
+                    _charge = new ChargeRepository(_AASTHAContext);
+                }
+                return _charge;
+            }
+        }
+        public IAppointmentRepository Appointments
+        {
+            get
+            {
+                if (_appointment == null)
+                {
+                    _appointment = new AppointmentRepository(_AASTHAContext);
+                }
+                return _appointment;
+            }
+        }
+
         public void SaveChanges()
         {
             _AASTHAContext.SaveChanges();
+        }
+
+        void IUnitOfWork.SaveChanges()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace AASTHA2.Entities
         public DbSet<Lookup> Lookups { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Operation> Operations { get; set; }
-        public DbSet<IpdDetail> IpdDetails { get; set; }
+        public DbSet<IpdLookup> IpdLookups { get; set; }
         public DbSet<Charge> Charges { get; set; }
 
         public override int SaveChanges()
@@ -51,9 +51,9 @@ namespace AASTHA2.Entities
                         var orgVal = item.OriginalValue;
                         var curVal = item.CurrentValue;
                         bool isNumeric = int.TryParse(Convert.ToString(curVal), out int n);
-                        if (isNumeric || n <= 0)
+                        if (isNumeric && n <= 0)
                             item.IsModified = false;
-                        else if (curVal == null || curVal == orgVal)
+                        else if (curVal == null)
                             item.IsModified = false;
                     }
                 }

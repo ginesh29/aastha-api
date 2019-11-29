@@ -53,7 +53,8 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _LookupService.PutLookup(LookupDTO);
-            return CreatedAtAction("GetLookup", new { id = Lookup.Id }, Lookup);
+            Lookup = _LookupService.GetLookup(LookupDTO.Id);
+            return Lookup;
         }
         [HttpDelete("{id}")]
         public ActionResult<LookupDTO> DeleteLookup(long id, bool removePhysical = false)

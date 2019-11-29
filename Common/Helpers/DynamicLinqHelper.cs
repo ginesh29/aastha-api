@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -35,6 +36,15 @@ namespace AASTHA2.Common.Helpers
                 i++;
             }
         }
+        public static IEnumerable<T> Map<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            foreach (var item in source)
+            {
+                action(item);
+                yield return item;
+            }
+        }
+        //charges.Select(i => { i.B = bValue; return i; })
         //public static IQueryable DynamicSearch(this IQueryable source, string search, object[] param)
         //{
         //    var data = source;

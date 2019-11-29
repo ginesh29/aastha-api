@@ -4,14 +4,16 @@ using AASTHA2.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AASTHA2.Entities.Migrations
 {
     [DbContext(typeof(AASTHAContext))]
-    partial class AASTHAContextModelSnapshot : ModelSnapshot
+    [Migration("20191129085154_manageDBField")]
+    partial class manageDBField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,7 +169,7 @@ namespace AASTHA2.Entities.Migrations
                     b.ToTable("Ipds");
                 });
 
-            modelBuilder.Entity("AASTHA2.Entities.IpdLookup", b =>
+            modelBuilder.Entity("AASTHA2.Entities.IpdDetail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,7 +199,7 @@ namespace AASTHA2.Entities.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("IpdLookups");
+                    b.ToTable("IpdDetails");
                 });
 
             modelBuilder.Entity("AASTHA2.Entities.Lookup", b =>
@@ -446,14 +448,14 @@ namespace AASTHA2.Entities.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("AASTHA2.Entities.IpdLookup", b =>
+            modelBuilder.Entity("AASTHA2.Entities.IpdDetail", b =>
                 {
                     b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
                         .WithMany()
                         .HasForeignKey("CreatedBy");
 
                     b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
-                        .WithMany("IpdLookups")
+                        .WithMany("IpdLookup")
                         .HasForeignKey("IpdId")
                         .OnDelete(DeleteBehavior.Cascade);
 

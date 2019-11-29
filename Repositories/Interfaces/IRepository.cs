@@ -11,8 +11,11 @@ namespace AASTHA2.Interfaces
         IQueryable<T> Find(Expression<Func<T, bool>> filter, string search, bool ShowDeleted, out int totalCount, string order, int skip = 0, int take = 15, params Expression<Func<T, object>>[] includePropery);
         T FirstOrDefault(Expression<Func<T, bool>> filter, string search = "", bool ShowDeleted = false, params Expression<Func<T, object>>[] includePropery);
         void Create(T entity);
+        void CreateRange(IEnumerable<T> entities);
         void Update(T entity, params Expression<Func<T, object>>[] updatedProperties);
-        void Delete(T entity, bool? deletePhysical = false);
+        void UpdateRange(IEnumerable<T> entities);
+        void Delete(T entity, bool deletePhysical = false);
+        void DeleteRange(IEnumerable<T> entities, bool deletePhysical = false);
         IEnumerable<T> GetWithRawSql(string query, params object[] parameters);
 
         //Async Method

@@ -9,11 +9,11 @@ namespace AASTHA2.Entities
     {        
         public DateTime Date { get; set; }
         public CaseType CaseType { get; set; }
-        public long ConsultCharge { get; set; }
-        public long UsgCharge { get; set; }
-        public long UptCharge { get; set; }
-        public long InjectionCharge { get; set; }
-        public long OtherCharge { get; set; }
+        public decimal ConsultCharge { get; set; }
+        public decimal UsgCharge { get; set; }
+        public decimal UptCharge { get; set; }
+        public decimal InjectionCharge { get; set; }
+        public decimal OtherCharge { get; set; }
 
         public long PatientId { get; set; }
         [ForeignKey("PatientId")]

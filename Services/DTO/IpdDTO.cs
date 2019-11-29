@@ -18,7 +18,9 @@ namespace AASTHA2.DTO
         public decimal Discount { get; set; }
 
         public long PatientId { get; set; }
-        public Patient Patient { get; set; }
-        public ICollection<Charge> Charges { get; set; }
-    }
+        public DeliveryDTO DeliveryDetail { get; set; }
+        public OperationDTO OperationDetail { get; set; }
+        public ICollection<ChargeDTO> Charges { get; set; }
+        public ICollection<IpdLookupDTO> IpdLookups { get; set; }
+    }    
 }

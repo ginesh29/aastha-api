@@ -8,8 +8,8 @@ namespace AASTHA2.Entities
     public class Charge : BaseEntity
     {   
         public decimal Days { get; set; }
-        public int Rate { get; set; }
-        public int Amount { get; set; }
+        public decimal Rate { get; set; }
+        public decimal Amount { get; set; }
        
         public long LookupId { get; set; }
         [ForeignKey("LookupId")]

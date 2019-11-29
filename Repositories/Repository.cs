@@ -66,6 +66,10 @@ namespace AASTHA2.Repositories
         {
             this._AASTHAContext.Set<T>().Add(entity);
         }
+        public void CreateRange(IEnumerable<T> entities)
+        {
+            this._AASTHAContext.Set<T>().AddRange(entities);
+        }
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
         {
             var dbEntityEntry = _AASTHAContext.Entry(entity);
@@ -75,13 +79,28 @@ namespace AASTHA2.Repositories
             else
                 this._AASTHAContext.Set<T>().Update(entity);
         }
-        public void Delete(T entity, bool? deletePhysical = false)
+        public void UpdateRange(IEnumerable<T> entities)
+        {
+            this._AASTHAContext.Set<T>().UpdateRange(entities);
+        }
+        public void Delete(T entity, bool deletePhysical = false)
         {
             if ((bool)deletePhysical)
                 this._AASTHAContext.Set<T>().Remove(entity);
             else
             {
                 var dbEntityEntry = _AASTHAContext.Entry(entity);
+                dbEntityEntry.Property("IsDeleted").CurrentValue = true;
+                dbEntityEntry.Property("IsDeleted").IsModified = true;
+            }
+        }
+        public void DeleteRange(IEnumerable<T> entities, bool deletePhysical = false)
+        {
+            if ((bool)deletePhysical)
+                this._AASTHAContext.Set<T>().RemoveRange(entities);
+            else
+            {
+                var dbEntityEntry = _AASTHAContext.Entry(entities);
                 dbEntityEntry.Property("IsDeleted").CurrentValue = true;
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }

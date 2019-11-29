@@ -59,7 +59,7 @@ namespace AASTHA2.Controllers
             }
             _patientService.PutPatient(patientDTO);
             patient = _patientService.GetPatient(patientDTO.Id);
-            return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
+            return patient;
         }
         [HttpDelete("{id}")]
         public ActionResult<PatientDTO> DeletePatient(long id, bool removePhysical = false)

@@ -18,5 +18,6 @@ namespace AASTHA2.Entities
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
         public ICollection<Charge> Charges { get; set; }
+        public ICollection<IpdLookup> IpdLookups { get; set; }
     }
 }

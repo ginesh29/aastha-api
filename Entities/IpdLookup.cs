@@ -4,10 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AASTHA2.Entities
 {
-    public class IpdDetail : BaseEntity
+    public class IpdLookup : BaseEntity
     {
-        public int IpdId { get; set; }
+        public long IpdId { get; set; }
         public long LookupId { get; set; }
+
+        [ForeignKey("IpdId")]
+        public Ipd Ipd { get; set; }
         [ForeignKey("LookupId")]
         public Lookup Lookup { get; set; }
     }

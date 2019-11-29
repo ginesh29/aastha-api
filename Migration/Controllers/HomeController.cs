@@ -42,7 +42,7 @@ namespace Migration.Controllers
             IpdSql(out str4);
             DeliverySql(out str5);
             OperationSql(out str6);
-            IpdDetailSql(out str7);
+            IpdLookupSql(out str7);
             ChargeSql(out str8);
             AppointmentSql(out str9);
             var query = "USE AASTHA2" + Environment.NewLine + str1 + Environment.NewLine + str2 + Environment.NewLine + str3 + Environment.NewLine + str4 + Environment.NewLine + str5 + Environment.NewLine + str6 + Environment.NewLine + str7 + Environment.NewLine + str8 + Environment.NewLine + str9;
@@ -216,7 +216,7 @@ namespace Migration.Controllers
             str6 = query;
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "6. OperationMigrationScript.sql"), query);
         }
-        public void IpdDetailSql(out string str7)
+        public void IpdLookupSql(out string str7)
         {
             //Delivery type
             var deliveries = db.TblDelivery;
@@ -228,7 +228,7 @@ namespace Migration.Controllers
                 {
                     bool b = db.DeliveryMaster.Select(m => m.DeliveryTypeId).Contains(Convert.ToInt32(item1));
                     if (b)
-                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{item1},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                        query += $@"INSERT INTO [dbo].[IpdLookups] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{item1},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
 
@@ -243,7 +243,7 @@ namespace Migration.Controllers
                     var lookup = Convert.ToInt32(item1) + 200;
                     //bool b = db.generaldiagnosis.Select(m => m.generaldiagnosisId).Contains(Convert.ToInt32(item1));
                     //if (b)
-                    query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                    query += $@"INSERT INTO [dbo].[IpdLookups] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
             //Operation Type
@@ -257,7 +257,7 @@ namespace Migration.Controllers
                     var lookup = Convert.ToInt32(item1) + 300;
                     bool b = db.OperationMaster.Select(m => m.OperationTypeId).Contains(Convert.ToInt32(item1));
                     if (b)
-                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                        query += $@"INSERT INTO [dbo].[IpdLookups] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
 
@@ -284,7 +284,7 @@ namespace Migration.Controllers
                     }
                     lookup = lookup + 100;
                     if (b)
-                        query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                        query += $@"INSERT INTO [dbo].[IpdLookups] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
 
@@ -303,11 +303,11 @@ namespace Migration.Controllers
                 foreach (var item1 in a)
                 {
                     var lookup = list.FirstOrDefault(m => m.Value == item1).Id;
-                    query += $@"INSERT INTO [dbo].[IpdDetails] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                    query += $@"INSERT INTO [dbo].[IpdLookups] ([IpdId], [LookupId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{lookup},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 }
             }
             str7 = query;
-            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "7. IpdDetailMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "7. IpdLookupMigrationScript.sql"), query);
         }
         public void ChargeSql(out string str8)
         {

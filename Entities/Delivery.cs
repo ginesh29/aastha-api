@@ -9,7 +9,7 @@ namespace AASTHA2.Entities
         public long IpdId { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        public Gender Gender { get; set; }
+        public Gender Gender { get; set; }       
         public decimal BabyWeight { get; set; }
 
         [ForeignKey("IpdId")]

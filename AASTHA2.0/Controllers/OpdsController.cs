@@ -56,7 +56,8 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _OpdService.PutOpd(OpdDTO);
-            return CreatedAtAction("GetOpd", new { id = Opd.Id }, Opd);
+            Opd = _OpdService.GetOpd(OpdDTO.Id);
+            return Opd;
         }
         [HttpDelete("{id}")]
         public ActionResult<OpdDTO> DeleteOpd(long id, bool removePhysical = false)

@@ -11,6 +11,10 @@ namespace AASTHA2.Interfaces
         IOpdRepository Opds { get; }
         IIpdRepository Ipds { get; }
         ILookupRepository Lookups { get; }
+        IOperationRepository Operations { get; }
+        IDeliveryRepository Deliveries { get; }
+        IChargeRepository Charges { get; }
+        IAppointmentRepository Appointments { get; }
         void SaveChanges();
     }
 }
