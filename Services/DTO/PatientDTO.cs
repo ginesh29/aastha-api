@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace AASTHA2.DTO
 {
@@ -10,6 +10,12 @@ namespace AASTHA2.DTO
         public string Lastname { get; set; }
         public string Address { get; set; }
         public string Mobile { get; set; }
-        public int Age { get; set; }
+        private int _age;
+        private DateTime _createdDate;
+        public int Age
+        {
+            get { return _age; }
+            set { _age = value; }
+        }
     }
 }
