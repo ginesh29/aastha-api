@@ -315,7 +315,7 @@ namespace Migration.Controllers
             var query = string.Empty;
             foreach (var item in opd)
             {
-                query += $@"INSERT INTO [dbo].[Charges] ([Days], [Rate], [Amount], [LookupId], [IpdId], [CreatedDate], [ModifiedDate]) VALUES ({item.Days},{item.Rate},{item.Amount},{item.ChargeId + 65000},{item.IpdId},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Charges] ([Days], [Rate], [LookupId], [IpdId], [CreatedDate], [ModifiedDate]) VALUES ({item.Days},{item.Rate},{item.ChargeId + 65000},{item.IpdId},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             str8 = query;
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "8. ChargeMigrationScript.sql"), query);

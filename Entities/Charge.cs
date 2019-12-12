@@ -9,7 +9,6 @@ namespace AASTHA2.Entities
     {   
         public decimal Days { get; set; }
         public decimal Rate { get; set; }
-        public decimal Amount { get; set; }
        
         public long LookupId { get; set; }
         [ForeignKey("LookupId")]

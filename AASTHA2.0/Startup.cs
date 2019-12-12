@@ -57,8 +57,12 @@ namespace AASTHA2
             services.AddSingleton(mapper);
             services
                 .AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<OpdValidator>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
+                .AddFluentValidation(fv =>
+                {
+                    //fv.ImplicitlyValidateChildProperties = true;
+                    fv.RegisterValidatorsFromAssemblyContaining<PatientValidator>();
+                }
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
                     {
                         option.SerializerSettings.ContractResolver = new DefaultContractResolver();

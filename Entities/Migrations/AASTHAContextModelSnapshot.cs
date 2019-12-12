@@ -58,8 +58,6 @@ namespace AASTHA2.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount");
-
                     b.Property<long?>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
