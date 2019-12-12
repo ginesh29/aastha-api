@@ -21,7 +21,7 @@ namespace AASTHA2.Controllers
         {
             //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //Fields = "Firstname,Middlename,Lastname";
-            //Sort = "Middlename desc,Firstname asc";
+            //sortOrder = "Middlename desc,Firstname asc";
             //Skip = 0;
             //Take = 10;
             int totalCount;

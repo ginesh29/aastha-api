@@ -45,6 +45,8 @@ namespace AASTHA2.Repositories
 
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
+            else
+                query = query.OrderBy("Id asc");
 
             totalCount = query.Count();
 

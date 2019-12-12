@@ -65,6 +65,7 @@ namespace AASTHA2
                         option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                         option.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                        option.SerializerSettings.DateFormatString = "dd MMM yyyy h:mm:ss tt";
                     });
             services.AddDbContext<AASTHAContext>(option =>
             {

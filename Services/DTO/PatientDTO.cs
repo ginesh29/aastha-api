@@ -11,10 +11,10 @@ namespace AASTHA2.DTO
         public string Address { get; set; }
         public string Mobile { get; set; }
         private int _age;
-        private DateTime _createdDate;
+        public DateTime CreatedDate { get; set; }
         public int Age
         {
-            get { return _age; }
+            get { return _age + (DateTime.UtcNow.Subtract(CreatedDate).Days / 365); }
             set { _age = value; }
         }
     }
