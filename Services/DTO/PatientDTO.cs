@@ -14,7 +14,7 @@ namespace AASTHA2.DTO
         public DateTime CreatedDate { get; set; }
         public int Age
         {
-            get { return _age + (DateTime.UtcNow.Subtract(CreatedDate).Days / 365); }
+            get { return _age + (DateTime.UtcNow.Year - CreatedDate.Year); }
             set { _age = value; }
         }
     }

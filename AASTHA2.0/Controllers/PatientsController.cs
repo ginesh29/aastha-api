@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients(string filter, string sortOrder, int skip, int take=15, string fields="")
+        public dynamic GetPatients(string filter, string sortOrder, int skip, int take = 15, string fields = "")
         {
             //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //Fields = "Firstname,Middlename,Lastname";
@@ -59,7 +59,7 @@ namespace AASTHA2.Controllers
             }
             _patientService.PutPatient(patientDTO);
             patient = _patientService.GetPatient(patientDTO.Id);
-            return patient;
+            return CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patient);
         }
         [HttpDelete("{id}")]
         public ActionResult<PatientDTO> DeletePatient(long id, bool removePhysical = false)
@@ -70,7 +70,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _patientService.RemovePatient(patient, null, false, removePhysical);
-            return patient;
+            return CreatedAtAction("GetPatient", new { id = id }, patient);
         }
     }
 }

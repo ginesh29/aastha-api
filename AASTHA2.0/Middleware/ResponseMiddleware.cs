@@ -43,7 +43,8 @@ namespace AASTHA2.Middleware
                     object error = null;
                     var isObjectOrList = JToken.Parse(readToEnd);
                     bool isObject = isObjectOrList is JArray;
-                    if (readToEnd == "[]"|| status == (int)HttpStatusCode.NotFound)
+                    var method = context.Request.Method;
+                    if (readToEnd == "[]" || status == (int)HttpStatusCode.NotFound)
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                         message = Messages.NO_DATA_FOUND;
@@ -57,7 +58,7 @@ namespace AASTHA2.Middleware
                     else if (status == (int)HttpStatusCode.Created)
                     {
                         objResult = JsonConvert.DeserializeObject(readToEnd);
-                        message = Messages.RECORD_ADD;
+                        message = method == "POST" ? Messages.RECORD_ADD : method == "PUT" ? Messages.RECORD_UPDATE : Messages.RECORD_DELETE;
                     }
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {

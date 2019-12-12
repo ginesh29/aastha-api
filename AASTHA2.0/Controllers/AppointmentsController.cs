@@ -59,7 +59,7 @@ namespace AASTHA2.Controllers
             }
             _AppointmentService.PutAppointment(AppointmentDTO);
             Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id);
-            return Appointment;
+            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.Id }, Appointment);
         }
         [HttpDelete("{id}")]
         public ActionResult<AppointmentDTO> DeleteAppointment(long id, bool removePhysical = false)
@@ -70,7 +70,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _AppointmentService.RemoveAppointment(Appointment, null, false, removePhysical);
-            return Appointment;
+            return CreatedAtAction("GetAppointment", new { id =id }, Appointment);
         }
     }
 }
