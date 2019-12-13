@@ -9,7 +9,7 @@ namespace AASTHA2.Common.Helpers
             DateTime date;
             return DateTime.TryParse(Convert.ToString(value), out date);
         }
-        public static bool IsValidTime(object value)
+        public static bool IsValidTime(TimeSpan value)
         {
             TimeSpan offset;
             return TimeSpan.TryParse(Convert.ToString(value), out offset);

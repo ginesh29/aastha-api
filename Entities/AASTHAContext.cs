@@ -53,7 +53,7 @@ namespace AASTHA2.Entities
                         var curVal = item.CurrentValue;
                         bool isNumeric = long.TryParse(Convert.ToString(curVal), out long n);
                         bool isDate =ValidateHelper.IsValidDate(curVal);
-                        bool isTime = ValidateHelper.IsValidTime(curVal);
+                        bool isTime = TimeSpan.TryParse(Convert.ToString(curVal), out TimeSpan time);
 
                         if (((isNumeric && n <= 0) || (!isTime && isDate && Convert.ToDateTime(curVal) == default(DateTime)) || curVal == null))
                             item.IsModified = false;
