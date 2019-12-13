@@ -30,7 +30,7 @@ namespace AASTHA2.Services
         //}
         public IpdDTO GetIpd(long Id, string Search = "", bool ShowDeleted = false)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
             return _mapper.Map<IpdDTO>(Ipd);
         }
         //public int IpdCount(string Search = "", bool ShowDeleted = false)
@@ -58,25 +58,25 @@ namespace AASTHA2.Services
         }
         public void PutIpd(IpdDTO IpdDto)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.Id);
-            Ipd = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.Id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
+            Ipd = _mapper.Map<Ipd>(Ipd);
+            //var Ipd1 = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
             _unitOfWork.Ipds.Update(Ipd);
-
             if (IpdDto.Type == IpdType.Delivery)
             {
-                var delivery = _mapper.Map<Delivery>(IpdDto.DeliveryDetail);
+                var delivery = _mapper.Map<Delivery>(Ipd.DeliveryDetail);
                 _unitOfWork.Deliveries.Update(delivery);
             }
             if (IpdDto.Type == IpdType.Operation)
             {
-                var operation = _mapper.Map<Operation>(IpdDto.OperationDetail);
+                var operation = _mapper.Map<Operation>(Ipd.OperationDetail);
                 _unitOfWork.Operations.Update(operation);
             }
             _unitOfWork.SaveChanges();
         }
         public void RemoveIpd(IpdDTO IpdDto, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.Id, Search, ShowDeleted);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.Id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
             _unitOfWork.Ipds.Delete(Ipd, RemovePhysical);
 
             if (IpdDto.Type == IpdType.Delivery)

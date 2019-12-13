@@ -23,10 +23,10 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
             return mapped.DynamicSelect(Fields).ToDynamicList();
         }
-        //public bool IsPatientExist(long Id, string Search = "", bool ShowDeleted = false)
-        //{
-        //    return _unitOfWork.Patients.IsExist(m => m.Id == Id, Search, ShowDeleted);
-        //}
+        public bool IsPatientExist(long Id, string Search = "", bool ShowDeleted = false)
+        {
+            return _unitOfWork.Patients.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted) != null;
+        }
         public PatientDTO GetPatient(long Id, string Search = "", bool ShowDeleted = false)
         {
             var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);

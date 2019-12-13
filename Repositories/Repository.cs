@@ -20,13 +20,13 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> filter, string search, bool ShowDeleted, out int totalCount, string order = "", int skip = 0, int take = 15, params Expression<Func<T, object>>[] includePropery)
+        public IQueryable<T> Find(Expression<Func<T, bool>> filter, string search, bool ShowDeleted, out int totalCount, string order = "", int skip = 0, int take = 15, params Expression<Func<T, object>>[] includeProperty)
         {
             IQueryable<T> query = _dbSet;
 
-            if (includePropery != null)
+            if (includeProperty != null)
             {
-                query = includePropery.Aggregate(query, (current, include) => current.Include(include));
+                query = includeProperty.Aggregate(query, (current, include) => current.Include(include));
             }
 
             if (filter != null)
@@ -59,10 +59,10 @@ namespace AASTHA2.Repositories
             //    query = query.Take(15);
             return query;
         }
-        public T FirstOrDefault(Expression<Func<T, bool>> filter, string search = "", bool ShowDeleted = false, params Expression<Func<T, object>>[] includePropery)
+        public T FirstOrDefault(Expression<Func<T, bool>> filter, string search = "", bool ShowDeleted = false, params Expression<Func<T, object>>[] includeProperty)
         {
             int totalCount;
-            return Find(filter, search, ShowDeleted, out totalCount).FirstOrDefault();
+            return Find(filter, search, ShowDeleted, out totalCount,"",0,0, includeProperty).FirstOrDefault();
         }
         public void Create(T entity)
         {

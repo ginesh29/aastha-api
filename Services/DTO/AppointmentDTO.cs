@@ -9,7 +9,8 @@ namespace AASTHA2.DTO
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
-        public AppointmentType Type { get; set; }
-        public long PatientId { get; set; }
+        public AppointmentType? Type { get; set; }
+        public string AppointmentType => this.Type.ToString();
+        public long? PatientId { get; set; }
     }
 }

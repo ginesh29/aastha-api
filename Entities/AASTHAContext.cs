@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AASTHA2.Common.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -50,10 +51,11 @@ namespace AASTHA2.Entities
                     {
                         var orgVal = item.OriginalValue;
                         var curVal = item.CurrentValue;
-                        bool isNumeric = int.TryParse(Convert.ToString(curVal), out int n);
-                        if (isNumeric && n <= 0)
-                            item.IsModified = false;
-                        else if (curVal == null)
+                        bool isNumeric = long.TryParse(Convert.ToString(curVal), out long n);
+                        bool isDate =ValidateHelper.IsValidDate(curVal);
+                        bool isTime = ValidateHelper.IsValidTime(curVal);
+
+                        if (((isNumeric && n <= 0) || (!isTime && isDate && Convert.ToDateTime(curVal) == default(DateTime)) || curVal == null))
                             item.IsModified = false;
                     }
                 }

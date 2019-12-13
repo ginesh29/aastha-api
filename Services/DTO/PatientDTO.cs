@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AASTHA2.Services;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AASTHA2.DTO
 {
@@ -10,12 +12,12 @@ namespace AASTHA2.DTO
         public string Lastname { get; set; }
         public string Address { get; set; }
         public string Mobile { get; set; }
-        private int _age;
+        public int Age { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int Age
+        public int UpdatedAge
         {
-            get { return _age + (DateTime.UtcNow.Year - CreatedDate.Year); }
-            set { _age = value; }
+            get { return Age + (CreatedDate != DateTime.MinValue ? (DateTime.UtcNow.Year - CreatedDate.Year) : 0); }
+            set { Age = value; }
         }
     }
 }

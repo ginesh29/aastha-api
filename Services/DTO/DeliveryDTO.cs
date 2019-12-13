@@ -1,6 +1,5 @@
 ﻿using AASTHA2.Common;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace AASTHA2.DTO
 {
@@ -9,8 +8,8 @@ namespace AASTHA2.DTO
         public long Id { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        public Gender Gender { get; set; }
-        public string GenderName => Enum.GetName(typeof(Gender), this.Gender);
+        public Gender? Gender { get; set; }
+        public string GenderName => this.Gender.ToString();
         public decimal BabyWeight { get; set; }
     }
 }

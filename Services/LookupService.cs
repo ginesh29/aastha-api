@@ -23,10 +23,10 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<LookupDTO>>(Lookup);
             return mapped.DynamicSelect(Fields).ToDynamicList();
         }
-        //public bool IsLookupExist(long Id, string Search = "", bool ShowDeleted = false)
-        //{
-        //    return _unitOfWork.Lookups.IsExist(m => m.Id == Id, Search, ShowDeleted);
-        //}
+        public bool IsLookupExist(long Id, string Search = "", bool ShowDeleted = false)
+        {
+            return _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted) != null;
+        }
         public LookupDTO GetLookup(long Id, string Search = "", bool ShowDeleted = false)
         {
             var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
