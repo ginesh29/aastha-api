@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients(string filter, string sortOrder, int skip, int take = 15, string fields = "")
+        public dynamic GetPatients(string filter, string sortOrder, int skip, int take, string fields = "")
         {
             //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //Fields = "Firstname,Middlename,Lastname";
