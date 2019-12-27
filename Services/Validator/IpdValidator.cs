@@ -21,12 +21,15 @@ namespace AASTHA2.Validator
             RuleFor(m => m.addmissionDate).NotEmpty().When(m => m.id < 1).WithMessage("Addmission Date is required");
             RuleFor(m => m.dischargeDate).NotEmpty().When(m => m.id < 1).WithMessage("Discharge Date is required");
             RuleFor(m => m.operationDetail).NotNull().When(m => m.id < 1 && m.type == IpdType.Operation)
-
                                            .SetValidator(new OperationDetailValidator()).When(m => m.id < 1 && m.type == IpdType.Operation);
+
             RuleFor(m => m.deliveryDetail).NotNull().When(m => m.id < 1 && m.type == IpdType.Delivery)
                                           .SetValidator(new DeliveryDetailValidator()).When(m => m.id < 1 && m.type == IpdType.Delivery);
+            RuleFor(m => m.ipdLookups).NotNull().When(m => m.id < 1);
+
             RuleForEach(m => m.charges).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Charges Details not valid")
                                        .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
+
             RuleForEach(m => m.ipdLookups).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Lookups Details not valid")
                                           .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
         }
