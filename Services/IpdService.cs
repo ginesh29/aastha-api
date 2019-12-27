@@ -41,33 +41,33 @@ namespace AASTHA2.Services
         {
             var Ipd = _mapper.Map<Ipd>(IpdDto);
             _unitOfWork.Ipds.Create(Ipd);
-            if (IpdDto.Type == IpdType.Delivery)
+            if (IpdDto.type == IpdType.Delivery)
             {
-                var delivery = _mapper.Map<Delivery>(IpdDto.DeliveryDetail);
+                var delivery = _mapper.Map<Delivery>(IpdDto.deliveryDetail);
                 delivery.IpdId = Ipd.Id;
                 _unitOfWork.Deliveries.Create(delivery);
             }
-            if (IpdDto.Type == IpdType.Operation)
+            if (IpdDto.type == IpdType.Operation)
             {
-                var operation = _mapper.Map<Operation>(IpdDto.OperationDetail);
+                var operation = _mapper.Map<Operation>(IpdDto.operationDetail);
                 operation.IpdId = Ipd.Id;
                 _unitOfWork.Operations.Create(operation);
             }
             _unitOfWork.SaveChanges();
-            IpdDto.Id = Ipd.Id;
+            IpdDto.id = Ipd.Id;
         }
         public void PutIpd(IpdDTO IpdDto)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.Id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
             Ipd = _mapper.Map<Ipd>(Ipd);
             //var Ipd1 = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
             _unitOfWork.Ipds.Update(Ipd);
-            if (IpdDto.Type == IpdType.Delivery)
+            if (IpdDto.type == IpdType.Delivery)
             {
                 var delivery = _mapper.Map<Delivery>(Ipd.DeliveryDetail);
                 _unitOfWork.Deliveries.Update(delivery);
             }
-            if (IpdDto.Type == IpdType.Operation)
+            if (IpdDto.type == IpdType.Operation)
             {
                 var operation = _mapper.Map<Operation>(Ipd.OperationDetail);
                 _unitOfWork.Operations.Update(operation);
@@ -76,17 +76,17 @@ namespace AASTHA2.Services
         }
         public void RemoveIpd(IpdDTO IpdDto, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.Id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
             _unitOfWork.Ipds.Delete(Ipd, RemovePhysical);
 
-            if (IpdDto.Type == IpdType.Delivery)
+            if (IpdDto.type == IpdType.Delivery)
             {
-                var delivery = _mapper.Map<Delivery>(IpdDto.DeliveryDetail);
+                var delivery = _mapper.Map<Delivery>(IpdDto.deliveryDetail);
                 _unitOfWork.Deliveries.Update(delivery);
             }
-            if (IpdDto.Type == IpdType.Operation)
+            if (IpdDto.type == IpdType.Operation)
             {
-                var operation = _mapper.Map<Operation>(IpdDto.OperationDetail);
+                var operation = _mapper.Map<Operation>(IpdDto.operationDetail);
                 _unitOfWork.Operations.Update(operation);
             }
             _unitOfWork.SaveChanges();

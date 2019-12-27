@@ -42,18 +42,18 @@ namespace AASTHA2.Services
             _unitOfWork.Operations.Create(Operation);
 
             _unitOfWork.SaveChanges();
-            OperationDto.Id = Operation.Id;
+            OperationDto.id = Operation.Id;
         }
         public void PutOperation(OperationDTO OperationDto)
         {
-            var Operation = _unitOfWork.Operations.FirstOrDefault(m => m.Id == OperationDto.Id);
+            var Operation = _unitOfWork.Operations.FirstOrDefault(m => m.Id == OperationDto.id);
             Operation = _mapper.Map<OperationDTO, Operation>(OperationDto, Operation);
             _unitOfWork.Operations.Update(Operation);
             _unitOfWork.SaveChanges();
         }
         public void RemoveOperation(OperationDTO Operation, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var OperationDto = _unitOfWork.Operations.FirstOrDefault(m => m.Id == Operation.Id, Search, ShowDeleted);
+            var OperationDto = _unitOfWork.Operations.FirstOrDefault(m => m.Id == Operation.id, Search, ShowDeleted);
             _unitOfWork.Operations.Delete(OperationDto, RemovePhysical);
             _unitOfWork.SaveChanges();
         }

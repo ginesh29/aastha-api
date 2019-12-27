@@ -7,7 +7,7 @@ namespace AASTHA2.DTO
 {
     public class IpdLookupDTO
     {
-        public long Id { get; set; }
-        public long LookupId { get; set; }
+        public long id { get; set; }
+        public long lookupId { get; set; }
     }    
 }

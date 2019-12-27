@@ -14,7 +14,7 @@ namespace AASTHA2.Common.Helpers
         {
             var data = source;
             if (!string.IsNullOrEmpty(select))
-                data = source.AsQueryable().Select($"new ({select})");
+                data = source.AsQueryable().Select($"new ({select})").Distinct();
             return data;
         }
         public static void DynamicSearchQuery(string Search, out string query, out object[] param)

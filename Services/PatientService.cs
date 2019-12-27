@@ -38,18 +38,18 @@ namespace AASTHA2.Services
             var patient = _mapper.Map<Patient>(patientDto);
             _unitOfWork.Patients.Create(patient);
             _unitOfWork.SaveChanges();
-            patientDto.Id = patient.Id;
+            patientDto.id = patient.Id;
         }
         public void PutPatient(PatientDTO patientDto)
         {
-            var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patientDto.Id);
+            var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patientDto.id);
             patient = _mapper.Map<PatientDTO, Patient>(patientDto, patient);
             _unitOfWork.Patients.Update(patient);
             _unitOfWork.SaveChanges();
         }
         public void RemovePatient(PatientDTO patient, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var patientDto = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patient.Id, Search, ShowDeleted);
+            var patientDto = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patient.id, Search, ShowDeleted);
             _unitOfWork.Patients.Delete(patientDto, RemovePhysical);
             _unitOfWork.SaveChanges();
         }

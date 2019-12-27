@@ -9,11 +9,11 @@ namespace AASTHA2.Validator
     {
         public OpdValidator(ServicesWrapper ServicesWrapper)
         {
-            RuleFor(m => m.CaseType).NotEmpty().When(m => m.Id < 1)
+            RuleFor(m => m.caseType).NotEmpty().When(m => m.id < 1).WithMessage("Case Type is required")
                                     .IsInEnum();
-            RuleFor(m => m.Date).NotEmpty().When(m => m.Id < 1);
-            RuleFor(m => m.PatientId).NotNull().When(m => m.Id < 1)
-                                       .SetValidator(new ValidPatientValidator(ServicesWrapper));
+            RuleFor(m => m.date).NotEmpty().When(m => m.id < 1).WithMessage("Opd Date is required");
+            RuleFor(m => m.patientId).NotNull().When(m => m.id < 1).WithMessage("Select Patient")
+                                       .SetValidator(new ValidPatientValidator(ServicesWrapper)).WithMessage("Select valid Patient");
         }        
     }
 }

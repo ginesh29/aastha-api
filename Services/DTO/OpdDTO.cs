@@ -5,16 +5,16 @@ namespace AASTHA2.DTO
 {
     public class OpdDTO
     {
-        public long Id { get; set; }
-        public DateTime Date { get; set; }
-        public string InvoiceNo => $"OPD{this.Id.ToString().PadLeft(7, '0')}";
-        public CaseType? CaseType { get; set; }
-        public string CaseTypeName => this.CaseType.ToString();
-        public decimal ConsultCharge { get; set; }
-        public decimal UsgCharge { get; set; }
-        public decimal UptCharge { get; set; }
-        public decimal InjectionCharge { get; set; }
-        public decimal OtherCharge { get; set; }
-        public long? PatientId { get; set; }
+        public long id { get; set; }
+        public DateTime date { get; set; }
+        public string invoiceNo => $"OPD{this.id.ToString().PadLeft(7, '0')}";
+        public CaseType? caseType { get; set; }
+        public string caseTypeName => this.caseType.ToString();
+        public decimal consultCharge { get; set; }
+        public decimal usgCharge { get; set; }
+        public decimal uptCharge { get; set; }
+        public decimal injectionCharge { get; set; }
+        public decimal otherCharge { get; set; }
+        public long? patientId { get; set; }
     }
 }

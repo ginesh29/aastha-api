@@ -41,18 +41,18 @@ namespace AASTHA2.Services
             var Opd = _mapper.Map<Opd>(OpdDto);
             _unitOfWork.Opds.Create(Opd);
             _unitOfWork.SaveChanges();
-            OpdDto.Id = Opd.Id;
+            OpdDto.id = Opd.Id;
         }
         public void PutOpd(OpdDTO OpdDto)
         {
-            var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == OpdDto.Id);
+            var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == OpdDto.id);
             Opd = _mapper.Map<OpdDTO, Opd>(OpdDto, Opd);
             _unitOfWork.Opds.Update(Opd);
             _unitOfWork.SaveChanges();
         }
         public void RemoveOpd(OpdDTO Opd, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var OpdDto = _unitOfWork.Opds.FirstOrDefault(m => m.Id == Opd.Id, Search, ShowDeleted);
+            var OpdDto = _unitOfWork.Opds.FirstOrDefault(m => m.Id == Opd.id, Search, ShowDeleted);
             _unitOfWork.Opds.Delete(OpdDto, RemovePhysical);
             _unitOfWork.SaveChanges();
         }

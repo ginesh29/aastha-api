@@ -38,18 +38,18 @@ namespace AASTHA2.Services
             _unitOfWork.Charges.Create(Charge);
 
             _unitOfWork.SaveChanges();
-            ChargeDto.Id = Charge.Id;
+            ChargeDto.id = Charge.Id;
         }
         public void PutCharge(ChargeDTO ChargeDto)
         {
-            var Charge = _unitOfWork.Charges.FirstOrDefault(m => m.Id == ChargeDto.Id);
+            var Charge = _unitOfWork.Charges.FirstOrDefault(m => m.Id == ChargeDto.id);
             Charge = _mapper.Map<ChargeDTO, Charge>(ChargeDto, Charge);
             _unitOfWork.Charges.Update(Charge);
             _unitOfWork.SaveChanges();
         }
         public void RemoveCharge(ChargeDTO Charge, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var ChargeDto = _unitOfWork.Charges.FirstOrDefault(m => m.Id == Charge.Id, Search, ShowDeleted);
+            var ChargeDto = _unitOfWork.Charges.FirstOrDefault(m => m.Id == Charge.id, Search, ShowDeleted);
             _unitOfWork.Charges.Delete(ChargeDto, RemovePhysical);
             _unitOfWork.SaveChanges();
         }

@@ -34,7 +34,7 @@ namespace AASTHA2.Controllers
         [HttpGet("{id}")]
         public ActionResult<PatientDTO> GetPatient(long id, string Search)
         {
-            //Search = "Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
+            //Search = "Address.Contains({D}) or Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             var patient = _patientService.GetPatient(id, Search, false);
 
             if (patient == null)
@@ -47,19 +47,19 @@ namespace AASTHA2.Controllers
         public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO)
         {
             _patientService.PostPatient(patientDTO);
-            return CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patientDTO);
+            return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patientDTO);
         }
         [HttpPut]
         public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO)
         {
-            var patient = _patientService.GetPatient(patientDTO.Id);
+            var patient = _patientService.GetPatient(patientDTO.id);
             if (patient == null)
             {
                 return NotFound();
             }
             _patientService.PutPatient(patientDTO);
-            patient = _patientService.GetPatient(patientDTO.Id);
-            return CreatedAtAction("GetPatient", new { id = patientDTO.Id }, patient);
+            patient = _patientService.GetPatient(patientDTO.id);
+            return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
         }
         [HttpDelete("{id}")]
         public ActionResult<PatientDTO> DeletePatient(long id, bool removePhysical = false)

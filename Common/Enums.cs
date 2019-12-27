@@ -22,11 +22,11 @@ namespace AASTHA2.Common
         GreaterThanOrEqual,
         [Display(Name = "<=", Description = "lte")]
         LessThanOrEqual,
-        [Display(Name = "", Description = "")]
+        [Display(Name = "Contains", Description = "contains")]
         Contains,
-        [Display(Name = "", Description = "")]
+        [Display(Name = "StartWith", Description = "startwith")]
         StartsWith,
-        [Display(Name = "", Description = "")]
+        [Display(Name = "EndWith", Description = "endwith")]
         EndsWith
     }
     public enum CaseType

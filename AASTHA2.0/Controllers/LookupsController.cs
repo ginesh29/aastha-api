@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Lookups
         [HttpGet]
-        public dynamic GetLookups(string filter, string sortOrder, int skip, int take = 15, string fields="")
+        public dynamic GetLookups(string filter, string sortOrder, int skip, int take=15, string fields="")
         {
             int totalCount;
             var data = _LookupService.GetLookups(filter, sortOrder, true, out totalCount, skip, take, fields);

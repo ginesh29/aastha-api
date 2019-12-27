@@ -42,18 +42,18 @@ namespace AASTHA2.Services
             _unitOfWork.Deliveries.Create(Delivery);
 
             _unitOfWork.SaveChanges();
-            DeliveryDto.Id = Delivery.Id;
+            DeliveryDto.id = Delivery.Id;
         }
         public void PutDelivery(DeliveryDTO DeliveryDto)
         {
-            var Delivery = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == DeliveryDto.Id);
+            var Delivery = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == DeliveryDto.id);
             Delivery = _mapper.Map<DeliveryDTO, Delivery>(DeliveryDto, Delivery);
             _unitOfWork.Deliveries.Update(Delivery);
             _unitOfWork.SaveChanges();
         }
         public void RemoveDelivery(DeliveryDTO Delivery, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
         {
-            var DeliveryDto = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == Delivery.Id, Search, ShowDeleted);
+            var DeliveryDto = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == Delivery.id, Search, ShowDeleted);
             _unitOfWork.Deliveries.Delete(DeliveryDto, RemovePhysical);
             _unitOfWork.SaveChanges();
         }

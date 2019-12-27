@@ -34,7 +34,7 @@ namespace AASTHA2.Controllers
         {
             var Opd = _OpdService.GetOpd(id, Search, false);
 
-            string stringValue = Enum.GetName(typeof(CaseType), Opd.CaseType);
+            string stringValue = Enum.GetName(typeof(CaseType), Opd.caseType);
             if (Opd == null)
             {
                 return NotFound();
@@ -45,19 +45,19 @@ namespace AASTHA2.Controllers
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO)
         {
             _OpdService.PostOpd(OpdDTO);
-            return CreatedAtAction("GetOpd", new { id = OpdDTO.Id }, OpdDTO);
+            return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, OpdDTO);
         }
         [HttpPut]
         public ActionResult<OpdDTO> PutOpd(OpdDTO OpdDTO)
         {
-            var Opd = _OpdService.GetOpd(OpdDTO.Id);
+            var Opd = _OpdService.GetOpd(OpdDTO.id);
             if (Opd == null)
             {
                 return NotFound();
             }
             _OpdService.PutOpd(OpdDTO);
-            Opd = _OpdService.GetOpd(OpdDTO.Id);
-            return CreatedAtAction("GetOpd", new { id = OpdDTO.Id }, Opd);
+            Opd = _OpdService.GetOpd(OpdDTO.id);
+            return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, Opd);
         }
         [HttpDelete("{id}")]
         public ActionResult<OpdDTO> DeleteOpd(long id, bool removePhysical = false)

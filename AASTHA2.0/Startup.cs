@@ -65,7 +65,6 @@ namespace AASTHA2
                 ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
                 AddJsonOptions(option =>
                     {
-                        option.SerializerSettings.ContractResolver = new DefaultContractResolver();
                         option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                         option.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;

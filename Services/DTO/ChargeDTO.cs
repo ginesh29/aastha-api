@@ -2,10 +2,10 @@
 {
     public class ChargeDTO
     {
-        public long Id { get; set; }
-        public decimal Days { get; set; }
-        public decimal Rate { get; set; }
-        public decimal Amount => (decimal)this.Days * (decimal)this.Rate;
-        public long LookupId { get; set; }
+        public long id { get; set; }
+        public decimal days { get; set; }
+        public decimal rate { get; set; }
+        public decimal Amount => (decimal)this.days * (decimal)this.rate;
+        public long lookupId { get; set; }
     }
 }

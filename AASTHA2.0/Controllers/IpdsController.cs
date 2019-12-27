@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Ipds
         [HttpGet]
-        public dynamic GetIpds(string filter, string sortOrder, int skip, int take = 15, string fields="")
+        public dynamic GetIpds(string filter, string sortOrder, int skip, int take, string fields="")
         {
             int totalCount;
             var data = _IpdService.GetIpds(filter, sortOrder, true, out totalCount, skip, take, fields);
@@ -42,19 +42,19 @@ namespace AASTHA2.Controllers
         public ActionResult<IpdDTO> PostIpd(IpdDTO IpdDTO)
         {
             _IpdService.PostIpd(IpdDTO);
-            return CreatedAtAction("GetIpd", new { id = IpdDTO.Id }, IpdDTO);
+            return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, IpdDTO);
         }
         [HttpPut]
         public ActionResult<IpdDTO> PutIpd(IpdDTO IpdDTO)
         {
-            var Ipd = _IpdService.GetIpd(IpdDTO.Id);
+            var Ipd = _IpdService.GetIpd(IpdDTO.id);
             if (Ipd == null)
             {
                 return NotFound();
             }
             _IpdService.PutIpd(IpdDTO);
-            Ipd = _IpdService.GetIpd(IpdDTO.Id);
-            return CreatedAtAction("GetIpd", new { id = IpdDTO.Id }, Ipd);
+            Ipd = _IpdService.GetIpd(IpdDTO.id);
+            return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, Ipd);
         }
         [HttpDelete("{id}")]
         public ActionResult<IpdDTO> DeleteIpd(long id, bool removePhysical = false)

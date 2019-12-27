@@ -9,13 +9,13 @@ namespace AASTHA2.Validator
     {       
         public PatientValidator()
         {
-            RuleFor(m => m.Firstname).NotEmpty().When(m => m.Id < 1);
-            RuleFor(m => m.Middlename).NotEmpty().When(m => m.Id < 1);
-            RuleFor(m => m.Lastname).NotEmpty().When(m => m.Id < 1);
-            RuleFor(m => m.Address).NotEmpty().When(m => m.Id < 1);
-            RuleFor(m => m.Age).NotNull().When(m => m.Id < 1)
-                               .GreaterThan(0).When(m => m.Id < 1).WithMessage("'Age' must be between 1 to 100.")
-                               .LessThanOrEqualTo(100).WithMessage("'Age' must be between 1 to 100.");
+            RuleFor(m => m.firstname).NotEmpty().When(m => m.id < 1).WithMessage("Firstname is required");
+            RuleFor(m => m.middlename).NotEmpty().When(m => m.id < 1).WithMessage("Middlename is required");
+            RuleFor(m => m.lastname).NotEmpty().When(m => m.id < 1).WithMessage("Lastname is required");
+            RuleFor(m => m.address).NotEmpty().When(m => m.id < 1).WithMessage("Address is required");
+            RuleFor(m => m.age).NotNull().When(m => m.id < 1).WithMessage("Age is required")
+                               .GreaterThan(0).When(m => m.id < 1).WithMessage("Age must be between 1 to 100.")
+                               .LessThanOrEqualTo(100).WithMessage("Age must be between 1 to 100.");
         }        
     }    
 }

@@ -6,7 +6,7 @@ namespace AASTHA2.DTO
 {
     public class OperationDTO
     {
-        public long Id { get; set; }
-        public DateTime Date { get; set; }
+        public long id { get; set; }
+        public DateTime date { get; set; }
     }
 }
