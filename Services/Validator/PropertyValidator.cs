@@ -29,7 +29,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            long lookupId = ((dynamic)context.PropertyValue).LookupId;
+            long lookupId = ((dynamic)context.PropertyValue).lookupId;
             if (!_lookupService.IsLookupExist(lookupId))
                 return false;
             return true;

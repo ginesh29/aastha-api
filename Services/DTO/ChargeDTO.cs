@@ -5,7 +5,7 @@
         public long id { get; set; }
         public decimal days { get; set; }
         public decimal rate { get; set; }
-        public decimal Amount => (decimal)this.days * (decimal)this.rate;
+        public decimal amount => (decimal)this.days * (decimal)this.rate;
         public long lookupId { get; set; }
     }
 }

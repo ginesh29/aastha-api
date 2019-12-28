@@ -25,7 +25,9 @@ namespace AASTHA2.Validator
 
             RuleFor(m => m.deliveryDetail).NotNull().When(m => m.id < 1 && m.type == IpdType.Delivery)
                                           .SetValidator(new DeliveryDetailValidator()).When(m => m.id < 1 && m.type == IpdType.Delivery);
+
             RuleFor(m => m.ipdLookups).NotNull().When(m => m.id < 1);
+            RuleFor(m => m.charges).NotNull().When(m => m.id < 1);
 
             RuleForEach(m => m.charges).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Charges Details not valid")
                                        .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
