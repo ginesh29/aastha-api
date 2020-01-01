@@ -18,10 +18,10 @@ namespace Migration.Controllers
         }
         AASTHAContext db = new AASTHAContext();
         private IHostingEnvironment _env;
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {
@@ -33,7 +33,7 @@ namespace Migration.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public void GenerateScript()
+        public IActionResult Index()
         {
             string str1, str2, str3, str4, str5, str6, str7, str8, str9;
             PatientSql(out str1);
@@ -49,6 +49,7 @@ namespace Migration.Controllers
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "10. FinalMigrationScript.sql"), query);
             var script = @"sqlcmd -S.\SQLEXPRESS -i ""10. FinalMigrationScript.sql""" + Environment.NewLine + "@pause";
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "Execute Script.bat"), script);
+            return View();
         }
         public void PatientSql(out string str1)
         {
@@ -89,7 +90,7 @@ namespace Migration.Controllers
         public void LookupSql(out string str3)
         {
             //Delivery type
-            var deliveries = db.DeliveryMaster;
+            var deliveries = db.DeliveryMaster.Where(m=>!string.IsNullOrEmpty(m.Delivery));
             var query = "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in deliveries)
             {
@@ -185,7 +186,7 @@ namespace Migration.Controllers
                 item.RoomType = !string.IsNullOrEmpty(item.RoomType) ? item.RoomType.Replace("-", "") : RoomType.General.ToString();
                 var roomtype = (int)((RoomType)Enum.Parse(typeof(RoomType), item.RoomType));
                 item.Conssesion = item.Conssesion > 0 ? item.Conssesion : 0;
-                query += $@"INSERT INTO [dbo].[Ipds] ([Id], [Type], [RoomType], [AddmissionDate], [DischargeDate], [Discount], [PatientId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{type},{roomtype},'{item.AddmissionDate}','{item.DischargeDate}',{item.Conssesion},{item.PatientId},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Ipds] ([Id],[UniqueId], [Type], [RoomType], [AddmissionDate], [DischargeDate], [Discount], [PatientId], [CreatedDate], [ModifiedDate]) VALUES ({item.IpdId},{item.IpdId},{type},{roomtype},'{item.AddmissionDate}','{item.DischargeDate}',{item.Conssesion},{item.PatientId},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Ipds] OFF" + Environment.NewLine + Environment.NewLine;
             str4 = query;

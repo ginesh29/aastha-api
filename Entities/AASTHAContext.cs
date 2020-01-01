@@ -20,6 +20,7 @@ namespace AASTHA2.Entities
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Ipd>().HasIndex(u => u.UniqueId).IsUnique();
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<User> Users { get; set; }

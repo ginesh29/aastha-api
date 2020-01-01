@@ -119,7 +119,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.HasIndex("IpdId");
+                    b.HasIndex("IpdId")
+                        .IsUnique();
 
                     b.HasIndex("ModifiedBy");
 
@@ -154,6 +155,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<long>("UniqueId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
@@ -161,6 +164,9 @@ namespace AASTHA2.Entities.Migrations
                     b.HasIndex("ModifiedBy");
 
                     b.HasIndex("PatientId");
+
+                    b.HasIndex("UniqueId")
+                        .IsUnique();
 
                     b.ToTable("Ipds");
                 });
@@ -298,7 +304,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.HasIndex("IpdId");
+                    b.HasIndex("IpdId")
+                        .IsUnique();
 
                     b.HasIndex("ModifiedBy");
 
@@ -419,8 +426,8 @@ namespace AASTHA2.Entities.Migrations
                         .HasForeignKey("CreatedBy");
 
                     b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
-                        .WithMany()
-                        .HasForeignKey("IpdId")
+                        .WithOne("DeliveryDetail")
+                        .HasForeignKey("AASTHA2.Entities.Delivery", "IpdId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AASTHA2.Entities.User", "ModifierInfo")
@@ -503,8 +510,8 @@ namespace AASTHA2.Entities.Migrations
                         .HasForeignKey("CreatedBy");
 
                     b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
-                        .WithMany()
-                        .HasForeignKey("IpdId")
+                        .WithOne("OperationDetail")
+                        .HasForeignKey("AASTHA2.Entities.Operation", "IpdId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AASTHA2.Entities.User", "ModifierInfo")

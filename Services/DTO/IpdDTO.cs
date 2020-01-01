@@ -7,7 +7,8 @@ namespace AASTHA2.DTO
     public class IpdDTO
     {
         public long id { get; set; }
-        public string invoiceNo => $"IPD{this.id.ToString().PadLeft(7, '0')}";
+        public long uniqueId { get; set; }
+        public string invoiceNo => $"IPD{this.uniqueId.ToString().PadLeft(7, '0')}";
         public IpdType? type { get; set; }
         public string ipdType => this.type.ToString();
         public RoomType? roomType { get; set; }

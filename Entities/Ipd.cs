@@ -7,7 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AASTHA2.Entities
 {
     public class Ipd : BaseEntity
-    {        
+    {
+        public long UniqueId { get; set; }
         public IpdType Type { get; set; }
         public RoomType RoomType { get; set; }
         public DateTime AddmissionDate { get; set; }

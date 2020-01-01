@@ -24,10 +24,10 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<IpdDTO>>(Ipd);
             return mapped.DynamicSelect(Fields).ToDynamicList();
         }
-        //public bool IsIpdExist(long Id, string Search = "", bool ShowDeleted = false)
-        //{
-        //    return _unitOfWork.Ipds.IsExist(m => m.Id == Id, Search, ShowDeleted);
-        //}
+        public bool IsIpdExist(long Id, string Search = "", bool ShowDeleted = false)
+        {
+            return _unitOfWork.Ipds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted) != null;
+        }
         public IpdDTO GetIpd(long Id, string Search = "", bool ShowDeleted = false)
         {
             var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);

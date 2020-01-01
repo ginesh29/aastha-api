@@ -25,7 +25,8 @@ namespace AASTHA2.Services
         }
         public bool IsPatientExist(long Id, string Search = "", bool ShowDeleted = false)
         {
-            return _unitOfWork.Patients.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted) != null;
+            Search = Id > 0 ? $"Id-eq-{Id}": Search;
+            return _unitOfWork.Patients.FirstOrDefault(null, Search, ShowDeleted) != null;
         }
         public PatientDTO GetPatient(long Id, string Search = "", bool ShowDeleted = false)
         {
