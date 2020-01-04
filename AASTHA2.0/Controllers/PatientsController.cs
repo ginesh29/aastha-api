@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients(string filter, string sortOrder, int skip, int take, string fields = "")
+        public dynamic GetPatients(string filter, string sort, int skip, int take, string fields = "")
         {
             //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //Fields = "Firstname,Middlename,Lastname";
@@ -25,7 +25,7 @@ namespace AASTHA2.Controllers
             //Skip = 0;
             //Take = 10;
             int totalCount;
-            var data = _patientService.GetPatients(filter, sortOrder, true, out totalCount, skip, take, fields);
+            var data = _patientService.GetPatients(filter, sort, true, out totalCount, skip, take, fields);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }

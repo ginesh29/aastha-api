@@ -47,7 +47,7 @@ namespace AASTHA2.Validator
         {
             string fullname = Convert.ToString(context.PropertyValue);
             var splitFullname = fullname.Split(" ");
-            string filter = "Firstname-eq-{"+splitFullname[0]+"} and Middlename-eq-{"+splitFullname[1]+"} and Lastname-eq-{"+splitFullname[2]+"}";
+            string filter = "Firstname-equals-{"+splitFullname[0]+ "} and Middlename-equals-{" + splitFullname[1]+ "} and Lastname-equals-{" + splitFullname[2]+"}";
             if (context.PropertyValue != null && _patientService.IsPatientExist(0, filter))
                 return false;
             return true;
