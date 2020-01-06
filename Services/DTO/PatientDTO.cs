@@ -12,6 +12,7 @@ namespace AASTHA2.DTO
         public string address { get; set; }
         public string mobile { get; set; }
         public int age { get; set; }
+        public bool? isDeleted { get; set; }
         public DateTime createdDate { get; set; }
         public int updatedAge
         {

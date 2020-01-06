@@ -26,7 +26,7 @@ namespace AASTHA2.Common.Helpers
                 query = query.Replace($"-{obj.GetDescription()}-", $"{ obj.GetDisplayName()} ");
             }
             var regex = new Regex("{(.*?)}");
-            var matches = regex.Matches(Search);
+            var matches = regex.Matches(Search).Distinct().ToList();
             int i = 0;
             param = new object[matches.Count];
             foreach (Match match in matches)

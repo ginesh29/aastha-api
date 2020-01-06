@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Migration.Controllers
 {
@@ -61,7 +62,7 @@ namespace Migration.Controllers
                 var sp = item.FullName.Split(' ');
                 var mobile = item.Mobile > 0 ? item.Mobile.ToString() : "null";
                 var age = item.Age > 0 ? item.Age : 0;
-                query += $@"INSERT INTO [dbo].[Patients] ([Id], [Firstname], [Middlename], [Lastname], [Address], [Mobile], [Age],[CreatedDate], [ModifiedDate]) VALUES ({item.PatientId},'{sp[0]}','{sp[1]}','{sp[2]}','{item.Address}',{mobile},{age},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Patients] ([Id], [Firstname], [Middlename], [Lastname], [Address], [Mobile], [Age],[CreatedDate], [ModifiedDate]) VALUES ({item.PatientId},'{toSentenceCase(sp[0])}','{toSentenceCase(sp[1])}','{toSentenceCase(sp[2])}','{item.Address}',{mobile},{age},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Patients] OFF";
             str1 = query;
@@ -95,7 +96,7 @@ namespace Migration.Controllers
             foreach (var item in deliveries)
             {
                 item.Delivery = item.Delivery.Contains("'") ? item.Delivery.Replace("'", "''") : item.Delivery;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DeliveryTypeId},'{item.Delivery}',{(int)LookupType.DeliveryType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DeliveryTypeId},'{toSentenceCase(item.Delivery)}',{(int)LookupType.DeliveryType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -105,7 +106,7 @@ namespace Migration.Controllers
             foreach (var item in diagnoses)
             {
                 item.DiagnosisType = item.DiagnosisType.Contains("'") ? item.DiagnosisType.Replace("'", "''") : item.DiagnosisType;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DigagnosisTypeId + 100},'{item.DiagnosisType}',{(int)LookupType.OperationDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DigagnosisTypeId + 100},'{toSentenceCase(item.DiagnosisType)}',{(int)LookupType.OperationDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -115,7 +116,7 @@ namespace Migration.Controllers
             foreach (var item in generals)
             {
                 item.GeneralDiagnosisName = item.GeneralDiagnosisName.Contains("'") ? item.GeneralDiagnosisName.Replace("'", "''") : item.GeneralDiagnosisName;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.GeneralDiagnosisId + 200},'{item.GeneralDiagnosisName}',{(int)LookupType.GeneralDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.GeneralDiagnosisId + 200},'{toSentenceCase(item.GeneralDiagnosisName)}',{(int)LookupType.GeneralDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -125,7 +126,7 @@ namespace Migration.Controllers
             foreach (var item in operations)
             {
                 item.OperationType = item.OperationType.Contains("'") ? item.OperationType.Replace("'", "''") : item.OperationType;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.OperationTypeId + 300},'{item.OperationType}',{(int)LookupType.OperationType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.OperationTypeId + 300},'{toSentenceCase(item.OperationType)}',{(int)LookupType.OperationType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -136,7 +137,7 @@ namespace Migration.Controllers
             foreach (var item in medicineTypes)
             {
                 item.MedicineType = item.MedicineType.Contains("'") ? item.MedicineType.Replace("'", "''") : item.MedicineType;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.MedicineId + 400},'{item.MedicineType}',{(int)LookupType.MedicinType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.MedicineId + 400},'{toSentenceCase(item.MedicineType)}',{(int)LookupType.MedicinType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -147,7 +148,7 @@ namespace Migration.Controllers
             {
                 item.MedicineName = item.MedicineName.Contains("'") ? item.MedicineName.Replace("'", "''") : item.MedicineName;
                 var parent = item.MedicineType > 0 ? (item.MedicineType + 400).ToString() : "null";
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [ParentId], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.MedicineTypeId + 500},'{item.MedicineName}',{parent},{(int)LookupType.Medicine},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [ParentId], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.MedicineTypeId + 500},'{toSentenceCase(item.MedicineName)}',{parent},{(int)LookupType.Medicine},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -157,7 +158,7 @@ namespace Migration.Controllers
             foreach (var item in chargesMasters)
             {
                 item.ChargeTitle = item.ChargeTitle.Contains("'") ? item.ChargeTitle.Replace("'", "''") : item.ChargeTitle;
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.ChargeId + 65000},'{item.ChargeTitle}',{(int)LookupType.ChargeType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.ChargeId + 65000},'{toSentenceCase(item.ChargeTitle)}',{(int)LookupType.ChargeType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
@@ -167,7 +168,7 @@ namespace Migration.Controllers
             int cnt = 1;
             foreach (var item in deliverydiagnosis)
             {
-                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({65050 + cnt},'{item}',{(int)LookupType.DeliveryDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({65050 + cnt},'{toSentenceCase(item)}',{(int)LookupType.DeliveryDiagnosis},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
                 cnt++;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
@@ -333,6 +334,11 @@ namespace Migration.Controllers
             }
             str9 = query;
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "9. AppointmentMigrationScript.sql"), query);
+        }
+        public string toSentenceCase(string str)
+        {
+            string sentence = str.ToLower();
+            return !string.IsNullOrEmpty(str)? $"{sentence[0].ToString().ToUpper()}{sentence.Substring(1)}":string.Empty;
         }
         public class Model
         {

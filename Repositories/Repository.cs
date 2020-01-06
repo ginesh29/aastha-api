@@ -40,8 +40,10 @@ namespace AASTHA2.Repositories
                 query = query.Where(dynamicQuery, param);
             }
 
-            if (Convert.ToBoolean(ShowDeleted))
-                query = query.Where("IsDeleted!=true");
+            if (ShowDeleted)
+                query = query.Where("IsDeleted=true");
+            else if (!ShowDeleted)
+                query = query.Where("IsDeleted=false or IsDeleted=null");
 
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);

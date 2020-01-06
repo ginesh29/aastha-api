@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients(string filter, string sort, int skip, int take, string fields = "")
+        public dynamic GetPatients(string filter, string sort, int skip, int take, bool isDeleted, string fields = "")
         {
             //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //Fields = "Firstname,Middlename,Lastname";
@@ -25,7 +25,7 @@ namespace AASTHA2.Controllers
             //Skip = 0;
             //Take = 10;
             int totalCount;
-            var data = _patientService.GetPatients(filter, sort, true, out totalCount, skip, take, fields);
+            var data = _patientService.GetPatients(filter, sort, isDeleted, out totalCount, skip, take, fields);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
@@ -62,14 +62,15 @@ namespace AASTHA2.Controllers
             return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
         }
         [HttpDelete("{id}")]
-        public ActionResult<PatientDTO> DeletePatient(long id, bool removePhysical = false)
+        public ActionResult<PatientDTO> DeletePatient(long id,bool isDeleted, bool removePhysical = false)
         {
-            var patient = _patientService.GetPatient(id);
+            var patient = _patientService.GetPatient(id,"",true);
+            patient.isDeleted = isDeleted;
             if (patient == null)
             {
                 return NotFound();
             }
-            _patientService.RemovePatient(patient, null, false, removePhysical);
+            _patientService.RemovePatient(patient, null,true, removePhysical);
             return CreatedAtAction("GetPatient", new { id = id }, patient);
         }
     }
