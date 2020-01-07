@@ -19,7 +19,7 @@ namespace AASTHA2.Services
         }
         public IEnumerable<dynamic> GetPatients(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take);
+            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take, m => m.Address);
             var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
             return mapped.DynamicSelect(Fields).ToDynamicList();
         }

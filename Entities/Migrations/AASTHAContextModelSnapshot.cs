@@ -318,7 +318,7 @@ namespace AASTHA2.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address");
+                    b.Property<long?>("AddressId");
 
                     b.Property<int>("Age");
 
@@ -341,6 +341,8 @@ namespace AASTHA2.Entities.Migrations
                     b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CreatedBy");
 
@@ -521,6 +523,10 @@ namespace AASTHA2.Entities.Migrations
 
             modelBuilder.Entity("AASTHA2.Entities.Patient", b =>
                 {
+                    b.HasOne("AASTHA2.Entities.Lookup", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
                     b.HasOne("AASTHA2.Entities.User", "CreaterInfo")
                         .WithMany()
                         .HasForeignKey("CreatedBy");

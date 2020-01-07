@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Migration.Controllers
 {
@@ -37,9 +36,9 @@ namespace Migration.Controllers
         public IActionResult Index()
         {
             string str1, str2, str3, str4, str5, str6, str7, str8, str9;
-            PatientSql(out str1);
-            OpdSql(out str2);
-            LookupSql(out str3);
+            LookupSql(out str1);
+            PatientSql(out str2);
+            OpdSql(out str3);
             IpdSql(out str4);
             DeliverySql(out str5);
             OperationSql(out str6);
@@ -52,47 +51,20 @@ namespace Migration.Controllers
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "Execute Script.bat"), script);
             return View();
         }
-        public void PatientSql(out string str1)
-        {
-            var patients = db.TblPatient;
-
-            var query = "SET IDENTITY_INSERT [dbo].[Patients] ON " + Environment.NewLine;
-            foreach (var item in patients)
-            {
-                var sp = item.FullName.Split(' ');
-                var mobile = item.Mobile > 0 ? item.Mobile.ToString() : "null";
-                var age = item.Age > 0 ? item.Age : 0;
-                query += $@"INSERT INTO [dbo].[Patients] ([Id], [Firstname], [Middlename], [Lastname], [Address], [Mobile], [Age],[CreatedDate], [ModifiedDate]) VALUES ({item.PatientId},'{toSentenceCase(sp[0])}','{toSentenceCase(sp[1])}','{toSentenceCase(sp[2])}','{item.Address}',{mobile},{age},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
-            }
-            query += "SET IDENTITY_INSERT [dbo].[Patients] OFF";
-            str1 = query;
-            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "1. PatientMigrationScript.sql"), query);
-        }
-        public void OpdSql(out string str2)
-        {
-            var opd = db.TblOpd;
-
-            var query = "SET IDENTITY_INSERT [dbo].[Opds] ON " + Environment.NewLine;
-            foreach (var item in opd)
-            {
-                item.CaseType = !string.IsNullOrEmpty(item.CaseType) ? item.CaseType : CaseType.New.ToString();
-                item.ConsultCharge = item.ConsultCharge > 0 ? item.ConsultCharge : 0;
-                item.UsgCharge = item.UsgCharge > 0 ? item.UsgCharge : 0;
-                item.UptCharge = item.UptCharge > 0 ? item.UptCharge : 0;
-                item.InjCharge = item.InjCharge > 0 ? item.InjCharge : 0;
-                item.OtherCharge = item.OtherCharge > 0 ? item.OtherCharge : 0;
-                var casetype = (int)((CaseType)Enum.Parse(typeof(CaseType), item.CaseType));
-                query += $@"INSERT INTO [dbo].[Opds] ([Id], [PatientId], [Date], [CaseType], [ConsultCharge], [UsgCharge], [UptCharge], [InjectionCharge], [OtherCharge], [CreatedDate], [ModifiedDate]) VALUES ({item.OpdId},{item.PatientId},'{item.Date}',{casetype},{item.ConsultCharge},{item.UsgCharge},{item.UptCharge},{item.InjCharge},{item.OtherCharge},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
-            }
-            query += "SET IDENTITY_INSERT [dbo].[Opds] OFF";
-            str2 = query;
-            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "2. OpdMigrationScript.sql"), query);
-        }
-        public void LookupSql(out string str3)
+        public void LookupSql(out string str1)
         {
             //Delivery type
-            var deliveries = db.DeliveryMaster.Where(m=>!string.IsNullOrEmpty(m.Delivery));
-            var query = "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
+            var query = "TRUNCATE TABLE [dbo].[Appointments] " + Environment.NewLine;
+            query += "TRUNCATE TABLE[dbo].[Charges] " + Environment.NewLine;
+            query += "TRUNCATE TABLE[dbo].[Deliveries] " + Environment.NewLine;
+            query += "TRUNCATE TABLE[dbo].[Operations] " + Environment.NewLine;
+            query += "TRUNCATE TABLE[dbo].[IpdLookups] " + Environment.NewLine;
+            query += "TRUNCATE TABLE[dbo].[Opds] " + Environment.NewLine;
+            query += "DELETE FROM[dbo].[Ipds] DBCC CHECKIDENT('dbo.Ipds', RESEED, 0) " + Environment.NewLine;
+            query += "DELETE FROM[dbo].[Patients] DBCC CHECKIDENT('dbo.Patients', RESEED, 0) " + Environment.NewLine;
+            query += "DELETE FROM[dbo].[Lookups] DBCC CHECKIDENT('dbo.Lookups', RESEED, 0) " + Environment.NewLine;           
+            var deliveries = db.DeliveryMaster.Where(m => !string.IsNullOrEmpty(m.Delivery));
+            query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in deliveries)
             {
                 item.Delivery = item.Delivery.Contains("'") ? item.Delivery.Replace("'", "''") : item.Delivery;
@@ -172,8 +144,64 @@ namespace Migration.Controllers
                 cnt++;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
+
+            //address + 65100
+            var address = db.TblPatient.Where(m => !string.IsNullOrEmpty(m.Address)).Select(m => toSentenceCase(m.Address)).Distinct();
+            query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
+            int cnt2 = 1;
+            foreach (var item in address)
+            {
+                query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({65100 + cnt2},'{toSentenceCase(item)}',{(int)LookupType.Address},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+                cnt2++;
+            }
+            query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
+            str1 = query;
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "1. LookupMigrationScript.sql"), query);
+        }
+        public void PatientSql(out string str2)
+        {
+            var patients = db.TblPatient;
+            var query = string.Empty;
+            query += "SET IDENTITY_INSERT [dbo].[Patients] ON " + Environment.NewLine;
+            foreach (var item in patients)
+            {
+                var sp = item.FullName.Split(' ');
+                var mobile = item.Mobile > 0 ? item.Mobile.ToString() : "null";
+                var age = item.Age > 0 ? item.Age : 0;
+                query += $@"INSERT INTO [dbo].[Patients] ([Id], [Firstname], [Middlename], [Lastname], [AddressId], [Mobile], [Age],[CreatedDate], [ModifiedDate]) VALUES ({item.PatientId},'{toSentenceCase(sp[0])}','{toSentenceCase(sp[1])}','{toSentenceCase(sp[2])}',{"null"},{mobile},{age},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+            }
+            query += "SET IDENTITY_INSERT [dbo].[Patients] OFF " + Environment.NewLine;
+
+            var address = db.TblPatient.Where(m => !string.IsNullOrEmpty(m.Address)).Select(m => toSentenceCase(m.Address)).Distinct();
+            int cnt = 1;
+            foreach (var item in address)
+            {
+                var ids = db.TblPatient.Where(m => m.Address.ToLower() == item.ToLower()).Select(m => m.PatientId);
+                query += $@"UPDATE [dbo].[Patients] SET AddressId = {65100 + cnt} WHERE Id in ({string.Join(",", ids)})" + Environment.NewLine;
+                cnt++;
+            }
+            str2 = query;
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "2. PatientMigrationScript.sql"), query);
+        }
+        public void OpdSql(out string str3)
+        {
+            var opd = db.TblOpd;
+
+            var query = "SET IDENTITY_INSERT [dbo].[Opds] ON " + Environment.NewLine;
+            foreach (var item in opd)
+            {
+                item.CaseType = !string.IsNullOrEmpty(item.CaseType) ? item.CaseType : CaseType.New.ToString();
+                item.ConsultCharge = item.ConsultCharge > 0 ? item.ConsultCharge : 0;
+                item.UsgCharge = item.UsgCharge > 0 ? item.UsgCharge : 0;
+                item.UptCharge = item.UptCharge > 0 ? item.UptCharge : 0;
+                item.InjCharge = item.InjCharge > 0 ? item.InjCharge : 0;
+                item.OtherCharge = item.OtherCharge > 0 ? item.OtherCharge : 0;
+                var casetype = (int)((CaseType)Enum.Parse(typeof(CaseType), item.CaseType));
+                query += $@"INSERT INTO [dbo].[Opds] ([Id], [PatientId], [Date], [CaseType], [ConsultCharge], [UsgCharge], [UptCharge], [InjectionCharge], [OtherCharge], [CreatedDate], [ModifiedDate]) VALUES ({item.OpdId},{item.PatientId},'{item.Date}',{casetype},{item.ConsultCharge},{item.UsgCharge},{item.UptCharge},{item.InjCharge},{item.OtherCharge},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+            }
+            query += "SET IDENTITY_INSERT [dbo].[Opds] OFF";
             str3 = query;
-            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "3. LookupMigrationScript.sql"), query);
+            System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "3. OpdMigrationScript.sql"), query);
         }
         public void IpdSql(out string str4)
         {
@@ -335,10 +363,11 @@ namespace Migration.Controllers
             str9 = query;
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "9. AppointmentMigrationScript.sql"), query);
         }
+
         public string toSentenceCase(string str)
         {
             string sentence = str.ToLower();
-            return !string.IsNullOrEmpty(str)? $"{sentence[0].ToString().ToUpper()}{sentence.Substring(1)}":string.Empty;
+            return !string.IsNullOrEmpty(str) ? $"{sentence[0].ToString().ToUpper()}{sentence.Substring(1)}" : string.Empty;
         }
         public class Model
         {

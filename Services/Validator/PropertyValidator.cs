@@ -48,7 +48,7 @@ namespace AASTHA2.Validator
         {
             string fullname = Convert.ToString(context.PropertyValue);
             var splitFullname = fullname.Split(" ");
-            string filter = $"Firstname-equals-{splitFullname[0]} and Middlename-equals-{ splitFullname[1]} and Lastname-equals-{splitFullname[2]}";
+            string filter = $"Firstname-equals-{{{splitFullname[0]}}} and Middlename-equals-{{{ splitFullname[1]}}} and Lastname-equals-{{{splitFullname[2]}}}";
             if (context.PropertyValue != null && _patientService.IsPatientExist(0, filter))
                 return false;
             return true;
@@ -63,7 +63,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            long lookupId = ((dynamic)context.PropertyValue).lookupId;
+            long lookupId = Convert.ToInt64(context.PropertyValue);
             if (!_lookupService.IsLookupExist(lookupId))
                 return false;
             return true;

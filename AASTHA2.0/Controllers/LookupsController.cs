@@ -20,7 +20,7 @@ namespace AASTHA2.Controllers
         public dynamic GetLookups(string filter, string sort, int skip, int take, string fields="")
         {
             int totalCount;
-            var data = _LookupService.GetLookups(filter, sort, true, out totalCount, skip, take, fields);
+            var data = _LookupService.GetLookups(filter, sort, false, out totalCount, skip, take, fields);
 
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
