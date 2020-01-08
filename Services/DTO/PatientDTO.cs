@@ -10,7 +10,6 @@ namespace AASTHA2.DTO
         public string lastname { get; set; }
         public string fullname => $@"{this.firstname } {this.middlename} {this.lastname}";
         public long addressId { get; set; }
-        public string addressName => Address.Name;
         public string mobile { get; set; }
         public int age { get; set; }
         public bool? isDeleted { get; set; }
