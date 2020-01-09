@@ -19,10 +19,10 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Opds
         [HttpGet]
-        public dynamic GetOpds(string filter, string sort, int skip, int take = 15, string fields="")
+        public dynamic GetOpds(string filter, string sort, int skip, int take = 15, string includeProperties = "", string fields = "")
         {
             int totalCount;
-            var data = _OpdService.GetOpds(filter, sort, true, out totalCount, skip, take, fields);
+            var data = _OpdService.GetOpds(filter, out totalCount, sort, skip, take, includeProperties, fields);
 
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
@@ -30,9 +30,9 @@ namespace AASTHA2.Controllers
 
         // GET: api/Opds/5
         [HttpGet("{id}")]
-        public ActionResult<OpdDTO> GetOpd(long id, string Search)
+        public ActionResult<OpdDTO> GetOpd(long id, string filter)
         {
-            var Opd = _OpdService.GetOpd(id, Search, false);
+            var Opd = _OpdService.GetOpd(id, filter);
 
             string stringValue = Enum.GetName(typeof(CaseType), Opd.caseType);
             if (Opd == null)
@@ -67,7 +67,7 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _OpdService.RemoveOpd(Opd, null, false, removePhysical);
+            _OpdService.RemoveOpd(Opd, "", removePhysical);
             return CreatedAtAction("GetOpd", new { id = id }, Opd);
         }
     }

@@ -17,24 +17,24 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetLookups(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetLookups(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take);
+            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<LookupDTO>>(Lookup);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        public bool IsLookupExist(long Id, string Search = "", bool ShowDeleted = false)
+        public bool IsLookupExist(long id, string filter = "", string includeProperties="")
         {
-            return _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted) != null;
+            return _unitOfWork.Lookups.FirstOrDefault( m=> m.Id == id, filter, includeProperties) != null;
         }
-        public LookupDTO GetLookup(long Id, string Search = "", bool ShowDeleted = false)
+        public LookupDTO GetLookup(long id, string filter = "", string includeProperties="")
         {
-            var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<LookupDTO>(Lookup);
         }
-        //public int LookupCount(string Search = "", bool ShowDeleted = false)
+        //public int LookupCount(string filter = "", bool ShowDeleted = false)
         //{
-        //    return _unitOfWork.Lookups.Count(null, Search, ShowDeleted);
+        //    return _unitOfWork.Lookups.Count(null, filter, ShowDeleted);
         //}
         public void PostLookup(LookupDTO LookupDto)
         {
@@ -50,10 +50,10 @@ namespace AASTHA2.Services
             _unitOfWork.Lookups.Update(Lookup);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveLookup(LookupDTO Lookup, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveLookup(LookupDTO Lookup, string filter = "", bool removePhysical = false)
         {
-            var LookupDto = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Lookup.Id, Search, ShowDeleted);
-            _unitOfWork.Lookups.Delete(LookupDto, RemovePhysical);
+            var LookupDto = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Lookup.Id, filter);
+            _unitOfWork.Lookups.Delete(LookupDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

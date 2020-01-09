@@ -17,20 +17,19 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetPatients(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetPatients(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take, m => m.Address);
+            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, out totalCount, filter, includeProperties,  sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        public bool IsPatientExist(long Id, string Search = "", bool ShowDeleted = false)
+        public bool IsPatientExist(string filter = "")
         {
-            Search = Id > 0 ? $"Id-equals-{Id}": Search;
-            return _unitOfWork.Patients.FirstOrDefault(null, Search, ShowDeleted) != null;
+            return _unitOfWork.Patients.FirstOrDefault(null, filter) != null;
         }
-        public PatientDTO GetPatient(long Id, string Search = "", bool ShowDeleted = false)
+        public PatientDTO GetPatient(long id, string filter = "", string includeProperties="")
         {
-            var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var patient = _unitOfWork.Patients.FirstOrDefault( m=> m.Id == id, filter, includeProperties);
             return _mapper.Map<PatientDTO>(patient);
         }
 
@@ -48,10 +47,10 @@ namespace AASTHA2.Services
             _unitOfWork.Patients.Update(patient);
             _unitOfWork.SaveChanges();
         }
-        public void RemovePatient(PatientDTO patient, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemovePatient(PatientDTO patient, string filter = "", bool removePhysical = false)
         {
-            var patientDto = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patient.id, Search, ShowDeleted);
-            _unitOfWork.Patients.Delete(patientDto, RemovePhysical);
+            var patientDto = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patient.id);
+            _unitOfWork.Patients.Delete(patientDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

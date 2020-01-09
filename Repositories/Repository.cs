@@ -20,60 +20,53 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> filter, string search, bool ShowDeleted, out int totalCount, string order = "", int skip = 0, int take = 0, params Expression<Func<T, object>>[] includeProperty)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, out int totalCount, string filter="", string includeProperties="", string order = "", int skip = 0, int take = 0)
         {
             IQueryable<T> query = _dbSet;
 
-            if (includeProperty != null)
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                query = includeProperty.Aggregate(query, (current, include) => current.Include(include));
+                foreach (var include in includeProperties.Split(","))
+                    query = query.Include(include);
             }
+            if (predicate != null)
+                query = query.Where(predicate);
 
-            if (filter != null)
-                query = query.Where(filter);
-
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(filter))
             {
                 string dynamicQuery;
                 object[] param;
-                DynamicLinqHelper.DynamicSearchQuery(search, out dynamicQuery, out param);
+                DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
                 query = query.Where(dynamicQuery, param);
             }
-
-            if (ShowDeleted)
-                query = query.Where("IsDeleted=true");
-            else if (!ShowDeleted)
-                query = query.Where("IsDeleted=false or IsDeleted=null");
 
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
             else
                 query = query.OrderBy("Id asc");
 
-            totalCount = query.Count();
+            totalCount = query!=null? query.Count():0;
 
             if (skip > 0)
                 query = query.Skip(skip);
 
             if (take > 0)
                 query = query.Take(take);
-            //else
-            //    query = query.Take(15);
             return query;
         }
-        public T FirstOrDefault(Expression<Func<T, bool>> filter, string search = "", bool ShowDeleted = false, params Expression<Func<T, object>>[] includeProperty)
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties="")
         {
             int totalCount;
-            return Find(filter, search, ShowDeleted, out totalCount,"",0,0, includeProperty).FirstOrDefault();
+            return Find(predicate, out totalCount, filter, includeProperties).FirstOrDefault();
         }
         public void Create(T entity)
         {
             this._AASTHAContext.Set<T>().Add(entity);
         }
-        public void CreateRange(IEnumerable<T> entities)
-        {
-            this._AASTHAContext.Set<T>().AddRange(entities);
-        }
+        //public void CreateRange(IEnumerable<T> entities)
+        //{
+        //    this._AASTHAContext.Set<T>().AddRange(entities);
+        //}
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
         {
             var dbEntityEntry = _AASTHAContext.Entry(entity);

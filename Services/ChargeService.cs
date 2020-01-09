@@ -17,26 +17,25 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetCharges(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetCharges(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take);
+            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<ChargeDTO>>(Charge);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsChargeExist(long Id, string Search = "", bool ShowDeleted = false)
+        //public bool IsChargeExist(long id, string filter = "", string includeProperties="")
         //{
-        //    return _unitOfWork.Charges.IsExist(m => m.Id == Id, Search, ShowDeleted);
+        //    return _unitOfWork.Charges.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public ChargeDTO GetCharge(long Id, string Search = "", bool ShowDeleted = false)
+        public ChargeDTO GetCharge(long id, string filter = "", string includeProperties = "")
         {
-            var Charge = _unitOfWork.Charges.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Charge = _unitOfWork.Charges.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<ChargeDTO>(Charge);
         }
         public void PostCharge(ChargeDTO ChargeDto)
         {
             var Charge = _mapper.Map<Charge>(ChargeDto);
             _unitOfWork.Charges.Create(Charge);
-
             _unitOfWork.SaveChanges();
             ChargeDto.id = Charge.Id;
         }
@@ -47,10 +46,10 @@ namespace AASTHA2.Services
             _unitOfWork.Charges.Update(Charge);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveCharge(ChargeDTO Charge, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveCharge(ChargeDTO Charge, string filter = "", bool removePhysical = false)
         {
-            var ChargeDto = _unitOfWork.Charges.FirstOrDefault(m => m.Id == Charge.id, Search, ShowDeleted);
-            _unitOfWork.Charges.Delete(ChargeDto, RemovePhysical);
+            var ChargeDto = _unitOfWork.Charges.FirstOrDefault(m => m.Id == Charge.id, filter);
+            _unitOfWork.Charges.Delete(ChargeDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

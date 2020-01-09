@@ -17,24 +17,24 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetOperations(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetOperations(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Operation> Operation = _unitOfWork.Operations.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take);
+            IEnumerable<Operation> Operation = _unitOfWork.Operations.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<OperationDTO>>(Operation);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsOperationExist(long Id, string Search = "", bool ShowDeleted = false)
+        //public bool IsOperationExist(long id, string filter = "", string includeProperties="")
         //{
-        //    return _unitOfWork.Operations.IsExist(m => m.Id == Id, Search, ShowDeleted);
+        //    return _unitOfWork.Operations.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public OperationDTO GetOperation(long Id, string Search = "", bool ShowDeleted = false)
+        public OperationDTO GetOperation(long id, string filter = "", string includeProperties="")
         {
-            var Operation = _unitOfWork.Operations.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Operation = _unitOfWork.Operations.FirstOrDefault( m=> m.Id == id, filter, includeProperties);
             return _mapper.Map<OperationDTO>(Operation);
         }
-        //public int OperationCount(string Search = "", bool ShowDeleted = false)
+        //public int OperationCount(string filter = "", bool ShowDeleted = false)
         //{
-        //    return _unitOfWork.Operations.Count(null, Search, ShowDeleted);
+        //    return _unitOfWork.Operations.Count(null, filter, ShowDeleted);
         //}
         public void PostOperation(OperationDTO OperationDto)
         {
@@ -51,10 +51,10 @@ namespace AASTHA2.Services
             _unitOfWork.Operations.Update(Operation);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveOperation(OperationDTO Operation, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveOperation(OperationDTO Operation, string filter = "",  bool removePhysical = false)
         {
-            var OperationDto = _unitOfWork.Operations.FirstOrDefault(m => m.Id == Operation.id, Search, ShowDeleted);
-            _unitOfWork.Operations.Delete(OperationDto, RemovePhysical);
+            var OperationDto = _unitOfWork.Operations.FirstOrDefault(m => m.Id == Operation.id, filter);
+            _unitOfWork.Operations.Delete(OperationDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

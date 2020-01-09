@@ -17,24 +17,24 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetOpds(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetOpds(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take, m => m.Patient);
+            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, out totalCount,filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<OpdDTO>>(Opd);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsOpdExist(long Id, string Search = "", bool ShowDeleted = false)
+        //public bool IsOpdExist(long id, string filter = "", string includeProperties="")
         //{
-        //    return _unitOfWork.Opds.IsExist(m => m.Id == Id, Search, ShowDeleted);
+        //    return _unitOfWork.Opds.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public OpdDTO GetOpd(long Id, string Search = "", bool ShowDeleted = false)
+        public OpdDTO GetOpd(long id, string filter = "", string includeProperties = "")
         {
-            var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<OpdDTO>(Opd);
         }
-        //public int OpdCount(string Search = "", bool ShowDeleted = false)
+        //public int OpdCount(string filter = "", bool ShowDeleted = false)
         //{
-        //    return _unitOfWork.Opds.Count(null, Search, ShowDeleted);
+        //    return _unitOfWork.Opds.Count(null, filter, ShowDeleted);
         //}
         public void PostOpd(OpdDTO OpdDto)
         {
@@ -50,10 +50,10 @@ namespace AASTHA2.Services
             _unitOfWork.Opds.Update(Opd);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveOpd(OpdDTO Opd, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveOpd(OpdDTO Opd, string filter = "", bool removePhysical = false)
         {
-            var OpdDto = _unitOfWork.Opds.FirstOrDefault(m => m.Id == Opd.id, Search, ShowDeleted);
-            _unitOfWork.Opds.Delete(OpdDto, RemovePhysical);
+            var OpdDto = _unitOfWork.Opds.FirstOrDefault(m => m.Id == Opd.id, filter);
+            _unitOfWork.Opds.Delete(OpdDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

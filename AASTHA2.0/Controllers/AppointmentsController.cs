@@ -17,25 +17,24 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Appointments
         [HttpGet]
-        public dynamic GetAppointments(string filter, string sort, int skip, int take=15, string fields="")
+        public dynamic GetAppointments(string filter, string sort, int skip, int take = 15, string includeProperties = "", string fields = "")
         {
-            //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            //Fields = "Firstname,Middlename,Lastname";
+            //filter = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
+            //fields = "Firstname,Middlename,Lastname";
             //Sort = "Middlename desc,Firstname asc";
             //Skip = 0;
             //Take = 10;
             int totalCount;
-            var data = _AppointmentService.GetAppointments(filter, sort, true, out totalCount, skip, take, fields);
+            var data = _AppointmentService.GetAppointments(filter, out totalCount, sort, skip, take, includeProperties, fields);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
 
         // GET: api/Appointments/5
         [HttpGet("{id}")]
-        public ActionResult<AppointmentDTO> GetAppointment(long id, string Search)
+        public ActionResult<AppointmentDTO> GetAppointment(long id, string filter)
         {
-            //Search = "Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            var Appointment = _AppointmentService.GetAppointment(id, Search, false);
+            var Appointment = _AppointmentService.GetAppointment(id, filter);
 
             if (Appointment == null)
             {
@@ -69,8 +68,8 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _AppointmentService.RemoveAppointment(Appointment, null, false, removePhysical);
-            return CreatedAtAction("GetAppointment", new { id =id }, Appointment);
+            _AppointmentService.RemoveAppointment(Appointment, "");
+            return CreatedAtAction("GetAppointment", new { id = id }, Appointment);
         }
     }
 }

@@ -17,25 +17,21 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetAppointments(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetAppointments(string filter, out int totalCount, string sort, int skip=0, int take=0, string includeProperties="", string fields = "")
         {
-            IEnumerable<Appointment> Appointment = _unitOfWork.Appointments.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take, m => m.Patient);
+            IEnumerable<Appointment> Appointment = _unitOfWork.Appointments.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<AppointmentDTO>>(Appointment);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsAppointmentExist(long Id, string Search = "", bool ShowDeleted = false)
+        //public bool IsAppointmentExist(long id, string filter = "", string includeProperties="")
         //{
-        //    return _unitOfWork.Appointments.IsExist(m => m.Id == Id, Search, ShowDeleted);
+        //    return _unitOfWork.Appointments.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public AppointmentDTO GetAppointment(long Id, string Search = "", bool ShowDeleted = false)
+        public AppointmentDTO GetAppointment(long id, string filter = "", string includeProperties="")
         {
-            var Appointment = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Appointment = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<AppointmentDTO>(Appointment);
         }
-        //public int AppointmentCount(string Search = "", bool ShowDeleted = false)
-        //{
-        //    return _unitOfWork.Appointments.Count(null, Search, ShowDeleted);
-        //}
         public void PostAppointment(AppointmentDTO AppointmentDto)
         {
             var Appointment = _mapper.Map<Appointment>(AppointmentDto);
@@ -50,10 +46,10 @@ namespace AASTHA2.Services
             _unitOfWork.Appointments.Update(Appointment);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveAppointment(AppointmentDTO Appointment, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveAppointment(AppointmentDTO Appointment, string filter = "", bool removePhysical = false)
         {
-            var AppointmentDto = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == Appointment.Id, Search, ShowDeleted);
-            _unitOfWork.Appointments.Delete(AppointmentDto, RemovePhysical);
+            var AppointmentDto = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == Appointment.Id, filter);
+            _unitOfWork.Appointments.Delete(AppointmentDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

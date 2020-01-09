@@ -17,10 +17,10 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Lookups
         [HttpGet]
-        public dynamic GetLookups(string filter, string sort, int skip, int take, string fields="")
+        public dynamic GetLookups(string filter, string sort, int skip, int take, string includeProperties = "", string fields = "")
         {
             int totalCount;
-            var data = _LookupService.GetLookups(filter, sort, false, out totalCount, skip, take, fields);
+            var data = _LookupService.GetLookups(filter, out totalCount, sort,  skip, take, includeProperties,fields);
 
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
@@ -28,9 +28,9 @@ namespace AASTHA2.Controllers
 
         // GET: api/Lookups/5
         [HttpGet("{id}")]
-        public ActionResult<LookupDTO> GetLookup(long id, string Search)
+        public ActionResult<LookupDTO> GetLookup(long id, string filter)
         {
-            var Lookup = _LookupService.GetLookup(id, Search, false);
+            var Lookup = _LookupService.GetLookup(id, filter);
 
             if (Lookup == null)
             {
@@ -64,7 +64,7 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _LookupService.RemoveLookup(Lookup, null, false, removePhysical);
+            _LookupService.RemoveLookup(Lookup,"", removePhysical);
             return CreatedAtAction("GetLookup", new { id =id }, Lookup);
         }
     }

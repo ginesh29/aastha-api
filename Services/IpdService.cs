@@ -18,25 +18,21 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetIpds(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetIpds(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take, m => m.Charges);
+            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<IpdDTO>>(Ipd);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        public bool IsIpdExist(long Id, string Search = "", bool ShowDeleted = false)
+        public bool IsIpdExist(long id, string filter = "", string includeProperties = "")
         {
-            return _unitOfWork.Ipds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted) != null;
+            return _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties) != null;
         }
-        public IpdDTO GetIpd(long Id, string Search = "", bool ShowDeleted = false)
+        public IpdDTO GetIpd(long id, string filter = "", string includeProperties = "")
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<IpdDTO>(Ipd);
         }
-        //public int IpdCount(string Search = "", bool ShowDeleted = false)
-        //{
-        //    return _unitOfWork.Ipds.Count(null, Search, ShowDeleted);
-        //}
         public void PostIpd(IpdDTO IpdDto)
         {
             var Ipd = _mapper.Map<Ipd>(IpdDto);
@@ -58,7 +54,7 @@ namespace AASTHA2.Services
         }
         public void PutIpd(IpdDTO IpdDto)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "");
             Ipd = _mapper.Map<Ipd>(Ipd);
             //var Ipd1 = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
             _unitOfWork.Ipds.Update(Ipd);
@@ -74,10 +70,10 @@ namespace AASTHA2.Services
             }
             _unitOfWork.SaveChanges();
         }
-        public void RemoveIpd(IpdDTO IpdDto, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveIpd(IpdDTO IpdDto, string filter = "", bool removePhysical = false)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "", false, c => c.Charges, i => i.IpdLookups, d => d.DeliveryDetail, o => o.OperationDetail);
-            _unitOfWork.Ipds.Delete(Ipd, RemovePhysical);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id,filter);
+            _unitOfWork.Ipds.Delete(Ipd, removePhysical);
 
             if (IpdDto.type == IpdType.Delivery)
             {

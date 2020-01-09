@@ -17,25 +17,24 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients(string filter, string sort, int skip, int take, bool isDeleted, string fields = "")
+        public dynamic GetPatients(string filter, string sort, int skip, int take, bool isDeleted, string includeProperties = "", string fields = "")
         {
-            //Search = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            //Fields = "Firstname,Middlename,Lastname";
+            //filter = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
+            //fields = "Firstname,Middlename,Lastname";
             //sortOrder = "Middlename desc,Firstname asc";
             //Skip = 0;
             //Take = 10;
             int totalCount;
-            var data = _patientService.GetPatients(filter, sort, isDeleted, out totalCount, skip, take, fields);
+            var data = _patientService.GetPatients(filter, out totalCount, sort, skip, take, includeProperties, fields);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
 
         // GET: api/Patients/5
         [HttpGet("{id}")]
-        public ActionResult<PatientDTO> GetPatient(long id, string Search)
+        public ActionResult<PatientDTO> GetPatient(long id, string filter)
         {
-            //Search = "Address.Contains({D}) or Firstname-eq-{Ginesh} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            var patient = _patientService.GetPatient(id, Search, false);
+            var patient = _patientService.GetPatient(id, filter);
 
             if (patient == null)
             {
@@ -62,15 +61,15 @@ namespace AASTHA2.Controllers
             return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
         }
         [HttpDelete("{id}")]
-        public ActionResult<PatientDTO> DeletePatient(long id,bool isDeleted, bool removePhysical = false)
+        public ActionResult<PatientDTO> DeletePatient(long id, bool isDeleted, bool removePhysical = false)
         {
-            var patient = _patientService.GetPatient(id,"",true);
+            var patient = _patientService.GetPatient(id, "");
             patient.isDeleted = isDeleted;
             if (patient == null)
             {
                 return NotFound();
             }
-            _patientService.RemovePatient(patient, null,true, removePhysical);
+            _patientService.RemovePatient(patient,"",removePhysical);
             return CreatedAtAction("GetPatient", new { id = id }, patient);
         }
     }

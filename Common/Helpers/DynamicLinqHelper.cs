@@ -17,16 +17,16 @@ namespace AASTHA2.Common.Helpers
                 data = source.AsQueryable().Select($"new ({select})").Distinct();
             return data;
         }
-        public static void DynamicSearchQuery(string Search, out string query, out object[] param)
+        public static void DynamicSearchQuery(string filter, out string query, out object[] param)
         {
-            query = Search;
+            query = filter;
             foreach (var item in Enum.GetNames(typeof(Operator)))
             {
                 Operator obj = (Operator)Enum.Parse(typeof(Operator), item);
                 query = query.Replace($"-{obj.GetDescription()}-", $"{ obj.GetDisplayName()} ");
             }
             var regex = new Regex("{(.*?)}");
-            var matches = regex.Matches(Search).Distinct().ToList();
+            var matches = regex.Matches(filter).Distinct().ToList();
             int i = 0;
             param = new object[matches.Count];
             foreach (Match match in matches)

@@ -17,24 +17,24 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetDeliverys(string Search, string Sort, bool ShowDeleted, out int totalCount, int Skip, int Take, string Fields)
+        public IEnumerable<dynamic> GetDeliveries(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Delivery> Delivery = _unitOfWork.Deliveries.Find(null, Search, ShowDeleted, out totalCount, Sort, Skip, Take);
+            IEnumerable<Delivery> Delivery = _unitOfWork.Deliveries.Find(null, out totalCount, filter, includeProperties,  sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<DeliveryDTO>>(Delivery);
-            return mapped.DynamicSelect(Fields).ToDynamicList();
+            return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsDeliveryExist(long Id, string Search = "", bool ShowDeleted = false)
+        //public bool IsDeliveryExist(long id, string filter = "", string includeProperties="")
         //{
-        //    return _unitOfWork.Deliverys.IsExist(m => m.Id == Id, Search, ShowDeleted);
+        //    return _unitOfWork.Deliverys.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public DeliveryDTO GetDelivery(long Id, string Search = "", bool ShowDeleted = false)
+        public DeliveryDTO GetDelivery(long id, string filter = "", string includeProperties="")
         {
-            var Delivery = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == Id, Search, ShowDeleted);
+            var Delivery = _unitOfWork.Deliveries.FirstOrDefault( m=> m.Id == id, filter, includeProperties);
             return _mapper.Map<DeliveryDTO>(Delivery);
         }
-        //public int DeliveryCount(string Search = "", bool ShowDeleted = false)
+        //public int DeliveryCount(string filter = "", bool ShowDeleted = false)
         //{
-        //    return _unitOfWork.Deliverys.Count(null, Search, ShowDeleted);
+        //    return _unitOfWork.Deliverys.Count(null, filter, ShowDeleted);
         //}
         public void PostDelivery(DeliveryDTO DeliveryDto)
         {
@@ -51,10 +51,10 @@ namespace AASTHA2.Services
             _unitOfWork.Deliveries.Update(Delivery);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveDelivery(DeliveryDTO Delivery, string Search = "", bool ShowDeleted = false, bool RemovePhysical = false)
+        public void RemoveDelivery(DeliveryDTO Delivery, string filter = "", bool removePhysical = false)
         {
-            var DeliveryDto = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == Delivery.id, Search, ShowDeleted);
-            _unitOfWork.Deliveries.Delete(DeliveryDto, RemovePhysical);
+            var DeliveryDto = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == Delivery.id, filter);
+            _unitOfWork.Deliveries.Delete(DeliveryDto, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }
