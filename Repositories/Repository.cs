@@ -39,6 +39,8 @@ namespace AASTHA2.Repositories
                 DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
                 query = query.Where(dynamicQuery, param);
             }
+            else
+                take = 15;
 
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
@@ -50,6 +52,7 @@ namespace AASTHA2.Repositories
 
             if (take > 0)
                 query = query.Take(take);
+
             return query;
         }
         public T FirstOrDefault(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties="")
