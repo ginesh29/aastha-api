@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Appointments
         [HttpGet]
-        public dynamic GetAppointments(string filter, string sort, int skip, int take = 15, string includeProperties = "", string fields = "")
+        public dynamic GetAppointments(string filter, string sort, int skip, int take, string includeProperties = "", string fields = "")
         {
             //filter = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
             //fields = "Firstname,Middlename,Lastname";

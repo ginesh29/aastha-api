@@ -19,7 +19,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Opds
         [HttpGet]
-        public dynamic GetOpds(string filter, string sort, int skip, int take = 15, string includeProperties = "", string fields = "")
+        public dynamic GetOpds(string filter, string sort, int skip, int take, string includeProperties = "", string fields = "")
         {
             int totalCount;
             var data = _OpdService.GetOpds(filter, out totalCount, sort, skip, take, includeProperties, fields);
