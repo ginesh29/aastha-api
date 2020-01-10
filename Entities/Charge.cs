@@ -12,9 +12,9 @@ namespace AASTHA2.Entities
        
         public long LookupId { get; set; }
         [ForeignKey("LookupId")]
-        public Lookup Lookup { get; set; }
+        public Lookup ChargeDetail { get; set; }
         public long IpdId { get; set; }
         [ForeignKey("IpdId")]
-        public Ipd Ipd { get; set; }
+        public Ipd IpdDetail { get; set; }
     }
 }
