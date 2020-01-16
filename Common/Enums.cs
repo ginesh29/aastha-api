@@ -10,7 +10,7 @@ namespace AASTHA2.Common
     }
     public enum Operator
     {
-        [Display(Name = "=", Description = "equals")]
+        [Display(Name = "=", Description = "eq")]
         Equals,
         [Display(Name = "!=", Description = "neq")]
         NoEquals,
