@@ -12,5 +12,6 @@ namespace AASTHA2.DTO
         public AppointmentType? Type { get; set; }
         public string AppointmentType => this.Type.ToString();
         public long? PatientId { get; set; }
+        public PatientDTO Patient { get; set; }
     }
 }
