@@ -39,7 +39,7 @@ namespace AASTHA2.Controllers
             return Ipd;
         }
         [HttpGet]
-        [Route("Ipds/GetStatistics")]
+        [Route("GetStatistics")]
         public ActionResult<dynamic> GetStatistics(string filter)
         {
             int totalCount;

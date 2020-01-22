@@ -22,7 +22,7 @@ namespace AASTHA2.Repositories
 
         public IQueryable<T> Find(Expression<Func<T, bool>> predicate, out int totalCount, string filter = "", string includeProperties = "", string order = "", int skip = 0, int take = 0)
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = _dbSet.AsNoTracking();
 
             if (!string.IsNullOrEmpty(includeProperties))
             {

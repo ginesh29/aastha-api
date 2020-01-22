@@ -3,6 +3,7 @@ using AASTHA2.DTO;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
@@ -42,7 +43,7 @@ namespace AASTHA2.Controllers
             return Opd;
         }
         [HttpGet]
-        [Route("Opds/GetStatistics")]
+        [Route("GetStatistics")]
         public ActionResult<dynamic> GetStatistics(string filter)
         {
             int totalCount;
