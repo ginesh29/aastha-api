@@ -38,6 +38,14 @@ namespace AASTHA2.Controllers
             }
             return Ipd;
         }
+        [HttpGet]
+        [Route("Ipds/GetStatistics")]
+        public ActionResult<dynamic> GetStatistics(string filter)
+        {
+            int totalCount;
+            var result = _IpdService.GetIpdStatistics(filter, out totalCount);
+            return Ok(result);
+        }
         [HttpPost]
         public ActionResult<IpdDTO> PostIpd(IpdDTO IpdDTO)
         {

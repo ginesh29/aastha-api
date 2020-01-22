@@ -3,6 +3,7 @@ using AASTHA2.DTO;
 using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
 
@@ -19,7 +20,7 @@ namespace AASTHA2.Services
         }
         public IEnumerable<dynamic> GetOpds(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, out totalCount,filter, includeProperties, sort, skip, take);
+            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<OpdDTO>>(Opd);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
@@ -31,6 +32,10 @@ namespace AASTHA2.Services
         {
             var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<OpdDTO>(Opd);
+        }
+        public IEnumerable<dynamic> GetOpdStatistics(string filter, out int totalCount)
+        {
+            return _unitOfWork.Opds.GetStatistics(out totalCount,filter);
         }
         //public int OpdCount(string filter = "", bool ShowDeleted = false)
         //{

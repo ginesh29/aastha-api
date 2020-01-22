@@ -20,7 +20,7 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, out int totalCount, string filter="", string includeProperties="", string order = "", int skip = 0, int take = 0)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, out int totalCount, string filter = "", string includeProperties = "", string order = "", int skip = 0, int take = 0)
         {
             IQueryable<T> query = _dbSet;
 
@@ -34,10 +34,13 @@ namespace AASTHA2.Repositories
 
             if (!string.IsNullOrEmpty(filter))
             {
-                string dynamicQuery;
-                object[] param;
-                DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
-                query = query.Where(dynamicQuery, param);
+                if(filter!="0")
+                {
+                    string dynamicQuery;
+                    object[] param;
+                    DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
+                    query = query.Where(dynamicQuery, param);
+                }               
             }
             else
                 take = 15;
@@ -45,7 +48,7 @@ namespace AASTHA2.Repositories
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
 
-            totalCount = query!=null? query.Count():0;
+            totalCount = query != null ? query.Count() : 0;
 
             if (skip > 0)
                 query = query.Skip(skip);
@@ -55,7 +58,7 @@ namespace AASTHA2.Repositories
 
             return query;
         }
-        public T FirstOrDefault(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties="")
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "")
         {
             int totalCount;
             return Find(predicate, out totalCount, filter, includeProperties).FirstOrDefault();

@@ -33,6 +33,10 @@ namespace AASTHA2.Services
             var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<IpdDTO>(Ipd);
         }
+        public IEnumerable<dynamic> GetIpdStatistics(string filter, out int totalCount)
+        {
+            return _unitOfWork.Ipds.GetStatistics(out totalCount, filter);
+        }
         public void PostIpd(IpdDTO IpdDto)
         {
             var Ipd = _mapper.Map<Ipd>(IpdDto);

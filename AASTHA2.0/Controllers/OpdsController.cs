@@ -41,6 +41,14 @@ namespace AASTHA2.Controllers
             }
             return Opd;
         }
+        [HttpGet]
+        [Route("Opds/GetStatistics")]
+        public ActionResult<dynamic> GetStatistics(string filter)
+        {
+            int totalCount;
+            var result = _OpdService.GetOpdStatistics(filter, out totalCount);
+            return Ok(result);
+        }
         [HttpPost]
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO)
         {
@@ -69,6 +77,6 @@ namespace AASTHA2.Controllers
             }
             _OpdService.RemoveOpd(Opd, "", removePhysical);
             return CreatedAtAction("GetOpd", new { id = id }, Opd);
-        }
+        }        
     }
 }
