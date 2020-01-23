@@ -12,6 +12,11 @@ namespace AASTHA2.Repositories
             : base(AASTHAContext)
         {
         }
+        public class Address
+        {
+            public int Year { get; set; }
+            public List<dynamic> NodeIds { get; set; }
+        }
         public IEnumerable<dynamic> GetStatistics(out int totalCount, string filter)
         {
             return Find(null, out totalCount, filter, "Charges")
@@ -23,7 +28,7 @@ namespace AASTHA2.Repositories
                       MonthName = g.FirstOrDefault().DischargeDate.ToString("MMMM"),
                       TotalPatient = g.Count(),
                       TotalCollection = g.SelectMany(x => x.Charges).Sum(d => d.Rate * d.Days) - g.Sum(m => m.Discount)
-                  }).ToLookup(m => m.Year).OrderByDescending(m => m.Key);
+                  });
         }
     }
 }

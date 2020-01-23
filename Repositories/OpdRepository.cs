@@ -24,7 +24,7 @@ namespace AASTHA2.Repositories
                       Year = g.Key.Year,
                       TotalPatient = g.Count(),
                       TotalCollection = g.Sum(m => m.ConsultCharge) + g.Sum(m => m.UsgCharge) + g.Sum(m => m.UptCharge) + g.Sum(m => m.InjectionCharge) + g.Sum(m => m.OtherCharge)
-                  }).ToLookup(m => m.Year).OrderByDescending(m => m.Key);
+                  });
         }
     }
 }
