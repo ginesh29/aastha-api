@@ -2,6 +2,7 @@
 using AASTHA2.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Repositories
 {
@@ -13,11 +14,16 @@ namespace AASTHA2.Repositories
         }
         public IEnumerable<dynamic> GetStatistics(out int totalCount, string filter)
         {
-            var data = Find(null, out totalCount, filter)
-                    .GroupBy(grp => new { Month = grp.DischargeDate.Month, Year = grp.DischargeDate.Year })
-                    .Select(g => new { Month = g.Key.Month, Year = g.Key.Year, Total = g.Count() })
-                    .OrderByDescending(a => a.Year).ThenByDescending(a => a.Month);
-            return data;
+            return Find(null, out totalCount, filter, "Charges")
+                  .GroupBy(grp => new { Month = grp.DischargeDate.Month, Year = grp.DischargeDate.Year })
+                  .Select(g => new
+                  {
+                      Year = g.Key.Year,
+                      Month = g.Key.Month,
+                      MonthName = g.FirstOrDefault().DischargeDate.ToString("MMMM"),
+                      TotalPatient = g.Count(),
+                      TotalCollection = g.SelectMany(x => x.Charges).Sum(d => d.Rate * d.Days) - g.Sum(m => m.Discount)
+                  }).OrderByDescending(m => m.Year);
         }
     }
 }
