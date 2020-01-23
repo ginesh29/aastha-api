@@ -1,6 +1,7 @@
 ﻿using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AASTHA2.Repositories
@@ -12,7 +13,7 @@ namespace AASTHA2.Repositories
         {
 
         }
-        public IQueryable<dynamic> GetStatistics(out int totalCount, string filter)
+        public IEnumerable<dynamic> GetStatistics(out int totalCount, string filter)
         {
             return Find(m => m.Date != Convert.ToDateTime("01/01/1900"), out totalCount, filter)
                   .GroupBy(grp => new { Month = grp.Date.Month, Year = grp.Date.Year })
@@ -23,7 +24,7 @@ namespace AASTHA2.Repositories
                       Year = g.Key.Year,
                       TotalPatient = g.Count(),
                       TotalCollection = g.Sum(m => m.ConsultCharge) + g.Sum(m => m.UsgCharge) + g.Sum(m => m.UptCharge) + g.Sum(m => m.InjectionCharge) + g.Sum(m => m.OtherCharge)
-                  }).OrderByDescending(m => m.Year);
+                  }).ToLookup(m => m.Year).OrderByDescending(m => m.Key);
         }
     }
 }

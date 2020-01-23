@@ -23,7 +23,7 @@ namespace AASTHA2.Repositories
                       MonthName = g.FirstOrDefault().DischargeDate.ToString("MMMM"),
                       TotalPatient = g.Count(),
                       TotalCollection = g.SelectMany(x => x.Charges).Sum(d => d.Rate * d.Days) - g.Sum(m => m.Discount)
-                  }).OrderByDescending(m => m.Year);
+                  }).ToLookup(m => m.Year).OrderByDescending(m => m.Key);
         }
     }
 }
