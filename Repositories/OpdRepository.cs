@@ -15,7 +15,7 @@ namespace AASTHA2.Repositories
         }
         public IEnumerable<dynamic> GetStatistics(out int totalCount, string filter)
         {
-            return Find(m => m.Date != Convert.ToDateTime("01/01/1900"), out totalCount, filter)
+            return Find(m => m.Date != Convert.ToDateTime("01/01/1900") && m.Date.Year > 2013, out totalCount, filter)
                   .GroupBy(grp => new { Month = grp.Date.Month, Year = grp.Date.Year })
                   .Select(g => new
                   {
