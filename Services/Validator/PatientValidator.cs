@@ -16,7 +16,7 @@ namespace AASTHA2.Validator
             RuleFor(m => m.age).NotNull().When(m => m.id < 1).WithMessage("Age is required")
                                .GreaterThan(0).When(m => m.id < 1).WithMessage("Age must be between 1 to 100.")
                                .LessThanOrEqualTo(100).WithMessage("Age must be between 1 to 100.");
-            RuleFor(m => m.fullname).SetValidator(new ExistPatientValidator(ServicesWrapper)).WithMessage("Patient already exist.");
+            RuleFor(m => new { m.firstname, m.middlename, m.lastname }).SetValidator(new ExistPatientValidator(ServicesWrapper)).WithMessage("Patient already exist.");
         }
     }
 }

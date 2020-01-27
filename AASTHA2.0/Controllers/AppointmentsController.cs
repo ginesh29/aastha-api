@@ -43,13 +43,14 @@ namespace AASTHA2.Controllers
             return Appointment;
         }
         [HttpPost]
-        public ActionResult<AppointmentDTO> PostAppointment(AppointmentDTO AppointmentDTO)
+        public ActionResult<AppointmentDTO> PostAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
         {
             _AppointmentService.PostAppointment(AppointmentDTO);
-            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.Id }, AppointmentDTO);
+            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.Id }, Appointment);
         }
         [HttpPut]
-        public ActionResult<AppointmentDTO> PutAppointment(AppointmentDTO AppointmentDTO)
+        public ActionResult<AppointmentDTO> PutAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
         {
             var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id);
             if (Appointment == null)
@@ -57,7 +58,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _AppointmentService.PutAppointment(AppointmentDTO);
-            Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id);
+            Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id, null, includeProperties);
             return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.Id }, Appointment);
         }
         [HttpDelete("{id}")]

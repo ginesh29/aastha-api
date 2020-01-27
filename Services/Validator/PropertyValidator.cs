@@ -1,7 +1,6 @@
 ﻿using AASTHA2.Services;
 using FluentValidation.Validators;
 using System;
-using AASTHA2.Common;
 
 namespace AASTHA2.Validator
 {
@@ -46,10 +45,25 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            string fullname = Convert.ToString(context.PropertyValue);
-            var splitFullname = fullname.Split(" ");
-            string filter = $"Firstname-eq-{{{splitFullname[0]}}} and Middlename-eq-{{{ splitFullname[1]}}} and Lastname-eq-{{{splitFullname[2]}}}";
+            dynamic fullname = context.PropertyValue;
+            string filter = $"Firstname-eq-{{{fullname.firstname}}} and Middlename-eq-{{{ fullname.middlename}}} and Lastname-eq-{{{fullname.lastname}}}";
             if (context.PropertyValue != null && _patientService.IsPatientExist(filter))
+                return false;
+            return true;
+        }
+    }
+    public class ExistAppointmentValidator : PropertyValidator
+    {
+        private static AppointmentService _appointmentService;
+        public ExistAppointmentValidator(ServicesWrapper ServicesWrapper) : base("{PropertyName} already exist.")
+        {
+            _appointmentService = ServicesWrapper.AppointmentService;
+        }
+        protected override bool IsValid(PropertyValidatorContext context)
+        {
+            dynamic data = context.PropertyValue;
+            string filter = $"date-eq-{{{data.Date}}} and patientId-eq-{{{ data.PatientId}}}";
+            if (context.PropertyValue != null && _appointmentService.IsAppointmentExist(filter))
                 return false;
             return true;
         }

@@ -17,17 +17,17 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetAppointments(string filter, out int totalCount, string sort, int skip=0, int take=0, string includeProperties="", string fields = "")
+        public IEnumerable<dynamic> GetAppointments(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
             IEnumerable<Appointment> Appointment = _unitOfWork.Appointments.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<AppointmentDTO>>(Appointment);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsAppointmentExist(long id, string filter = "", string includeProperties="")
-        //{
-        //    return _unitOfWork.Appointments.IsExist( => m.Id == id, filter, includeProperties);
-        //}
-        public AppointmentDTO GetAppointment(long id, string filter = "", string includeProperties="")
+        public bool IsAppointmentExist(string filter = "")
+        {
+            return _unitOfWork.Appointments.FirstOrDefault(null, filter) != null;
+        }
+        public AppointmentDTO GetAppointment(long id, string filter = "", string includeProperties = "")
         {
             var Appointment = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<AppointmentDTO>(Appointment);
