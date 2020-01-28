@@ -137,8 +137,8 @@ namespace AASTHA2
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "AASTHA API V1");
             });
-            app.UseResponseWrapper();
-            app.UseExceptionWrapper();
+            //app.UseResponseWrapper();
+            //app.UseExceptionWrapper();
 
             app.UseMvc();
         }
