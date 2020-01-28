@@ -89,7 +89,7 @@ namespace AASTHA2.Controllers
         {
             var stream = new MemoryStream();
             int totalCount;
-            IEnumerable<OpdDTO> opds = _OpdService.GetOpds(filter, out totalCount, sort, skip, take, includeProperties, fields).ToDynamicList<OpdDTO>();
+            var opds = _OpdService.GetOpds(filter, out totalCount, sort, skip, take, includeProperties, fields).ToDynamicList<OpdDTO>();
             using (var package = new ExcelPackage(stream))
             {
                 var workSheet2 = package.Workbook.Worksheets.Add("Report");
