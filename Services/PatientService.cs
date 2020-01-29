@@ -17,9 +17,9 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetPatients(string filter, out int totalCount, string sort, int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public IEnumerable<dynamic> GetPatients(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, out totalCount, filter, includeProperties,  sort, skip, take);
+            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
@@ -27,9 +27,9 @@ namespace AASTHA2.Services
         {
             return _unitOfWork.Patients.FirstOrDefault(null, filter) != null;
         }
-        public PatientDTO GetPatient(long id, string filter = "", string includeProperties="")
+        public PatientDTO GetPatient(long id, string filter = "", string includeProperties = "")
         {
-            var patient = _unitOfWork.Patients.FirstOrDefault( m=> m.Id == id, filter, includeProperties);
+            var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<PatientDTO>(patient);
         }
 
