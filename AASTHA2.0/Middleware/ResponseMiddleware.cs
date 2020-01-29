@@ -30,8 +30,8 @@ namespace AASTHA2.Middleware
                 {
                     //set the current response to the memorystream.
                     context.Response.Body = memoryStream;
-
-                    await _next(context);
+                    if (!context.Request.Path.Value.Contains("Export"))
+                        await _next(context);
                     var status = context.Response.StatusCode;
                     //reset the body 
                     context.Response.Body = currentBody;
