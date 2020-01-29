@@ -41,8 +41,6 @@ namespace AASTHA2.Middleware
                     string message = string.Empty;
                     object validation = null;
                     object error = null;
-                    var isObjectOrList = JToken.Parse(readToEnd);
-                    bool isObject = isObjectOrList is JArray;
                     var method = context.Request.Method;
                     if (readToEnd == "[]" || status == (int)HttpStatusCode.NotFound)
                     {
