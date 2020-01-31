@@ -46,14 +46,6 @@ namespace AASTHA2.Controllers
             }
             return Ipd;
         }
-        [HttpGet]
-        [Route("GetStatistics")]
-        public ActionResult<dynamic> GetStatistics(string filter)
-        {
-            int totalCount;
-            var result = _IpdService.GetIpdStatistics(filter, out totalCount);
-            return Ok(result);
-        }
         [HttpPost]
         public ActionResult<IpdDTO> PostIpd(IpdDTO IpdDTO)
         {
@@ -105,7 +97,7 @@ namespace AASTHA2.Controllers
                 var charges = _LookupService.GetLookups(filter, out totalCount).ToDynamicList<LookupDTO>();
                 foreach (var item in charges)
                 {
-                    workSheet.Cells[$"{alpha}1"].Value = $"{item.Name.Substring(0, 3)}.";
+                    workSheet.Cells[$"{alpha}1"].Value = $"{item.name.Substring(0, 3)}.";
                     alpha++;
                 }
                 workSheet.Cells[$"{alpha}1"].Value = "Total";
@@ -127,7 +119,7 @@ namespace AASTHA2.Controllers
                     alpha = 'F';
                     foreach (var charge in charges)
                     {
-                        var amount = item.charges.FirstOrDefault(m => m.lookupId == charge.Id)?.amount;
+                        var amount = item.charges.FirstOrDefault(m => m.lookupId == charge.id)?.amount;
                         workSheet.Cells[$"{alpha}{row}"].Value = amount>0?amount:0;
                         alpha++;
                     }

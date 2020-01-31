@@ -19,11 +19,6 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetPatients(string filter, string sort, int skip, int take, bool isDeleted, string includeProperties = "", string fields = "")
         {
-            //filter = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            //fields = "Firstname,Middlename,Lastname";
-            //sortOrder = "Middlename desc,Firstname asc";
-            //Skip = 0;
-            //Take = 10;
             int totalCount;
             var data = _patientService.GetPatients(filter, out totalCount, sort, skip, take, includeProperties, fields);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
@@ -69,8 +64,8 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _patientService.RemovePatient(patient,"",removePhysical);
+            _patientService.RemovePatient(patient, "", removePhysical);
             return CreatedAtAction("GetPatient", new { id = id }, patient);
-        }
+        }       
     }
 }

@@ -42,19 +42,19 @@ namespace AASTHA2.Controllers
         public ActionResult<LookupDTO> PostLookup(LookupDTO LookupDTO)
         {
             _LookupService.PostLookup(LookupDTO);
-            return CreatedAtAction("GetLookup", new { id = LookupDTO.Id }, LookupDTO);
+            return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, LookupDTO);
         }
         [HttpPut]
         public ActionResult<LookupDTO> PutLookup(LookupDTO LookupDTO)
         {
-            var Lookup = _LookupService.GetLookup(LookupDTO.Id);
+            var Lookup = _LookupService.GetLookup(LookupDTO.id);
             if (Lookup == null)
             {
                 return NotFound();
             }
             _LookupService.PutLookup(LookupDTO);
-            Lookup = _LookupService.GetLookup(LookupDTO.Id);
-            return CreatedAtAction("GetLookup", new { id = LookupDTO.Id }, Lookup);
+            Lookup = _LookupService.GetLookup(LookupDTO.id);
+            return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, Lookup);
         }
         [HttpDelete("{id}")]
         public ActionResult<LookupDTO> DeleteLookup(long id, bool removePhysical = false)

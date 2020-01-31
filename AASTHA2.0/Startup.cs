@@ -120,11 +120,6 @@ namespace AASTHA2
            .WriteTo.File($"Logs/Exceptions/ExceptionLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
            .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Warning)
            .WriteTo.File($"Logs/Warnings/WarningLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
-
-           .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Debug)
-           .WriteTo.File($"Logs/Debugs/DebugLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
-           .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Verbose)
-           .WriteTo.File($"Logs/Verboses/VerboseLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
            .CreateLogger();
             if (env.IsDevelopment())
             {

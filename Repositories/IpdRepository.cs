@@ -12,11 +12,6 @@ namespace AASTHA2.Repositories
             : base(AASTHAContext)
         {
         }
-        public class Address
-        {
-            public int Year { get; set; }
-            public List<dynamic> NodeIds { get; set; }
-        }
         public IEnumerable<dynamic> GetStatistics(out int totalCount, string filter)
         {
             return Find(null, out totalCount, filter, "Charges")

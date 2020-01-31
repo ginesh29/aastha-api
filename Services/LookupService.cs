@@ -41,18 +41,18 @@ namespace AASTHA2.Services
             var Lookup = _mapper.Map<Lookup>(LookupDto);
             _unitOfWork.Lookups.Create(Lookup);
             _unitOfWork.SaveChanges();
-            LookupDto.Id = Lookup.Id;
+            LookupDto.id = Lookup.Id;
         }
         public void PutLookup(LookupDTO LookupDto)
         {
-            var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == LookupDto.Id);
+            var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == LookupDto.id);
             Lookup = _mapper.Map<LookupDTO, Lookup>(LookupDto, Lookup);
             _unitOfWork.Lookups.Update(Lookup);
             _unitOfWork.SaveChanges();
         }
         public void RemoveLookup(LookupDTO Lookup, string filter = "", bool removePhysical = false)
         {
-            var LookupDto = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Lookup.Id, filter);
+            var LookupDto = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Lookup.id, filter);
             _unitOfWork.Lookups.Delete(LookupDto, removePhysical);
             _unitOfWork.SaveChanges();
         }

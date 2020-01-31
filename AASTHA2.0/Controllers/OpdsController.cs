@@ -6,7 +6,6 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq.Dynamic.Core;
 
@@ -45,14 +44,6 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             return Opd;
-        }
-        [HttpGet]
-        [Route("GetStatistics")]
-        public ActionResult<dynamic> GetStatistics(string filter)
-        {
-            int totalCount;
-            var result = _OpdService.GetOpdStatistics(filter, out totalCount);
-            return Ok(result);
         }
         [HttpPost]
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO)
@@ -124,7 +115,7 @@ namespace AASTHA2.Controllers
                     workSheet.Cells[$"H{row}"].Value = Convert.ToDecimal(item.uptCharge);
                     workSheet.Cells[$"I{row}"].Value = Convert.ToDecimal(item.injectionCharge);
                     workSheet.Cells[$"J{row}"].Value = Convert.ToDecimal(item.otherCharge);
-                    workSheet.Cells[$"K{row}"].Formula = $"=SUM(F{row}:J{row})";                   
+                    workSheet.Cells[$"K{row}"].Formula = $"=SUM(F{row}:J{row})";
                     row++;
                 }
                 workSheet.Cells[$"A{row}"].Value = "Total";
