@@ -13,7 +13,7 @@ namespace AASTHA2.Validator
                                 .IsInEnum();
             RuleFor(m => m.PatientId).NotNull().When(m => m.Id < 1)
                                      .SetValidator(new ValidPatientValidator(ServicesWrapper));
-            RuleFor(m => new { m.Date, m.PatientId }).SetValidator(new ExistAppointmentValidator(ServicesWrapper)).WithMessage("Appointment already exist.");
+            RuleFor(m => new {m.Id, m.Date, m.PatientId }).SetValidator(new ExistAppointmentValidator(ServicesWrapper)).WithMessage("Appointment already exist.");
         }
     }
 }

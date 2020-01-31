@@ -29,9 +29,9 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            long patientId = Convert.ToInt64(context.PropertyValue);
-
-            if (context.PropertyValue != null && _ipdService.IsIpdExist(patientId))
+            dynamic data = context.PropertyValue;
+            string filter = $"id-neq-{{{data.Id}}} and UniqueId-eq-{{{data.uniqueId}}} and isDeleted-neq-{{{true}}}";
+            if (context.PropertyValue != null && _ipdService.IsIpdExist(filter))
                 return false;
             return true;
         }
@@ -45,8 +45,8 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic fullname = context.PropertyValue;
-            string filter = $"Firstname-eq-{{{fullname.firstname}}} and Middlename-eq-{{{ fullname.middlename}}} and Lastname-eq-{{{fullname.lastname}}}";
+            dynamic data = context.PropertyValue;
+            string filter = $"id-neq-{{{data.Id}}} and Firstname-eq-{{{data.firstname}}} and Middlename-eq-{{{ data.middlename}}} and Lastname-eq-{{{data.lastname}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _patientService.IsPatientExist(filter))
                 return false;
             return true;
@@ -62,7 +62,7 @@ namespace AASTHA2.Validator
         protected override bool IsValid(PropertyValidatorContext context)
         {
             dynamic data = context.PropertyValue;
-            string filter = $"date-eq-{{{data.Date}}} and patientId-eq-{{{ data.PatientId}}}";
+            string filter = $"id-neq-{{{data.Id}}} and date-eq-{{{data.Date}}} and patientId-eq-{{{ data.PatientId}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _appointmentService.IsAppointmentExist(filter))
                 return false;
             return true;

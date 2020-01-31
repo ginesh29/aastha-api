@@ -3,7 +3,6 @@ using AASTHA2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
 using System.IO;
@@ -30,8 +29,7 @@ namespace AASTHA2.Middleware
                 {
                     //set the current response to the memorystream.
                     context.Response.Body = memoryStream;
-                    if (!context.Request.Path.Value.Contains("Export"))
-                        await _next(context);
+                    await _next(context);
                     var status = context.Response.StatusCode;
                     //reset the body 
                     context.Response.Body = currentBody;

@@ -24,9 +24,9 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<IpdDTO>>(Ipd);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        public bool IsIpdExist(long id, string filter = "", string includeProperties = "")
+        public bool IsIpdExist(string filter = "")
         {
-            return _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties) != null;
+            return _unitOfWork.Ipds.FirstOrDefault(null,filter) != null;
         }
         public IpdDTO GetIpd(long id, string filter = "", string includeProperties = "")
         {
