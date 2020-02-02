@@ -18,26 +18,25 @@ namespace AASTHA2._0.Controllers
         }
         [HttpGet]
         [Route("GetPatientStatistics")]
-        public ActionResult<dynamic> GetPatientStatistics(string filter)
+        public ActionResult<dynamic> GetPatientStatistics()
         {
-            int totalCount;
             var result = new
             {
-                patients = _patientService.GetPatientStatistics(filter, out totalCount),
-                opds = _opdService.GetOpdStatistics(filter, out totalCount),
-                ipds = _ipdService.GetIpdStatistics(filter, out totalCount)
+
+                patients = _patientService.GetPatientStatistics(),
+                opds = _opdService.GetOpdStatistics(),
+                ipds = _ipdService.GetIpdStatistics()
             };
             return Ok(result);
         }
         [HttpGet]
         [Route("GetOpdIpdStatistics")]
-        public ActionResult<dynamic> GetStatistics(string filter)
+        public ActionResult<dynamic> GetStatistics()
         {
-            int totalCount;
             var result = new
             {
-                opds = _opdService.GetOpdStatistics(filter, out totalCount),
-                ipds = _ipdService.GetIpdStatistics(filter, out totalCount)
+                opds = _opdService.GetOpdStatistics(),
+                ipds = _ipdService.GetIpdStatistics()
             };
             return Ok(result);
         }

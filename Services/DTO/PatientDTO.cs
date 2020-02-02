@@ -21,7 +21,7 @@ namespace AASTHA2.DTO
             get { return age + (createdDate != DateTime.MinValue ? (DateTime.UtcNow.Year - createdDate.Year) : 0); }
             set { age = value; }
         }
-        public ICollection<OpdDTO> opds { get; set; }
-        public ICollection<IpdDTO> ipds { get; set; }
+        //public ICollection<OpdDTO> opds { get; set; }
+        //public ICollection<IpdDTO> ipds { get; set; }
     }
 }

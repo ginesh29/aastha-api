@@ -9,10 +9,15 @@ namespace AASTHA2.Entities
     {        
         public DateTime Date { get; set; }
         public CaseType CaseType { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal ConsultCharge { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal UsgCharge { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal UptCharge { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal InjectionCharge { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal OtherCharge { get; set; }
 
         public long PatientId { get; set; }

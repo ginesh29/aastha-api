@@ -62,7 +62,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<decimal>("Days");
+                    b.Property<decimal>("Days")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<long>("IpdId");
 
@@ -74,7 +75,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<decimal>("Rate");
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
@@ -95,7 +97,8 @@ namespace AASTHA2.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("BabyWeight");
+                    b.Property<decimal>("BabyWeight")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<long?>("CreatedBy");
 
@@ -141,7 +144,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("DischargeDate");
 
-                    b.Property<decimal>("Discount");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<bool?>("IsDeleted");
 
@@ -245,7 +249,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<int>("CaseType");
 
-                    b.Property<decimal>("ConsultCharge");
+                    b.Property<decimal>("ConsultCharge")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<long?>("CreatedBy");
 
@@ -253,7 +258,8 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<decimal>("InjectionCharge");
+                    b.Property<decimal>("InjectionCharge")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<bool?>("IsDeleted");
 
@@ -261,13 +267,16 @@ namespace AASTHA2.Entities.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<decimal>("OtherCharge");
+                    b.Property<decimal>("OtherCharge")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<long>("PatientId");
 
-                    b.Property<decimal>("UptCharge");
+                    b.Property<decimal>("UptCharge")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("UsgCharge");
+                    b.Property<decimal>("UsgCharge")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
@@ -351,6 +360,26 @@ namespace AASTHA2.Entities.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("AASTHA2.Entities.Sp_GetCollection_Result", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Month");
+
+                    b.Property<string>("MonthName");
+
+                    b.Property<decimal>("TotalCollection");
+
+                    b.Property<int>("TotalPatient");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sp_GetCollection");
+                });
+
             modelBuilder.Entity("AASTHA2.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -406,12 +435,12 @@ namespace AASTHA2.Entities.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedBy");
 
-                    b.HasOne("AASTHA2.Entities.Ipd", "Ipd")
+                    b.HasOne("AASTHA2.Entities.Ipd", "IpdDetail")
                         .WithMany("Charges")
                         .HasForeignKey("IpdId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AASTHA2.Entities.Lookup", "Lookup")
+                    b.HasOne("AASTHA2.Entities.Lookup", "ChargeDetail")
                         .WithMany()
                         .HasForeignKey("LookupId")
                         .OnDelete(DeleteBehavior.Cascade);
