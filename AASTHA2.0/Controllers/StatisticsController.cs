@@ -18,14 +18,14 @@ namespace AASTHA2._0.Controllers
         }
         [HttpGet]
         [Route("GetPatientStatistics")]
-        public ActionResult<dynamic> GetPatientStatistics()
+        public ActionResult<dynamic> GetPatientStatistics(int? Year)
         {
             var result = new
             {
 
-                patients = _patientService.GetPatientStatistics(),
-                opds = _opdService.GetOpdStatistics(),
-                ipds = _ipdService.GetIpdStatistics()
+                patients = _patientService.GetPatientStatistics(Year),
+                opds = _opdService.GetOpdStatistics(Year),
+                ipds = _ipdService.GetIpdStatistics(Year)
             };
             return Ok(result);
         }

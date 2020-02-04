@@ -33,9 +33,9 @@ namespace AASTHA2.Services
             var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<OpdDTO>(Opd);
         }
-        public IEnumerable<dynamic> GetOpdStatistics()
+        public IEnumerable<dynamic> GetOpdStatistics(int? Year = null)
         {
-            return _unitOfWork.Opds.GetStatistics();
+            return _unitOfWork.Opds.GetStatistics(Year);
         }
         //public int OpdCount(string filter = "", bool ShowDeleted = false)
         //{

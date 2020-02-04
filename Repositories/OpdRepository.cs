@@ -14,9 +14,12 @@ namespace AASTHA2.Repositories
         {
 
         }
-        public IEnumerable<Sp_GetCollection_Result> GetStatistics()
+        public IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year)
         {
-            return _AASTHAContext.Set<Sp_GetCollection_Result>().FromSql("GetOpdStatistics");
+            var result = _AASTHAContext.Set<Sp_GetCollection_Result>().FromSql("GetOpdStatistics");
+            if (Year > 0)
+                result = result.Where(m => m.Year == Year);
+            return result;
         }
     }
 }

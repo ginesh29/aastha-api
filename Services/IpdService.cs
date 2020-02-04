@@ -34,9 +34,9 @@ namespace AASTHA2.Services
             var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<IpdDTO>(Ipd);
         }
-        public IEnumerable<dynamic> GetIpdStatistics()
+        public IEnumerable<dynamic> GetIpdStatistics(int? Year = null)
         {
-            return _unitOfWork.Ipds.GetStatistics();
+            return _unitOfWork.Ipds.GetStatistics(Year);
         }
         public void PostIpd(IpdDTO IpdDto)
         {
