@@ -34,7 +34,7 @@ namespace AASTHA2.Services
         }
         public IEnumerable<dynamic> GetOpdStatistics(int? Year = null)
         {
-            return _unitOfWork.Opds.GetStatistics(out totalCount, filter);
+            return _unitOfWork.Opds.GetStatistics(Year);
         }
         //public int OpdCount(string filter = "", bool ShowDeleted = false)
         //{
