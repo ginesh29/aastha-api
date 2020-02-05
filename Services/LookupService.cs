@@ -23,9 +23,10 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<LookupDTO>>(Lookup);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        public bool IsLookupExist(long id, string filter = "", string includeProperties="")
+
+        public bool IsLookupExist(string filter = "")
         {
-            return _unitOfWork.Lookups.FirstOrDefault( m=> m.Id == id, filter, includeProperties) != null;
+            return _unitOfWork.Lookups.FirstOrDefault( null, filter) != null;
         }
         public LookupDTO GetLookup(long id, string filter = "", string includeProperties="")
         {
