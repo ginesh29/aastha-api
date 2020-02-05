@@ -1,5 +1,6 @@
 ﻿using AASTHA2.Entities;
 using AASTHA2.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -12,18 +13,12 @@ namespace AASTHA2.Repositories
             : base(AASTHAContext)
         {
         }
-        public IEnumerable<dynamic> GetStatistics(out int totalCount, string filter)
+        public IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year)
         {
-            return Find(null, out totalCount, filter, "Charges")
-                  .GroupBy(grp => new { Month = grp.DischargeDate.Month, Year = grp.DischargeDate.Year })
-                  .Select(g => new
-                  {
-                      Year = g.Key.Year,
-                      Month = g.Key.Month,
-                      MonthName = g.FirstOrDefault().DischargeDate.ToString("MMMM"),
-                      TotalPatient = g.Count(),
-                      TotalCollection = g.SelectMany(x => x.Charges).Sum(d => d.Rate * d.Days) - g.Sum(m => m.Discount)
-                  });
+            var result = _AASTHAContext.Set<Sp_GetCollection_Result>().FromSql("GetIpdStatistics");
+            if (Year > 0)
+                result = result.Where(m => m.Year == Year);
+            return result;
         }
     }
 }

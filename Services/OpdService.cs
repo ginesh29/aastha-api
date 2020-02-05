@@ -32,7 +32,7 @@ namespace AASTHA2.Services
             var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<OpdDTO>(Opd);
         }
-        public IEnumerable<dynamic> GetOpdStatistics(string filter, out int totalCount)
+        public IEnumerable<dynamic> GetOpdStatistics(int? Year = null)
         {
             return _unitOfWork.Opds.GetStatistics(out totalCount, filter);
         }

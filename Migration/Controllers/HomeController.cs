@@ -185,7 +185,7 @@ namespace Migration.Controllers
         }
         public void OpdSql(out string str3)
         {
-            var opd = db.TblOpd;
+            var opd = db.TblOpd.Where(m=>m.Date.Value.Year>2013);
 
             var query = "SET IDENTITY_INSERT [dbo].[Opds] ON " + Environment.NewLine;
             foreach (var item in opd)

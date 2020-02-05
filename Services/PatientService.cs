@@ -23,9 +23,9 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        public IEnumerable<dynamic> GetPatientStatistics(string filter, out int totalCount)
+        public IEnumerable<dynamic> GetPatientStatistics(int? Year = null)
         {
-            return _unitOfWork.Patients.GetStatistics(out totalCount, filter);
+            return _unitOfWork.Patients.GetStatistics(Year);
         }
         public bool IsPatientExist(string filter = "")
         {

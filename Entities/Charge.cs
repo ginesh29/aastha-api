@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AASTHA2.Entities
 {
     public class Charge : BaseEntity
-    {   
+    {
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Days { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Rate { get; set; }
        
         public long LookupId { get; set; }

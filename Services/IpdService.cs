@@ -5,6 +5,7 @@ using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Services
@@ -18,7 +19,7 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetIpds(string filter, out int totalCount, string sort="", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public IEnumerable<dynamic> GetIpds(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
             IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<IpdDTO>>(Ipd);
@@ -26,16 +27,16 @@ namespace AASTHA2.Services
         }
         public bool IsIpdExist(string filter = "")
         {
-            return _unitOfWork.Ipds.FirstOrDefault(null,filter) != null;
+            return _unitOfWork.Ipds.FirstOrDefault(null, filter) != null;
         }
         public IpdDTO GetIpd(long id, string filter = "", string includeProperties = "")
         {
             var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<IpdDTO>(Ipd);
         }
-        public IEnumerable<dynamic> GetIpdStatistics(string filter, out int totalCount)
+        public IEnumerable<dynamic> GetIpdStatistics(int? Year = null)
         {
-            return _unitOfWork.Ipds.GetStatistics(out totalCount, filter);
+            return _unitOfWork.Ipds.GetStatistics(Year);
         }
         public void PostIpd(IpdDTO IpdDto)
         {
@@ -76,7 +77,7 @@ namespace AASTHA2.Services
         }
         public void RemoveIpd(IpdDTO IpdDto, string filter = "", bool removePhysical = false)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id,filter);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, filter);
             _unitOfWork.Ipds.Delete(Ipd, removePhysical);
 
             if (IpdDto.type == IpdType.Delivery)
