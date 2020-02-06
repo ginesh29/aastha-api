@@ -22,7 +22,6 @@ namespace AASTHA2._0.Controllers
         {
             var result = new
             {
-
                 patients = _patientService.GetPatientStatistics(Year),
                 opds = _opdService.GetOpdStatistics(Year),
                 ipds = _ipdService.GetIpdStatistics(Year)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace AASTHA2.DTO
 {
@@ -8,8 +7,9 @@ namespace AASTHA2.DTO
         public long id { get; set; }
         public string firstname { get; set; }
         public string middlename { get; set; }
+        public string fathername { get; set; }
         public string lastname { get; set; }
-        public string fullname => $@"{this.firstname } {this.middlename} {this.lastname}";
+        public string fullname => $"{this.firstname } {this.middlename} {(!string.IsNullOrEmpty(this.fathername) ? $"({this.fathername})" : string.Empty) } {this.lastname}";
         public long addressId { get; set; }
         public string mobile { get; set; }
         public int age { get; set; }
