@@ -37,18 +37,18 @@ namespace AASTHA2.Services
             var Appointment = _mapper.Map<Appointment>(AppointmentDto);
             _unitOfWork.Appointments.Create(Appointment);
             _unitOfWork.SaveChanges();
-            AppointmentDto.Id = Appointment.Id;
+            AppointmentDto.id = Appointment.Id;
         }
         public void PutAppointment(AppointmentDTO AppointmentDto)
         {
-            var Appointment = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == AppointmentDto.Id);
+            var Appointment = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == AppointmentDto.id);
             Appointment = _mapper.Map<AppointmentDTO, Appointment>(AppointmentDto, Appointment);
             _unitOfWork.Appointments.Update(Appointment);
             _unitOfWork.SaveChanges();
         }
         public void RemoveAppointment(AppointmentDTO Appointment, string filter = "", bool removePhysical = false)
         {
-            var AppointmentDto = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == Appointment.Id, filter);
+            var AppointmentDto = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == Appointment.id, filter);
             _unitOfWork.Appointments.Delete(AppointmentDto, removePhysical);
             _unitOfWork.SaveChanges();
         }

@@ -7,11 +7,11 @@ namespace AASTHA2.DTO
 {
     public class AppointmentDTO
     {
-        public long Id { get; set; }
-        public DateTime Date { get; set; }
-        public AppointmentType? Type { get; set; }
-        public string AppointmentType => this.Type.ToString();
-        public long? PatientId { get; set; }
-        public PatientDTO Patient { get; set; }
+        public long id { get; set; }
+        public DateTime date { get; set; }
+        public AppointmentType? type { get; set; }
+        public string AppointmentType => this.type.ToString();
+        public long? patientId { get; set; }
+        public PatientDTO patient { get; set; }
     }
 }

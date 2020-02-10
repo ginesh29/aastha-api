@@ -47,13 +47,14 @@ namespace AASTHA2.Controllers
             return Ipd;
         }
         [HttpPost]
-        public ActionResult<IpdDTO> PostIpd(IpdDTO IpdDTO)
+        public ActionResult<IpdDTO> PostIpd(IpdDTO IpdDTO, string includeProperties = "")
         {
             _IpdService.PostIpd(IpdDTO);
-            return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, IpdDTO);
+            var opd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
+            return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, opd);
         }
         [HttpPut]
-        public ActionResult<IpdDTO> PutIpd(IpdDTO IpdDTO)
+        public ActionResult<IpdDTO> PutIpd(IpdDTO IpdDTO, string includeProperties = "")
         {
             var Ipd = _IpdService.GetIpd(IpdDTO.id);
             if (Ipd == null)
@@ -61,7 +62,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _IpdService.PutIpd(IpdDTO);
-            Ipd = _IpdService.GetIpd(IpdDTO.id);
+            Ipd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, Ipd);
         }
         [HttpDelete("{id}")]
@@ -111,7 +112,7 @@ namespace AASTHA2.Controllers
                 foreach (var item in ipds)
                 {
                     workSheet.Cells[$"A{row}"].Value = item.uniqueId;
-                    workSheet.Cells[$"B{row}"].Value = item.Patient.fullname;
+                    workSheet.Cells[$"B{row}"].Value = item.patient.fullname;
                     workSheet.Cells[$"C{row}"].Value = item.ipdType;
                     workSheet.Cells[$"D{row}"].Value = item.addmissionDate;
                     workSheet.Cells[$"E{row}"].Value = item.dischargeDate;
@@ -120,7 +121,7 @@ namespace AASTHA2.Controllers
                     foreach (var charge in charges)
                     {
                         var amount = item.charges.FirstOrDefault(m => m.lookupId == charge.id)?.amount;
-                        workSheet.Cells[$"{alpha}{row}"].Value = amount>0?amount:0;
+                        workSheet.Cells[$"{alpha}{row}"].Value = amount > 0 ? amount : 0;
                         alpha++;
                     }
                     workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{alpha}{row})";

@@ -17,6 +17,6 @@ namespace AASTHA2.DTO
         public decimal otherCharge { get; set; }
         public decimal totalCharge => consultCharge + usgCharge + uptCharge + injectionCharge + otherCharge;
         public long? patientId { get; set; }
-        public PatientDTO Patient { get; set; }
+        public PatientDTO patient { get; set; }
     }
 }

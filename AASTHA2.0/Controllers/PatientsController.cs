@@ -38,13 +38,14 @@ namespace AASTHA2.Controllers
             return patient;
         }
         [HttpPost]
-        public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO)
+        public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO, string includeProperties = "")
         {
             _patientService.PostPatient(patientDTO);
-            return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patientDTO);
+            var patient = _patientService.GetPatient(patientDTO.id, null, includeProperties);
+            return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
         }
         [HttpPut]
-        public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO)
+        public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO, string includeProperties = "")
         {
             var patient = _patientService.GetPatient(patientDTO.id);
             if (patient == null)
@@ -52,7 +53,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _patientService.PutPatient(patientDTO);
-            patient = _patientService.GetPatient(patientDTO.id);
+            patient = _patientService.GetPatient(patientDTO.id,null,includeProperties);
             return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
         }
         [HttpDelete("{id}")]

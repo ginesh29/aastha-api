@@ -9,16 +9,16 @@ namespace AASTHA2.DTO
         public string middlename { get; set; }
         public string fathername { get; set; }
         public string lastname { get; set; }
-        public string fullname => $"{this.firstname } {this.middlename} {(!string.IsNullOrEmpty(this.fathername) ? $"({this.fathername})" : string.Empty) } {this.lastname}";
+        public string fullname => $"{this.firstname } {this.middlename}{(!string.IsNullOrEmpty(this.fathername) ? $"({this.fathername})" : string.Empty) } {this.lastname}";
         public long addressId { get; set; }
         public string mobile { get; set; }
         public int age { get; set; }
         public bool? isDeleted { get; set; }
-        public DateTime createdDate { get; set; }
-        public LookupDTO Address { get; set; }
-        public int updatedAge
+        public DateTime modifiedDate { get; set; }
+        public LookupDTO address { get; set; }
+        public int calculatedAge
         {
-            get { return age + (createdDate != DateTime.MinValue ? (DateTime.UtcNow.Year - createdDate.Year) : 0); }
+            get { return age + (modifiedDate != DateTime.MinValue ? (DateTime.UtcNow.Year - modifiedDate.Year) : 0); }
             set { age = value; }
         }
         //public ICollection<OpdDTO> opds { get; set; }

@@ -20,7 +20,7 @@ namespace AASTHA2.Controllers
         public dynamic GetLookups(string filter, string sort, int skip, int take, string includeProperties = "", string fields = "")
         {
             int totalCount;
-            var data = _LookupService.GetLookups(filter, out totalCount, sort,  skip, take, includeProperties,fields);
+            var data = _LookupService.GetLookups(filter, out totalCount, sort, skip, take, includeProperties, fields);
 
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
@@ -39,13 +39,14 @@ namespace AASTHA2.Controllers
             return Lookup;
         }
         [HttpPost]
-        public ActionResult<LookupDTO> PostLookup(LookupDTO LookupDTO)
+        public ActionResult<LookupDTO> PostLookup(LookupDTO LookupDTO, string includeProperties = "")
         {
             _LookupService.PostLookup(LookupDTO);
-            return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, LookupDTO);
+            var lookup = _LookupService.GetLookup(LookupDTO.id, null, includeProperties);
+            return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, lookup);
         }
         [HttpPut]
-        public ActionResult<LookupDTO> PutLookup(LookupDTO LookupDTO)
+        public ActionResult<LookupDTO> PutLookup(LookupDTO LookupDTO, string includeProperties = "")
         {
             var Lookup = _LookupService.GetLookup(LookupDTO.id);
             if (Lookup == null)
@@ -53,7 +54,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _LookupService.PutLookup(LookupDTO);
-            Lookup = _LookupService.GetLookup(LookupDTO.id);
+            Lookup = _LookupService.GetLookup(LookupDTO.id, null, includeProperties);
             return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, Lookup);
         }
         [HttpDelete("{id}")]
@@ -64,8 +65,8 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _LookupService.RemoveLookup(Lookup,"", removePhysical);
-            return CreatedAtAction("GetLookup", new { id =id }, Lookup);
+            _LookupService.RemoveLookup(Lookup, "", removePhysical);
+            return CreatedAtAction("GetLookup", new { id = id }, Lookup);
         }
     }
 }

@@ -46,20 +46,20 @@ namespace AASTHA2.Controllers
         public ActionResult<AppointmentDTO> PostAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
         {
             _AppointmentService.PostAppointment(AppointmentDTO);
-            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id, null, includeProperties);
-            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.Id }, Appointment);
+            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id, null, includeProperties);
+            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.id }, Appointment);
         }
         [HttpPut]
         public ActionResult<AppointmentDTO> PutAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
         {
-            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id);
+            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id);
             if (Appointment == null)
             {
                 return NotFound();
             }
             _AppointmentService.PutAppointment(AppointmentDTO);
-            Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id, null, includeProperties);
-            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.Id }, Appointment);
+            Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id, null, includeProperties);
+            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.id }, Appointment);
         }
         [HttpDelete("{id}")]
         public ActionResult<AppointmentDTO> DeleteAppointment(long id, bool removePhysical = false)

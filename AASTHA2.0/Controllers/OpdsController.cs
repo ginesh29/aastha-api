@@ -46,13 +46,14 @@ namespace AASTHA2.Controllers
             return Opd;
         }
         [HttpPost]
-        public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO)
+        public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO, string includeProperties = "")
         {
             _OpdService.PostOpd(OpdDTO);
-            return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, OpdDTO);
+            var opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
+            return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, opd);
         }
         [HttpPut]
-        public ActionResult<OpdDTO> PutOpd(OpdDTO OpdDTO)
+        public ActionResult<OpdDTO> PutOpd(OpdDTO OpdDTO, string includeProperties = "")
         {
             var Opd = _OpdService.GetOpd(OpdDTO.id);
             if (Opd == null)
@@ -60,7 +61,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _OpdService.PutOpd(OpdDTO);
-            Opd = _OpdService.GetOpd(OpdDTO.id);
+            Opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, Opd);
         }
         [HttpDelete("{id}")]
@@ -106,7 +107,7 @@ namespace AASTHA2.Controllers
                 {
                     workSheet.Cells[$"A{row}"].Value = item.id;
                     workSheet.Cells[$"B{row}"].Value = item.invoiceNo;
-                    workSheet.Cells[$"C{row}"].Value = item.Patient.fullname;
+                    workSheet.Cells[$"C{row}"].Value = item.patient.fullname;
                     workSheet.Cells[$"D{row}"].Value = item.caseType;
                     workSheet.Cells[$"E{row}"].Value = item.date;
                     workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd/mm/yyyy";
