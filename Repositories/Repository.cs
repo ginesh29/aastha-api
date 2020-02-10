@@ -32,17 +32,15 @@ namespace AASTHA2.Repositories
             if (predicate != null)
                 query = query.Where(predicate);
 
-            if (!string.IsNullOrEmpty(filter))
+            if (!string.IsNullOrEmpty(filter) && filter != "0")
             {
-                if(filter!="0")
-                {
-                    string dynamicQuery;
-                    object[] param;
-                    DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
-                    query = query.Where(dynamicQuery, param);
-                }               
+                string dynamicQuery;
+                object[] param;
+                DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
+                query = query.Where(dynamicQuery, param);
             }
             else
+                if (take <= 0)
                 take = 15;
 
             if (!string.IsNullOrEmpty(order))
