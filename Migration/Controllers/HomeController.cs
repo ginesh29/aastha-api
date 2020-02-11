@@ -160,7 +160,7 @@ namespace Migration.Controllers
         }
         public void PatientSql(out string str2)
         {
-            var patients = db.TblPatient;
+            var patients = db.TblPatient.Where(m=>!string.IsNullOrEmpty(m.FullName));
             var query = string.Empty;
             query += "SET IDENTITY_INSERT [dbo].[Patients] ON " + Environment.NewLine;
             foreach (var item in patients)
