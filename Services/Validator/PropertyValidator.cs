@@ -46,7 +46,9 @@ namespace AASTHA2.Validator
         protected override bool IsValid(PropertyValidatorContext context)
         {
             dynamic data = context.PropertyValue;
-            string filter = $"id-neq-{{{data.id}}} and Firstname-eq-{{{data.firstname}}} and Middlename-eq-{{{ data.middlename}}} and Fathername-eq-{{{ data.fathername}}} and Lastname-eq-{{{data.lastname}}} and isDeleted-neq-{{{true}}}";
+            string filter = $"id-neq-{{{data.id}}} and Firstname-eq-{{{data.firstname}}} and Middlename-eq-{{{ data.middlename}}} and Lastname-eq-{{{data.lastname}}} and isDeleted-neq-{{{true}}}";
+            if(!string.IsNullOrEmpty(data.fathername))
+                filter= $"{filter} and Fathername-eq-{{{ data.fathername}}}";
             if (context.PropertyValue != null && _patientService.IsPatientExist(filter))
                 return false;
             return true;
