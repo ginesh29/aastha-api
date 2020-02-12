@@ -16,6 +16,7 @@ namespace AASTHA2.DTO
         public DateTime addmissionDate { get; set; }
         public DateTime dischargeDate { get; set; }
         public decimal discount { get; set; }
+        public bool? isDeleted { get; set; }
 
         public long? patientId { get; set; }
         public PatientDTO patient { get; set; }

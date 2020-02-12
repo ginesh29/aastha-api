@@ -51,10 +51,10 @@ namespace AASTHA2.Services
             _unitOfWork.Lookups.Update(Lookup);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveLookup(LookupDTO Lookup, string filter = "", bool removePhysical = false)
+        public void RemoveLookup(LookupDTO LookupDto, string filter = "", bool removePhysical = false)
         {
-            var LookupDto = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == Lookup.id, filter);
-            _unitOfWork.Lookups.Delete(LookupDto, removePhysical);
+            var Lookup = _mapper.Map<Lookup>(LookupDto);
+            _unitOfWork.Lookups.Delete(Lookup, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

@@ -54,10 +54,10 @@ namespace AASTHA2.Services
             _unitOfWork.Patients.Update(patient);
             _unitOfWork.SaveChanges();
         }
-        public void RemovePatient(PatientDTO patient, string filter = "", bool removePhysical = false)
+        public void RemovePatient(PatientDTO patientDto, string filter = "", bool removePhysical = false)
         {
-            var patientDto = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patient.id);
-            _unitOfWork.Patients.Delete(patientDto, removePhysical);
+            var patient = _mapper.Map<Patient>(patientDto);
+            _unitOfWork.Patients.Delete(patient, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

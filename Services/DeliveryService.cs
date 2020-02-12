@@ -51,10 +51,10 @@ namespace AASTHA2.Services
             _unitOfWork.Deliveries.Update(Delivery);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveDelivery(DeliveryDTO Delivery, string filter = "", bool removePhysical = false)
+        public void RemoveDelivery(DeliveryDTO DeliveryDto, string filter = "", bool removePhysical = false)
         {
-            var DeliveryDto = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == Delivery.id, filter);
-            _unitOfWork.Deliveries.Delete(DeliveryDto, removePhysical);
+            var Delivery = _mapper.Map<Delivery>(DeliveryDto);
+            _unitOfWork.Deliveries.Delete(Delivery, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

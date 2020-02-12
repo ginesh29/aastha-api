@@ -54,11 +54,11 @@ namespace AASTHA2.Services
             _unitOfWork.Opds.Update(Opd);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveOpd(OpdDTO Opd, string filter = "", bool removePhysical = false)
+        public void RemoveOpd(OpdDTO OpdDto, string filter = "", bool removePhysical = false)
         {
-            var OpdDto = _unitOfWork.Opds.FirstOrDefault(m => m.Id == Opd.id, filter);
-            _unitOfWork.Opds.Delete(OpdDto, removePhysical);
-            _unitOfWork.SaveChanges();
+            var Opd = _mapper.Map<Opd>(OpdDto);
+            _unitOfWork.Opds.Delete(Opd, removePhysical);
+            _unitOfWork.SaveChanges();            
         }
     }
 }

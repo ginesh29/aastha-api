@@ -46,10 +46,10 @@ namespace AASTHA2.Services
             _unitOfWork.Appointments.Update(Appointment);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveAppointment(AppointmentDTO Appointment, string filter = "", bool removePhysical = false)
+        public void RemoveAppointment(AppointmentDTO AppointmentDto, string filter = "", bool removePhysical = false)
         {
-            var AppointmentDto = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == Appointment.id, filter);
-            _unitOfWork.Appointments.Delete(AppointmentDto, removePhysical);
+            var Appointment = _mapper.Map<Appointment>(AppointmentDto);
+            _unitOfWork.Appointments.Delete(Appointment, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

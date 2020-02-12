@@ -46,10 +46,10 @@ namespace AASTHA2.Services
             _unitOfWork.Charges.Update(Charge);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveCharge(ChargeDTO Charge, string filter = "", bool removePhysical = false)
+        public void RemoveCharge(ChargeDTO ChargeDto, string filter = "", bool removePhysical = false)
         {
-            var ChargeDto = _unitOfWork.Charges.FirstOrDefault(m => m.Id == Charge.id, filter);
-            _unitOfWork.Charges.Delete(ChargeDto, removePhysical);
+            var Charge = _mapper.Map<Charge>(ChargeDto);
+            _unitOfWork.Charges.Delete(Charge, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }

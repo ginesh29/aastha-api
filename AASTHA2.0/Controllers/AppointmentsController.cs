@@ -62,9 +62,10 @@ namespace AASTHA2.Controllers
             return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.id }, Appointment);
         }
         [HttpDelete("{id}")]
-        public ActionResult<AppointmentDTO> DeleteAppointment(long id, bool removePhysical = false)
+        public ActionResult<AppointmentDTO> DeleteAppointment(long id, bool isDeleted, bool removePhysical = false)
         {
             var Appointment = _AppointmentService.GetAppointment(id);
+            Appointment.isDeleted = isDeleted;
             if (Appointment == null)
             {
                 return NotFound();

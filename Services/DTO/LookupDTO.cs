@@ -10,6 +10,7 @@ namespace AASTHA2.DTO
         public string name { get; set; }
         public LookupType type { get; set; }
         public long? parentId { get; set; }
+        public bool? isDeleted { get; set; }
 
         public LookupDTO parent { get; set; }
         public ICollection<LookupDTO> children { get; set; }

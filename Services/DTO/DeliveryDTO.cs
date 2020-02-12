@@ -11,5 +11,6 @@ namespace AASTHA2.DTO
         public Gender? gender { get; set; }
         public string genderName => this.gender.ToString();
         public decimal babyWeight { get; set; }
+        public bool? isDeleted { get; set; }
     }
 }

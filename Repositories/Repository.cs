@@ -89,7 +89,6 @@ namespace AASTHA2.Repositories
             else
             {
                 var dbEntityEntry = _AASTHAContext.Entry(entity);
-                dbEntityEntry.Property("IsDeleted").CurrentValue = true;
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }
@@ -100,7 +99,6 @@ namespace AASTHA2.Repositories
             else
             {
                 var dbEntityEntry = _AASTHAContext.Entry(entities);
-                dbEntityEntry.Property("IsDeleted").CurrentValue = true;
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }

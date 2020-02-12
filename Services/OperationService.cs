@@ -51,10 +51,10 @@ namespace AASTHA2.Services
             _unitOfWork.Operations.Update(Operation);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveOperation(OperationDTO Operation, string filter = "",  bool removePhysical = false)
+        public void RemoveOperation(OperationDTO OperationDto, string filter = "",  bool removePhysical = false)
         {
-            var OperationDto = _unitOfWork.Operations.FirstOrDefault(m => m.Id == Operation.id, filter);
-            _unitOfWork.Operations.Delete(OperationDto, removePhysical);
+            var Operation = _mapper.Map<Operation>(OperationDto);
+            _unitOfWork.Operations.Delete(Operation, removePhysical);
             _unitOfWork.SaveChanges();
         }
     }
