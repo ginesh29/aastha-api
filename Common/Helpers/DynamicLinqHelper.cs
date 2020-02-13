@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace AASTHA2.Common.Helpers
@@ -36,68 +34,16 @@ namespace AASTHA2.Common.Helpers
                 i++;
             }
         }
-        public static IEnumerable<T> Map<T>(this IEnumerable<T> source, Action<T> action)
+        public static dynamic ToPageList(this IEnumerable source, int skip, int take)
         {
-            foreach (var item in source)
-            {
-                action(item);
-                yield return item;
-            }
+            var query = source.AsQueryable();
+            int totalCount = source != null ? query.Count() : 0;
+            if (skip > 0)
+                source = query.Skip(skip);
+            if (take > 0)
+                source = query.Take(take);
+
+            return new { Data = query, TotalCount = totalCount };
         }
-        //charges.Select(i => { i.B = bValue; return i; })
-        //public static IQueryable DynamicSearch(this IQueryable source, string search, object[] param)
-        //{
-        //    var data = source;
-        //    if (!string.IsNullOrEmpty(search))
-        //        data = source.Where(search, param);
-        //    return data;
-        //}
     }
-
-    //public static class OrederByHelper
-    //{
-    //    public class SortModel
-    //    {
-    //        public string PropertyName { get; set; }
-    //        public SortOrder Order { get; set; }
-    //    }
-
-    //    public static IQueryable<T> DynamicOrderBy<T>(this IQueryable<T> source, List<SortModel> sortModel)
-    //    {
-    //        var expression = source.Expression;
-    //        int count = 0;
-    //        foreach (var item in sortModel)
-    //        {
-    //            var parameter = Expression.Parameter(typeof(T), "x");
-    //            var selector = Expression.PropertyOrField(parameter, item.PropertyName);
-    //            var method = string.Equals(item.Order.ToString(), SortOrder.Desc.ToString(), StringComparison.OrdinalIgnoreCase) ? (count == 0 ? "OrderByDescending" : "ThenByDescending") : (count == 0 ? "OrderBy" : "ThenBy");
-    //            expression = Expression.Call(typeof(Queryable), method, new Type[] { source.ElementType, selector.Type }, expression, Expression.Quote(Expression.Lambda(selector, parameter)));
-    //            count++;
-    //        }
-    //        return count > 0 ? source.Provider.CreateQuery<T>(expression) : source;
-    //    }
-    //    private static SortOrder GetOrder(string order)
-    //    {
-    //        switch (order)
-    //        {
-    //            case "asc":
-    //                return SortOrder.Asc;
-    //            case "desc":
-    //                return SortOrder.Desc;
-    //            default:
-    //                return SortOrder.Asc;
-    //        }
-    //    }
-    //    public static List<SortModel> GenerateSortCriteria(string Sort)
-    //    {
-    //        var sortModel = new List<SortModel>();
-    //        foreach (var item in Sort.Split(","))
-    //        {
-    //            var sp = item.Split("-");
-    //            sortModel.Add(new SortModel { PropertyName = sp[0], Order = GetOrder(sp[1]) });
-    //        }
-    //        return sortModel;
-    //    }
-
-    //}
 }

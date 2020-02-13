@@ -4,7 +4,6 @@ using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using AutoMapper;
 using System.Collections.Generic;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Services
 {
@@ -17,10 +16,10 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetCharges(string filter, out int totalCount, string sort="", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public IEnumerable<dynamic> GetCharges(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
             IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
-            var mapped = _mapper.Map<IEnumerable<ChargeDTO>>(Charge);
+            var mapped = _mapper.Map<IEnumerable<ChargeDTO>>(Charge).ToPageList(skip, take);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
         //public bool IsChargeExist(long id, string filter = "", string includeProperties="")
