@@ -67,6 +67,7 @@ namespace AASTHA2.Repositories
         }
         //public void CreateRange(IEnumerable<T> entities)
         //{
+        //    db.Configuration.AutoDetectChangesEnabled = false;
         //    this._AASTHAContext.Set<T>().AddRange(entities);
         //}
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
