@@ -5,8 +5,10 @@ using Migration.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace Migration.Controllers
 {
@@ -366,8 +368,9 @@ namespace Migration.Controllers
 
         public string toSentenceCase(string str)
         {
-            string sentence = str.ToLower();
-            return !string.IsNullOrEmpty(str) ? $"{sentence[0].ToString().ToUpper()}{sentence.Substring(1)}" : string.Empty;
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+            return textInfo.ToTitleCase(str.ToLower());
         }
         public class Model
         {
