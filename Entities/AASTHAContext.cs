@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,8 @@ namespace AASTHA2.Entities
         public DbSet<Operation> Operations { get; set; }
         public DbSet<IpdLookup> IpdLookups { get; set; }
         public DbSet<Charge> Charges { get; set; }
-        public DbSet<Sp_GetCollection_Result> Sp_GetCollection { get; set; }
+        [NotMapped]
+        public  DbSet<Sp_GetCollection_Result> Sp_GetCollection { get; set; }
 
         public override int SaveChanges()
         {
