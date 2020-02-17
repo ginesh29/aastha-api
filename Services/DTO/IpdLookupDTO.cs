@@ -9,5 +9,6 @@ namespace AASTHA2.DTO
     {
         public long id { get; set; }
         public long lookupId { get; set; }
+        public LookupDTO lookup { get; set; }
     }    
 }
