@@ -1,6 +1,7 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.DTO;
 using AASTHA2.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -18,10 +19,12 @@ namespace AASTHA2.Controllers
     {
         private static IpdService _IpdService;
         private static LookupService _LookupService;
-        public IpdsController(ServicesWrapper ServicesWrapper)
+        private readonly IMapper _mapper;
+        public IpdsController(ServicesWrapper ServicesWrapper, IMapper mapper)
         {
             _IpdService = ServicesWrapper.IpdService;
             _LookupService = ServicesWrapper.LookupService;
+            _mapper = mapper;
         }
         // GET: api/Ipds
         [HttpGet]
@@ -56,12 +59,15 @@ namespace AASTHA2.Controllers
         [HttpPut]
         public ActionResult<IpdDTO> PutIpd(IpdDTO IpdDTO, string includeProperties = "")
         {
-            var Ipd = _IpdService.GetIpd(IpdDTO.id);
+            var Ipd = _IpdService.GetIpd(IpdDTO.id, "", includeProperties);
             if (Ipd == null)
             {
                 return NotFound();
             }
             _IpdService.PutIpd(IpdDTO);
+            var removedLookup = Ipd.ipdLookups.Where(i => i.ipdId == IpdDTO.id && !IpdDTO.ipdLookups.Select(m=>m.id).Contains(i.id));
+            //var map =  _mapper.Map<IEnumerable<LookupDTO>>(removedLookup);
+            //_LookupService.RemoveLookupRange(map);
             Ipd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, Ipd);
         }

@@ -3,6 +3,7 @@
     public class ChargeDTO
     {
         public long id { get; set; }
+        public long ipdId { get; set; }
         public decimal days { get; set; }
         public decimal rate { get; set; }
         public decimal amount => (decimal)this.days * (decimal)this.rate;

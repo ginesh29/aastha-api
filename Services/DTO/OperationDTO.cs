@@ -7,6 +7,7 @@ namespace AASTHA2.DTO
     public class OperationDTO
     {
         public long id { get; set; }
+        public long ipdId { get; set; }
         public DateTime date { get; set; }
     }
 }

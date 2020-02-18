@@ -59,20 +59,9 @@ namespace AASTHA2.Services
         }
         public void PutIpd(IpdDTO IpdDto)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "");
-            Ipd = _mapper.Map<Ipd>(Ipd);
-            //var Ipd1 = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id,"", "Patient,Charges,DeliveryDetail,OperationDetail,IpdLookups.Lookup");
+            Ipd = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
             _unitOfWork.Ipds.Update(Ipd);
-            if (IpdDto.type == IpdType.Delivery)
-            {
-                var delivery = _mapper.Map<Delivery>(Ipd.DeliveryDetail);
-                _unitOfWork.Deliveries.Update(delivery);
-            }
-            if (IpdDto.type == IpdType.Operation)
-            {
-                var operation = _mapper.Map<Operation>(Ipd.OperationDetail);
-                _unitOfWork.Operations.Update(operation);
-            }
             _unitOfWork.SaveChanges();
         }
         public void RemoveIpd(IpdDTO IpdDto, string filter = "", bool removePhysical = false)
@@ -91,6 +80,6 @@ namespace AASTHA2.Services
                 _unitOfWork.Operations.Update(operation);
             }
             _unitOfWork.SaveChanges();
-        }
+        }        
     }
 }

@@ -56,6 +56,6 @@ namespace AASTHA2.Services
             var Lookup = _mapper.Map<Lookup>(LookupDto);
             _unitOfWork.Lookups.Delete(Lookup, removePhysical);
             _unitOfWork.SaveChanges();
-        }
+        }       
     }
 }
