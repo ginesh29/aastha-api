@@ -32,7 +32,6 @@ namespace AASTHA2.Controllers
         {
             int totalCount;
             var data = _IpdService.GetIpds(filter, out totalCount, sort, skip, take, includeProperties, fields);
-
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
@@ -42,7 +41,6 @@ namespace AASTHA2.Controllers
         public ActionResult<IpdDTO> GetIpd(long id, string filter)
         {
             var Ipd = _IpdService.GetIpd(id, filter);
-
             if (Ipd == null)
             {
                 return NotFound();
@@ -63,11 +61,10 @@ namespace AASTHA2.Controllers
             if (Ipd == null)
             {
                 return NotFound();
-            }
-            _IpdService.PutIpd(IpdDTO);
+            }          
             var removedLookup = Ipd.ipdLookups.Where(i => i.ipdId == IpdDTO.id && !IpdDTO.ipdLookups.Select(m=>m.id).Contains(i.id));
-            //var map =  _mapper.Map<IEnumerable<LookupDTO>>(removedLookup);
-            //_LookupService.RemoveLookupRange(map);
+            _IpdService.RemoveIpdLookup(removedLookup,"",true);
+            _IpdService.PutIpd(IpdDTO);
             Ipd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, Ipd);
         }

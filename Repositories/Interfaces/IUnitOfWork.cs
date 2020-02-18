@@ -10,6 +10,7 @@ namespace AASTHA2.Interfaces
         IPatientRepository Patients { get; }
         IOpdRepository Opds { get; }
         IIpdRepository Ipds { get; }
+        IIpdLookupRepository IpdLookups { get; }
         ILookupRepository Lookups { get; }
         IOperationRepository Operations { get; }
         IDeliveryRepository Deliveries { get; }

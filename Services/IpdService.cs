@@ -59,7 +59,7 @@ namespace AASTHA2.Services
         }
         public void PutIpd(IpdDTO IpdDto)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id,"", "Patient,Charges,DeliveryDetail,OperationDetail,IpdLookups.Lookup");
+            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "", "Patient,Charges,DeliveryDetail,OperationDetail,IpdLookups.Lookup");
             Ipd = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
             _unitOfWork.Ipds.Update(Ipd);
             _unitOfWork.SaveChanges();
@@ -68,18 +68,17 @@ namespace AASTHA2.Services
         {
             var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, filter);
             _unitOfWork.Ipds.Delete(Ipd, removePhysical);
-
-            if (IpdDto.type == IpdType.Delivery)
+            _unitOfWork.SaveChanges();
+        }
+        public void RemoveIpdLookup(IEnumerable<IpdLookupDTO> ipdLookupDTO, string filter = "", bool removePhysical = false)
+        {
+            int totalCount;
+            foreach (var item in ipdLookupDTO)
             {
-                var delivery = _mapper.Map<Delivery>(IpdDto.deliveryDetail);
-                _unitOfWork.Deliveries.Update(delivery);
-            }
-            if (IpdDto.type == IpdType.Operation)
-            {
-                var operation = _mapper.Map<Operation>(IpdDto.operationDetail);
-                _unitOfWork.Operations.Update(operation);
+                var Ipd = _unitOfWork.IpdLookups.FirstOrDefault(m => m.Id == item.id, filter);
+                _unitOfWork.IpdLookups.Delete(Ipd, removePhysical);
             }
             _unitOfWork.SaveChanges();
-        }        
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace AASTHA2.Repositories
         private IOpdRepository _opd;
         private IIpdRepository _ipd;
         private ILookupRepository _lookup;
+        private IIpdLookupRepository _ipdLookup;
         private IDeliveryRepository _delivery;
         private IOperationRepository _operation;
         private IChargeRepository _charge;
@@ -65,6 +66,17 @@ namespace AASTHA2.Repositories
                     _ipd = new IpdRepository(_AASTHAContext);
                 }
                 return _ipd;
+            }
+        }
+        public IIpdLookupRepository IpdLookups
+        {
+            get
+            {
+                if (_ipdLookup == null)
+                {
+                    _ipdLookup = new IpdLookupRepository(_AASTHAContext);
+                }
+                return _ipdLookup;
             }
         }
         public ILookupRepository Lookups

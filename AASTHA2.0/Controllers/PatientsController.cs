@@ -30,7 +30,6 @@ namespace AASTHA2.Controllers
         public ActionResult<PatientDTO> GetPatient(long id, string filter)
         {
             var patient = _patientService.GetPatient(id, filter);
-
             if (patient == null)
             {
                 return NotFound();
