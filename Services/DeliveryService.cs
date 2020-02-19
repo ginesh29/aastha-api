@@ -17,9 +17,9 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetDeliveries(string filter, out int totalCount, string sort="", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public IEnumerable<dynamic> GetDeliveries(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
-            IEnumerable<Delivery> Delivery = _unitOfWork.Deliveries.Find(null, out totalCount, filter, includeProperties,  sort, skip, take);
+            IEnumerable<Delivery> Delivery = _unitOfWork.Deliveries.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<DeliveryDTO>>(Delivery);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
@@ -27,9 +27,9 @@ namespace AASTHA2.Services
         //{
         //    return _unitOfWork.Deliverys.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public DeliveryDTO GetDelivery(long id, string filter = "", string includeProperties="")
+        public DeliveryDTO GetDelivery(long id, string filter = "", string includeProperties = "")
         {
-            var Delivery = _unitOfWork.Deliveries.FirstOrDefault( m=> m.Id == id, filter, includeProperties);
+            var Delivery = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<DeliveryDTO>(Delivery);
         }
         //public int DeliveryCount(string filter = "", bool ShowDeleted = false)
@@ -46,8 +46,7 @@ namespace AASTHA2.Services
         }
         public void PutDelivery(DeliveryDTO DeliveryDto)
         {
-            var Delivery = _unitOfWork.Deliveries.FirstOrDefault(m => m.Id == DeliveryDto.id);
-            Delivery = _mapper.Map<DeliveryDTO, Delivery>(DeliveryDto, Delivery);
+            var Delivery = _mapper.Map<DeliveryDTO, Delivery>(DeliveryDto);
             _unitOfWork.Deliveries.Update(Delivery);
             _unitOfWork.SaveChanges();
         }

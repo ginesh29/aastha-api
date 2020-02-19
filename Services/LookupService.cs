@@ -46,8 +46,7 @@ namespace AASTHA2.Services
         }
         public void PutLookup(LookupDTO LookupDto)
         {
-            var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == LookupDto.id);
-            Lookup = _mapper.Map<LookupDTO, Lookup>(LookupDto, Lookup);
+            var Lookup = _mapper.Map<LookupDTO, Lookup>(LookupDto);
             _unitOfWork.Lookups.Update(Lookup);
             _unitOfWork.SaveChanges();
         }

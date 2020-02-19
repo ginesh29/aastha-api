@@ -49,8 +49,7 @@ namespace AASTHA2.Services
         }
         public void PutOpd(OpdDTO OpdDto)
         {
-            var Opd = _unitOfWork.Opds.FirstOrDefault(m => m.Id == OpdDto.id);
-            Opd = _mapper.Map<OpdDTO, Opd>(OpdDto, Opd);
+           var Opd = _mapper.Map<OpdDTO, Opd>(OpdDto);
             _unitOfWork.Opds.Update(Opd);
             _unitOfWork.SaveChanges();
         }

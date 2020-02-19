@@ -59,20 +59,18 @@ namespace AASTHA2.Services
         }
         public void PutIpd(IpdDTO IpdDto)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, "", "Patient,Charges,DeliveryDetail,OperationDetail,IpdLookups.Lookup");
-            Ipd = _mapper.Map<IpdDTO, Ipd>(IpdDto, Ipd);
+            var Ipd = _mapper.Map<IpdDTO, Ipd>(IpdDto);
             _unitOfWork.Ipds.Update(Ipd);
             _unitOfWork.SaveChanges();
         }
         public void RemoveIpd(IpdDTO IpdDto, string filter = "", bool removePhysical = false)
         {
-            var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == IpdDto.id, filter);
+            var Ipd = _mapper.Map<Ipd>(IpdDto);
             _unitOfWork.Ipds.Delete(Ipd, removePhysical);
             _unitOfWork.SaveChanges();
         }
         public void RemoveIpdLookup(IEnumerable<IpdLookupDTO> ipdLookupDTO, string filter = "", bool removePhysical = false)
         {
-            int totalCount;
             foreach (var item in ipdLookupDTO)
             {
                 var Ipd = _unitOfWork.IpdLookups.FirstOrDefault(m => m.Id == item.id, filter);

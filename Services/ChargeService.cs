@@ -40,8 +40,7 @@ namespace AASTHA2.Services
         }
         public void PutCharge(ChargeDTO ChargeDto)
         {
-            var Charge = _unitOfWork.Charges.FirstOrDefault(m => m.Id == ChargeDto.id);
-            Charge = _mapper.Map<ChargeDTO, Charge>(ChargeDto, Charge);
+            var Charge = _mapper.Map<ChargeDTO, Charge>(ChargeDto);
             _unitOfWork.Charges.Update(Charge);
             _unitOfWork.SaveChanges();
         }

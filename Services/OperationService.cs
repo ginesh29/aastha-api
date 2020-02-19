@@ -17,7 +17,7 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetOperations(string filter, out int totalCount, string sort="", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public IEnumerable<dynamic> GetOperations(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
         {
             IEnumerable<Operation> Operation = _unitOfWork.Operations.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
             var mapped = _mapper.Map<IEnumerable<OperationDTO>>(Operation);
@@ -27,9 +27,9 @@ namespace AASTHA2.Services
         //{
         //    return _unitOfWork.Operations.IsExist( => m.Id == id, filter, includeProperties);
         //}
-        public OperationDTO GetOperation(long id, string filter = "", string includeProperties="")
+        public OperationDTO GetOperation(long id, string filter = "", string includeProperties = "")
         {
-            var Operation = _unitOfWork.Operations.FirstOrDefault( m=> m.Id == id, filter, includeProperties);
+            var Operation = _unitOfWork.Operations.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<OperationDTO>(Operation);
         }
         //public int OperationCount(string filter = "", bool ShowDeleted = false)
@@ -46,12 +46,11 @@ namespace AASTHA2.Services
         }
         public void PutOperation(OperationDTO OperationDto)
         {
-            var Operation = _unitOfWork.Operations.FirstOrDefault(m => m.Id == OperationDto.id);
-            Operation = _mapper.Map<OperationDTO, Operation>(OperationDto, Operation);
+            var Operation = _mapper.Map<OperationDTO, Operation>(OperationDto);
             _unitOfWork.Operations.Update(Operation);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveOperation(OperationDTO OperationDto, string filter = "",  bool removePhysical = false)
+        public void RemoveOperation(OperationDTO OperationDto, string filter = "", bool removePhysical = false)
         {
             var Operation = _mapper.Map<Operation>(OperationDto);
             _unitOfWork.Operations.Delete(Operation, removePhysical);

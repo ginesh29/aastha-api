@@ -48,9 +48,8 @@ namespace AASTHA2.Services
             patientDto.id = patient.Id;
         }
         public void PutPatient(PatientDTO patientDto)
-        {
-            var patient = _unitOfWork.Patients.FirstOrDefault(m => m.Id == patientDto.id);
-            patient = _mapper.Map<PatientDTO, Patient>(patientDto, patient);
+        {            
+           var patient = _mapper.Map<PatientDTO, Patient>(patientDto);
             _unitOfWork.Patients.Update(patient);
             _unitOfWork.SaveChanges();
         }

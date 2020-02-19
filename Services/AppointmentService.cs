@@ -41,8 +41,7 @@ namespace AASTHA2.Services
         }
         public void PutAppointment(AppointmentDTO AppointmentDto)
         {
-            var Appointment = _unitOfWork.Appointments.FirstOrDefault(m => m.Id == AppointmentDto.id);
-            Appointment = _mapper.Map<AppointmentDTO, Appointment>(AppointmentDto, Appointment);
+            var Appointment = _mapper.Map<AppointmentDTO, Appointment>(AppointmentDto);
             _unitOfWork.Appointments.Update(Appointment);
             _unitOfWork.SaveChanges();
         }
