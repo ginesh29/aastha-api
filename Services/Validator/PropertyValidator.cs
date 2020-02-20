@@ -96,7 +96,7 @@ namespace AASTHA2.Validator
         protected override bool IsValid(PropertyValidatorContext context)
         {
             dynamic data = context.PropertyValue;
-            string filter = $"id-neq-{{{data.Id}}} and date-eq-{{{data.Date}}} and patientId-eq-{{{ data.PatientId}}} and isDeleted-neq-{{{true}}}";
+            string filter = $"id-neq-{{{data.id}}} and date-eq-{{{data.date}}} and patientId-eq-{{{ data.patientId}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _appointmentService.IsAppointmentExist(filter))
                 return false;
             return true;
