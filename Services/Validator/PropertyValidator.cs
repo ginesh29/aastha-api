@@ -54,6 +54,22 @@ namespace AASTHA2.Validator
             return true;
         }
     }
+    public class ExistUserValidator : PropertyValidator
+    {
+        private static UserService _userService;
+        public ExistUserValidator(ServicesWrapper ServicesWrapper) : base("{PropertyName} already exist.")
+        {
+            _userService = ServicesWrapper.UserService;
+        }
+        protected override bool IsValid(PropertyValidatorContext context)
+        {
+            dynamic data = context.PropertyValue;
+            string filter = $"id-neq-{{{data.id}}} and Username-eq-{{{data.firstname}}} and isDeleted-neq-{{{true}}}";
+            if (context.PropertyValue != null && _userService.IsUserExist(filter))
+                return false;
+            return true;
+        }
+    }
     public class ExistLookupValidator : PropertyValidator
     {
         private static LookupService _lookupService;
