@@ -64,10 +64,10 @@ namespace Migration.Controllers
             query += "TRUNCATE TABLE[dbo].[Opds] " + Environment.NewLine;
             query += "DELETE FROM[dbo].[Ipds] DBCC CHECKIDENT('dbo.Ipds', RESEED, 0) " + Environment.NewLine;
             query += "DELETE FROM[dbo].[Patients] DBCC CHECKIDENT('dbo.Patients', RESEED, 0) " + Environment.NewLine;
-            query += "DELETE FROM[dbo].[Lookups] DBCC CHECKIDENT('dbo.Lookups', RESEED, 0) " + Environment.NewLine;           
+            query += "DELETE FROM[dbo].[Lookups] DBCC CHECKIDENT('dbo.Lookups', RESEED, 0) " + Environment.NewLine;
             var deliveries = db.DeliveryMaster.Where(m => !string.IsNullOrEmpty(m.Delivery));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
-            foreach (var item in deliveries)
+            foreach (var item in deliveries.Where(m => !string.IsNullOrEmpty(m.Delivery)))
             {
                 item.Delivery = item.Delivery.Contains("'") ? item.Delivery.Replace("'", "''") : item.Delivery;
                 query += $@"INSERT INTO [dbo].[Lookups] ([Id], [Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ({item.DeliveryTypeId},'{toSentenceCase(item.Delivery)}',{(int)LookupType.DeliveryType},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
@@ -75,7 +75,7 @@ namespace Migration.Controllers
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Operation Diagnosis + 100
-            var diagnoses = db.DiagnosisMaster;
+            var diagnoses = db.DiagnosisMaster.Where(m => !string.IsNullOrEmpty(m.DiagnosisType));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in diagnoses)
             {
@@ -85,7 +85,7 @@ namespace Migration.Controllers
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //General Diagnosis + 200
-            var generals = db.GeneralDiagnosis;
+            var generals = db.GeneralDiagnosis.Where(m => !string.IsNullOrEmpty(m.GeneralDiagnosisName));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in generals)
             {
@@ -95,7 +95,7 @@ namespace Migration.Controllers
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Operation Type +300
-            var operations = db.OperationMaster;
+            var operations = db.OperationMaster.Where(m => !string.IsNullOrEmpty(m.OperationType));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in operations)
             {
@@ -106,7 +106,7 @@ namespace Migration.Controllers
 
 
             //Medicine Type + 400
-            var medicineTypes = db.TblMedicineType;
+            var medicineTypes = db.TblMedicineType.Where(m => !string.IsNullOrEmpty(m.MedicineType));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in medicineTypes)
             {
@@ -116,7 +116,7 @@ namespace Migration.Controllers
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Medicine + 500
-            var medicines = db.MedicineMaster;
+            var medicines = db.MedicineMaster.Where(m => !string.IsNullOrEmpty(m.MedicineName));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in medicines)
             {
@@ -127,7 +127,7 @@ namespace Migration.Controllers
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
 
             //Charges Master + 65000
-            var chargesMasters = db.IpdChargesMaster;
+            var chargesMasters = db.IpdChargesMaster.Where(m => !string.IsNullOrEmpty(m.ChargeTitle));
             query += "SET IDENTITY_INSERT [dbo].[Lookups] ON " + Environment.NewLine;
             foreach (var item in chargesMasters)
             {
@@ -162,7 +162,7 @@ namespace Migration.Controllers
         }
         public void PatientSql(out string str2)
         {
-            var patients = db.TblPatient.Where(m=> !string.IsNullOrEmpty(m.FullName));
+            var patients = db.TblPatient.Where(m => !string.IsNullOrEmpty(m.FullName));
             var query = string.Empty;
             query += "SET IDENTITY_INSERT [dbo].[Patients] ON " + Environment.NewLine;
             foreach (var item in patients)
@@ -187,7 +187,7 @@ namespace Migration.Controllers
         }
         public void OpdSql(out string str3)
         {
-            var opd = db.TblOpd.Where(m=>m.Date.Value.Year>2013);
+            var opd = db.TblOpd.Where(m => m.Date.Value.Year > 2013);
 
             var query = "SET IDENTITY_INSERT [dbo].[Opds] ON " + Environment.NewLine;
             foreach (var item in opd)
@@ -343,7 +343,7 @@ namespace Migration.Controllers
         }
         public void ChargeSql(out string str8)
         {
-            var opd = db.IpdChargeDetails.Where(m => m.IpdId > 0);
+            var opd = db.IpdChargeDetails.Where(m => m.IpdId > 0 && m.Amount > 0);
             var query = string.Empty;
             foreach (var item in opd)
             {

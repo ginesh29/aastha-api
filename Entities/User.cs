@@ -14,8 +14,8 @@ namespace AASTHA2.Entities
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsSuperAdmin { get; set; }
-        [ForeignKey("AddressId")]
-        [NotMapped]
-        public Lookup Address { get; set; }       
+        //[ForeignKey("AddressId")]
+        //[NotMapped]
+        //public Lookup Address { get; set; }       
     }
 }
