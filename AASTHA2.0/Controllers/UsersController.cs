@@ -19,9 +19,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetUsers([FromQuery]FilterModel filterModel)
         {
-            int totalCount;
-            var data = _userService.GetUsers(filterModel, out totalCount);
-            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
+            var result = _userService.GetUsers(filterModel);
             return Ok(result);
         }
 

@@ -43,7 +43,7 @@ namespace AASTHA2.Common.Helpers
             if (take > 0)
                 source = query.Take(take);
 
-            return new { Data = query, TotalCount = totalCount };
+            return new { Data = source, TotalCount = totalCount };
         }
     }
 }

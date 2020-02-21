@@ -20,9 +20,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetAppointments([FromQuery]FilterModel filterModel)
         {
-            int totalCount;
-            var data = _AppointmentService.GetAppointments(filterModel, out totalCount);
-            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
+            var result = _AppointmentService.GetAppointments(filterModel);
             return Ok(result);
         }
 

@@ -20,7 +20,7 @@ namespace AASTHA2.Repositories
             _dbSet = AASTHAContext.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, out int totalCount, string filter = "", string includeProperties = "", string order = "", int skip = 0, int take = 0)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "", string order = "", int skip = 0, int take = 0)
         {
             IQueryable<T> query = _dbSet.AsNoTracking();
 
@@ -39,27 +39,13 @@ namespace AASTHA2.Repositories
                 DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
                 query = query.Where(dynamicQuery, param);
             }
-            else
-                if (take <= 0)
-                take = 15;
-
             if (!string.IsNullOrEmpty(order))
                 query = query.OrderBy(order);
-
-            totalCount = query != null ? query.Count() : 0;
-
-            if (skip > 0)
-                query = query.Skip(skip);
-
-            if (take > 0)
-                query = query.Take(take);
-
             return query;
         }
         public T FirstOrDefault(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "")
         {
-            int totalCount;
-            return Find(predicate, out totalCount, filter, includeProperties).FirstOrDefault();
+            return Find(predicate,filter, includeProperties).FirstOrDefault();
         }
         public void Create(T entity)
         {

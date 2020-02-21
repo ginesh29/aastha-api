@@ -18,11 +18,10 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetLookups(FilterModel filterModel, out int totalCount)
+        public dynamic GetLookups(FilterModel filterModel)
         {
-            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-            var mapped = _mapper.Map<IEnumerable<LookupDTO>>(Lookup);
-            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
+            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return _mapper.Map<IEnumerable<LookupDTO>>(Lookup).ToPageList(filterModel.skip, filterModel.take);
         }
 
         public bool IsLookupExist(string filter = "")

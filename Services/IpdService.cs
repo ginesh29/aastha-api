@@ -20,11 +20,10 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetIpds(FilterModel filterModel, out int totalCount)
+        public dynamic GetIpds(FilterModel filterModel)
         {
-            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-            var mapped = _mapper.Map<IEnumerable<IpdDTO>>(Ipd);
-            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
+            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return  _mapper.Map<IEnumerable<IpdDTO>>(Ipd).ToPageList(filterModel.skip, filterModel.take);
         }
         public bool IsIpdExist(string filter = "")
         {

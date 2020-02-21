@@ -20,10 +20,8 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetPatients([FromQuery]FilterModel filterModel)
         {
-            int totalCount;
-            var data = _patientService.GetPatients(filterModel, out totalCount);
-            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
-            return Ok(result);
+            var data = _patientService.GetPatients(filterModel);           
+            return Ok(data);
         }
 
         // GET: api/Patients/5

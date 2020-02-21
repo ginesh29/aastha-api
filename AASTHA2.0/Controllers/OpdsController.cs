@@ -26,10 +26,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetOpds([FromQuery]FilterModel filterModel)
         {
-            int totalCount;
-            var data = _OpdService.GetOpds(filterModel, out totalCount);
-
-            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
+            var result = _OpdService.GetOpds(filterModel);
             return Ok(result);
         }
 

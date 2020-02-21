@@ -31,9 +31,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetIpds([FromQuery]FilterModel filterModel)
         {
-            int totalCount;
-            var data = _IpdService.GetIpds(filterModel, out totalCount);
-            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
+            var result = _IpdService.GetIpds(filterModel);
             return Ok(result);
         }
 
@@ -98,10 +96,9 @@ namespace AASTHA2.Controllers
                 workSheet.Cells["E1"].Value = "Dis. Date";
 
                 char alpha = 'F';
-                int totalCount;
                 FilterModel filterModel = new FilterModel();
                 filterModel.filter = $"type-eq-{{{(int)LookupType.ChargeType}}}";
-                var charges = _LookupService.GetLookups(filterModel, out totalCount).ToDynamicList<LookupDTO>();
+                var charges = _LookupService.GetLookups(filterModel).ToDynamicList<LookupDTO>();
                 foreach (var item in charges)
                 {
                     workSheet.Cells[$"{alpha}1"].Value = $"{item.name.Substring(0, 3)}.";

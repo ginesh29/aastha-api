@@ -18,11 +18,10 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetOpds(FilterModel filterModel, out int totalCount)
+        public dynamic GetOpds(FilterModel filterModel)
         {
-            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-            var mapped = _mapper.Map<IEnumerable<OpdDTO>>(Opd);
-            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
+            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return _mapper.Map<IEnumerable<OpdDTO>>(Opd).ToPageList(filterModel.skip, filterModel.take);
         }
         public bool IsOpdExist(string filter = "")
         {
@@ -37,10 +36,6 @@ namespace AASTHA2.Services
         {
             return _unitOfWork.Opds.GetStatistics(Year);
         }
-        //public int OpdCount(string filter = "", bool ShowDeleted = false)
-        //{
-        //    return _unitOfWork.Opds.Count(null, filter, ShowDeleted);
-        //}
         public void PostOpd(OpdDTO OpdDto)
         {
             var Opd = _mapper.Map<Opd>(OpdDto);

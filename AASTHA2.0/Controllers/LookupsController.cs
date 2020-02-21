@@ -20,10 +20,7 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public dynamic GetLookups([FromQuery]FilterModel filterModel)
           {
-            int totalCount;
-            var data = _LookupService.GetLookups(filterModel, out totalCount);
-
-            var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
+            var result = _LookupService.GetLookups(filterModel);
             return Ok(result);
         }
 

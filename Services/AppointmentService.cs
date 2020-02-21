@@ -18,11 +18,11 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetAppointments(FilterModel filterModel, out int totalCount)
+        public dynamic GetAppointments(FilterModel filterModel)
         {
-            IEnumerable<Appointment> Appointment = _unitOfWork.Appointments.Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-            var mapped = _mapper.Map<IEnumerable<AppointmentDTO>>(Appointment);
-            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
+            IEnumerable<Appointment> Appointment = _unitOfWork.Appointments.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return _mapper.Map<IEnumerable<AppointmentDTO>>(Appointment).ToPageList(filterModel.skip, filterModel.take);
+
         }
         public bool IsAppointmentExist(string filter = "")
         {

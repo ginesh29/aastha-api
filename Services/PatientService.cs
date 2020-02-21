@@ -5,7 +5,6 @@ using AASTHA2.Interfaces;
 using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Services
 {
@@ -18,12 +17,14 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetPatients(FilterModel filterModel, out int totalCount)
+        public dynamic GetPatients(FilterModel filterModel)
         {
             IEnumerable<Patient> patient = _unitOfWork.Patients
-                .Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-            var mapped = _mapper.Map<IEnumerable<PatientDTO>>(patient);
-            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
+                .Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+
+            var map = _mapper.Map<IEnumerable<PatientDTO>>(patient);
+            var paged = map.ToPageList(filterModel.skip, filterModel.take);
+            return paged;
         }
         public IEnumerable<dynamic> GetPatientStatistics(int? Year = null)
         {
@@ -47,8 +48,8 @@ namespace AASTHA2.Services
             patientDto.id = patient.Id;
         }
         public void PutPatient(PatientDTO patientDto)
-        {            
-           var patient = _mapper.Map<PatientDTO, Patient>(patientDto);
+        {
+            var patient = _mapper.Map<PatientDTO, Patient>(patientDto);
             _unitOfWork.Patients.Update(patient);
             _unitOfWork.SaveChanges();
         }

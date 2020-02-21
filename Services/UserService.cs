@@ -18,12 +18,11 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetUsers(FilterModel filterModel,out int totalCount)
+        public dynamic GetUsers(FilterModel filterModel)
         {
             IEnumerable<User> user = _unitOfWork.Users
-                .Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-            var mapped = _mapper.Map<IEnumerable<UserDTO>>(user);
-            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
+                .Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return _mapper.Map<IEnumerable<UserDTO>>(user).ToPageList(filterModel.skip, filterModel.take);
         }
         public bool IsUserExist(string filter = "")
         {

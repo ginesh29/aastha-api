@@ -2,6 +2,7 @@
 using AASTHA2.DTO;
 using AASTHA2.Entities;
 using AASTHA2.Interfaces;
+using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
 
@@ -16,11 +17,10 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetCharges(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public dynamic GetCharges(FilterModel filterModel)
         {
-            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
-            var mapped = _mapper.Map<IEnumerable<ChargeDTO>>(Charge).ToPageList(skip, take);
-            return mapped.DynamicSelect(fields).ToDynamicList();
+            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return _mapper.Map<IEnumerable<ChargeDTO>>(Charge).ToPageList(filterModel.skip, filterModel.take);
         }
         public ChargeDTO GetCharge(long id, string filter = "", string includeProperties = "")
         {
