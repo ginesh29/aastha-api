@@ -22,10 +22,6 @@ namespace AASTHA2.Services
             var mapped = _mapper.Map<IEnumerable<ChargeDTO>>(Charge).ToPageList(skip, take);
             return mapped.DynamicSelect(fields).ToDynamicList();
         }
-        //public bool IsChargeExist(long id, string filter = "", string includeProperties="")
-        //{
-        //    return _unitOfWork.Charges.IsExist( => m.Id == id, filter, includeProperties);
-        //}
         public ChargeDTO GetCharge(long id, string filter = "", string includeProperties = "")
         {
             var Charge = _unitOfWork.Charges.FirstOrDefault(m => m.Id == id, filter, includeProperties);

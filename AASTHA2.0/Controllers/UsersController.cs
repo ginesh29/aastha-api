@@ -1,4 +1,5 @@
 ﻿using AASTHA2.DTO;
+using AASTHA2.Models;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
@@ -16,10 +17,10 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Users
         [HttpGet]
-        public dynamic GetUsers(string filter, string sort, int skip, int take, bool isDeleted, string includeProperties = "", string fields = "")
+        public dynamic GetUsers([FromQuery]FilterModel filterModel)
         {
             int totalCount;
-            var data = _userService.GetUsers(filter, out totalCount, sort, skip, take, includeProperties, fields);
+            var data = _userService.GetUsers(filterModel, out totalCount);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }

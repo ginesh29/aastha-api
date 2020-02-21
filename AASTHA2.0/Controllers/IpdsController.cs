@@ -1,5 +1,6 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.DTO;
+using AASTHA2.Models;
 using AASTHA2.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +29,10 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Ipds
         [HttpGet]
-        public dynamic GetIpds(string filter, string sort, int skip, int take, string includeProperties = "", string fields = "")
+        public dynamic GetIpds([FromQuery]FilterModel filterModel)
         {
             int totalCount;
-            var data = _IpdService.GetIpds(filter, out totalCount, sort, skip, take, includeProperties, fields);
+            var data = _IpdService.GetIpds(filterModel, out totalCount);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
@@ -98,8 +99,9 @@ namespace AASTHA2.Controllers
 
                 char alpha = 'F';
                 int totalCount;
-                string filter = $"type-eq-{{{(int)LookupType.ChargeType}}}";
-                var charges = _LookupService.GetLookups(filter, out totalCount).ToDynamicList<LookupDTO>();
+                FilterModel filterModel = new FilterModel();
+                filterModel.filter = $"type-eq-{{{(int)LookupType.ChargeType}}}";
+                var charges = _LookupService.GetLookups(filterModel, out totalCount).ToDynamicList<LookupDTO>();
                 foreach (var item in charges)
                 {
                     workSheet.Cells[$"{alpha}1"].Value = $"{item.name.Substring(0, 3)}.";

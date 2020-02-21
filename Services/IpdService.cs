@@ -3,6 +3,7 @@ using AASTHA2.Common.Helpers;
 using AASTHA2.DTO;
 using AASTHA2.Entities;
 using AASTHA2.Interfaces;
+using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,11 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IEnumerable<dynamic> GetIpds(string filter, out int totalCount, string sort = "", int skip = 0, int take = 0, string includeProperties = "", string fields = "")
+        public IEnumerable<dynamic> GetIpds(FilterModel filterModel, out int totalCount)
         {
-            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, out totalCount, filter, includeProperties, sort, skip, take);
+            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, out totalCount, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
             var mapped = _mapper.Map<IEnumerable<IpdDTO>>(Ipd);
-            return mapped.DynamicSelect(fields).ToDynamicList();
+            return mapped.DynamicSelect(filterModel.fields).ToDynamicList();
         }
         public bool IsIpdExist(string filter = "")
         {

@@ -1,4 +1,5 @@
 ﻿using AASTHA2.DTO;
+using AASTHA2.Models;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
@@ -17,15 +18,10 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Appointments
         [HttpGet]
-        public dynamic GetAppointments(string filter, string sort, int skip, int take, string includeProperties = "", string fields = "")
+        public dynamic GetAppointments([FromQuery]FilterModel filterModel)
         {
-            //filter = "Firstname-eq-{Ginesh1} or Lastname-eq-{Tandel1} or Middlename-eq-{Balkrushana1}";
-            //fields = "Firstname,Middlename,Lastname";
-            //Sort = "Middlename desc,Firstname asc";
-            //Skip = 0;
-            //Take = 10;
             int totalCount;
-            var data = _AppointmentService.GetAppointments(filter, out totalCount, sort, skip, take, includeProperties, fields);
+            var data = _AppointmentService.GetAppointments(filterModel, out totalCount);
             var result = new { TotalCount = totalCount, Data = data.ToDynamicList() };
             return Ok(result);
         }
