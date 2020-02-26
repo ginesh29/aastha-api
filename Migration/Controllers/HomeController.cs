@@ -157,6 +157,13 @@ namespace Migration.Controllers
                 cnt2++;
             }
             query += "SET IDENTITY_INSERT [dbo].[Lookups] OFF" + Environment.NewLine + Environment.NewLine;
+
+            string[] advise = { "Plenty of liquids orally", "USG Pelvis (SOS)", "ANC Profile", "Timed Intercourse on Date", "Abstinece / Condom use for next 7 days", "Infertility work - up" };
+            foreach (var item in advise)
+            {
+                query += $@"INSERT INTO [dbo].[Lookups] ([Name], [Type], [CreatedDate], [ModifiedDate]) VALUES ('{item}',{(int)LookupType.Advise},'{DateTime.UtcNow}','{DateTime.UtcNow}')" + Environment.NewLine;
+            }
+           
             str1 = query;
             System.IO.File.WriteAllText(Path.Combine(_env.WebRootPath, "SqlScripts", "1. LookupMigrationScript.sql"), query);
         }
