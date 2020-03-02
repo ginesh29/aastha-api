@@ -42,8 +42,15 @@ namespace AASTHA2.Common.Helpers
                 source = query.Skip(skip);
             if (take > 0)
                 source = query.Take(take);
+            int start = 0;
+            int end = 0;
 
-            return new { Data = source, TotalCount = totalCount };
+            if (totalCount > 0)
+            {
+                start = skip + 1;
+                end = totalCount > take ? skip + take : totalCount;
+            }
+            return new { StartPage = start, EndPage = end, TotalCount = totalCount, Data = source };
         }
     }
 }

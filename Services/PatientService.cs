@@ -19,12 +19,8 @@ namespace AASTHA2.Services
         }
         public dynamic GetPatients(FilterModel filterModel)
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients
-                .Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
-
-            var map = _mapper.Map<IEnumerable<PatientDTO>>(patient);
-            var paged = map.ToPageList(filterModel.skip, filterModel.take);
-            return paged;
+            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            return _mapper.Map<IEnumerable<PatientDTO>>(patient).ToPageList(filterModel.skip, filterModel.take);
         }
         public IEnumerable<dynamic> GetPatientStatistics(int? Year = null)
         {
