@@ -3,7 +3,7 @@ using AASTHA2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Serilog;
+//using Serilog;
 using System;
 using System.IO;
 using System.Net;
@@ -59,19 +59,19 @@ namespace AASTHA2.Middleware
                     else if (status == (int)HttpStatusCode.Unauthorized)
                     {
                         message = JsonConvert.DeserializeObject(readToEnd).ToString();
-                        Log.Warning(message);
+                        //Log.Warning(message);
                     }
                     else if (status == (int)HttpStatusCode.BadRequest)
                     {
                         message = Messages.VALIDATION_ERROR;
                         validation = ((dynamic)JsonConvert.DeserializeObject(readToEnd)).errors;
-                        Log.Warning(validation.ToString());
+                        //Log.Warning(validation.ToString());
                     }
                     else if (status == (int)HttpStatusCode.InternalServerError)
                     {
                         message = Messages.INTERNAL_SERVER_ERROR;
                         error = ((dynamic)JsonConvert.DeserializeObject(readToEnd)).Errors;
-                        Log.Error(error.ToString());
+                        //Log.Error(error.ToString());
                     }
                     var result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult, message, validation, error);
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
@@ -79,7 +79,7 @@ namespace AASTHA2.Middleware
             }
             catch (Exception ex)
             {
-                Log.Error($"Message : { ex.Message},Stacktrace :{ex.StackTrace}");
+                //Log.Error($"Message : { ex.Message},Stacktrace :{ex.StackTrace}");
             }
         }
     }
