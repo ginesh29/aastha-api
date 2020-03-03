@@ -5,7 +5,7 @@ namespace AASTHA2.Repositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public UserRepository(AASTHAContext AASTHAContext)
+        public UserRepository(AASTHA2Context AASTHAContext)
             : base(AASTHAContext)
         {
         }

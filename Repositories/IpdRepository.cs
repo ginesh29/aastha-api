@@ -9,7 +9,7 @@ namespace AASTHA2.Repositories
 {
     public class IpdRepository : RepositoryBase<Ipd>, IIpdRepository
     {
-        public IpdRepository(AASTHAContext AASTHAContext)
+        public IpdRepository(AASTHA2Context AASTHAContext)
             : base(AASTHAContext)
         {
         }

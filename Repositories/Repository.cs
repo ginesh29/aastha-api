@@ -12,9 +12,9 @@ namespace AASTHA2.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
-        protected AASTHAContext _AASTHAContext { get; set; }
+        protected AASTHA2Context _AASTHAContext { get; set; }
         public DbSet<T> _dbSet;
-        public RepositoryBase(AASTHAContext AASTHAContext)
+        public RepositoryBase(AASTHA2Context AASTHAContext)
         {
             _AASTHAContext = AASTHAContext;
             _dbSet = AASTHAContext.Set<T>();

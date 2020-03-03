@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Migration.Models
+namespace AASTHA.Entities
 {
     public partial class AASTHAContext : DbContext
     {

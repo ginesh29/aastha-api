@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AASTHA2.Entities.Migrations
 {
-    [DbContext(typeof(AASTHAContext))]
+    [DbContext(typeof(AASTHA2Context))]
     [Migration("20200220142001_update-user")]
     partial class updateuser
     {

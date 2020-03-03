@@ -69,7 +69,7 @@ namespace AASTHA2
                         //option.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
                         option.SerializerSettings.DateFormatString = "dd MMM yyyy h:mm:ss tt";
                     });
-            services.AddDbContext<AASTHAContext>(option =>
+            services.AddDbContext<AASTHA2Context>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("AASTHADB"));
             });

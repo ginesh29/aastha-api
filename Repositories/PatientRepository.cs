@@ -9,7 +9,7 @@ namespace AASTHA2.Repositories
 {
     public class PatientRepository : RepositoryBase<Patient>, IPatientRepository
     {
-        public PatientRepository(AASTHAContext AASTHAContext)
+        public PatientRepository(AASTHA2Context AASTHAContext)
             : base(AASTHAContext)
         {
         }

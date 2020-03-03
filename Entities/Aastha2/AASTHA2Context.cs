@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace AASTHA2.Entities
 {
-    public class AASTHAContext : DbContext
+    public class AASTHA2Context : DbContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AASTHAContext(DbContextOptions<AASTHAContext> option, IHttpContextAccessor httpContextAccessor) : base(option)
+        public AASTHA2Context(DbContextOptions<AASTHA2Context> option, IHttpContextAccessor httpContextAccessor) : base(option)
         {
             _httpContextAccessor = httpContextAccessor;
         }

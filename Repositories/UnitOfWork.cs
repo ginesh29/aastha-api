@@ -8,7 +8,7 @@ namespace AASTHA2.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private AASTHAContext _AASTHAContext;
+        private AASTHA2Context _AASTHAContext;
         private IUserRepository _user;
         private IPatientRepository _patient;
         private IOpdRepository _opd;
@@ -19,7 +19,7 @@ namespace AASTHA2.Repositories
         private IOperationRepository _operation;
         private IChargeRepository _charge;
         private IAppointmentRepository _appointment;
-        public UnitOfWork(AASTHAContext AASTHAContext)
+        public UnitOfWork(AASTHA2Context AASTHAContext)
         {
             _AASTHAContext = AASTHAContext;
         }

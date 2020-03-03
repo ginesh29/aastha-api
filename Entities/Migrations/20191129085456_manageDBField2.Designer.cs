@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AASTHA2.Entities.Migrations
 {
-    [DbContext(typeof(AASTHAContext))]
+    [DbContext(typeof(AASTHA2Context))]
     [Migration("20191129085456_manageDBField2")]
     partial class manageDBField2
     {

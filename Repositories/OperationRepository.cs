@@ -5,7 +5,7 @@ namespace AASTHA2.Repositories
 {
     public class OperationRepository : RepositoryBase<Operation>, IOperationRepository
     {
-        public OperationRepository(AASTHAContext AASTHAContext)
+        public OperationRepository(AASTHA2Context AASTHAContext)
             : base(AASTHAContext)
         {
         }

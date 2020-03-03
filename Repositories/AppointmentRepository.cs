@@ -5,7 +5,7 @@ namespace AASTHA2.Repositories
 {
     public class AppointmentRepository : RepositoryBase<Appointment>, IAppointmentRepository
     {
-        public AppointmentRepository(AASTHAContext AASTHAContext)
+        public AppointmentRepository(AASTHA2Context AASTHAContext)
             : base(AASTHAContext)
         {
         }

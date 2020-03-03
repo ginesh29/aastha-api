@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AASTHA2.Entities.Migrations
 {
-    [DbContext(typeof(AASTHAContext))]
+    [DbContext(typeof(AASTHA2Context))]
     partial class AASTHAContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

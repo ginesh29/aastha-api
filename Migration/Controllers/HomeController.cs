@@ -1,4 +1,5 @@
-﻿using AASTHA2.Common;
+﻿using AASTHA.Entities;
+using AASTHA2.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Migration.Models;

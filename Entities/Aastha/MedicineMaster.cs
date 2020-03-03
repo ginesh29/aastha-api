@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Migration.Models
+namespace AASTHA.Entities
 {
     public partial class MedicineMaster
     {
