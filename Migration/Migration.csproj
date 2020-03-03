@@ -19,7 +19,7 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\SqlScripts\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
