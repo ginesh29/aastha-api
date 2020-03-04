@@ -15,7 +15,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class OpdsController : ControllerBase
     {
         private static OpdService _OpdService;
@@ -120,12 +120,12 @@ namespace AASTHA2.Controllers
                     row++;
                 }
                 workSheet.Cells[$"A{row}"].Value = "Total";
-                workSheet.Cells[$"F{row}"].Formula = $"=SUM(F2:F{row})";
-                workSheet.Cells[$"G{row}"].Formula = $"=SUM(G2:G{row})";
-                workSheet.Cells[$"H{row}"].Formula = $"=SUM(H2:H{row})";
-                workSheet.Cells[$"I{row}"].Formula = $"=SUM(I2:I{row})";
-                workSheet.Cells[$"J{row}"].Formula = $"=SUM(J2:J{row})";
-                workSheet.Cells[$"K{row}"].Formula = $"=SUM(K2:K{row})";
+                workSheet.Cells[$"F{row}"].Formula = $"=SUM(F2:F{row - 1})";
+                workSheet.Cells[$"G{row}"].Formula = $"=SUM(G2:G{row - 1})";
+                workSheet.Cells[$"H{row}"].Formula = $"=SUM(H2:H{row - 1})";
+                workSheet.Cells[$"I{row}"].Formula = $"=SUM(I2:I{row - 1})";
+                workSheet.Cells[$"J{row}"].Formula = $"=SUM(J2:J{row - 1})";
+                workSheet.Cells[$"K{row}"].Formula = $"=SUM(F{row}:J{row})";
 
                 var footerCell = workSheet.Cells[$"A{row}:K{row}"];
                 footerCell.Style.Fill.PatternType = ExcelFillStyle.Solid;

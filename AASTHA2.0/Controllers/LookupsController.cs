@@ -9,7 +9,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class LookupsController : ControllerBase
     {
         private static LookupService _LookupService;

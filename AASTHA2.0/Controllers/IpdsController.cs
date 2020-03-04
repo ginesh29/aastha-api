@@ -16,7 +16,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class IpdsController : ControllerBase
     {
         private static IpdService _IpdService;
@@ -105,6 +105,7 @@ namespace AASTHA2.Controllers
                     workSheet.Cells[$"{alpha}1"].Value = $"{item.name.Substring(0, 3)}.";
                     alpha++;
                 }
+
                 workSheet.Cells[$"{alpha}1"].Value = "Total";
 
                 var headerCell = workSheet.Cells[$"A1:${alpha}1"];
@@ -129,7 +130,7 @@ namespace AASTHA2.Controllers
                         workSheet.Cells[$"{alpha}{row}"].Value = amount > 0 ? amount : 0;
                         alpha++;
                     }
-                    workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{alpha}{row})";
+                    workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{ --alpha}{row})";
                     workSheet.Cells[$"D{row}"].Style.Numberformat.Format = "dd/mm/yyyy";
                     workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd/mm/yyyy";
                     row++;
@@ -138,10 +139,10 @@ namespace AASTHA2.Controllers
                 alpha = 'F';
                 foreach (var charge in charges)
                 {
-                    workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM({alpha}2:{alpha}{row})";
+                    workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM({alpha}2:{alpha}{row - 1})";
                     alpha++;
                 }
-                workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM({alpha}2:{alpha}{row})";
+                workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{ --alpha}{row})";
 
                 var footerCell = workSheet.Cells[$"A{row}:{alpha}{row}"];
                 footerCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
