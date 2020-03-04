@@ -9,8 +9,8 @@ namespace AASTHA2.Repositories
 {
     public class IpdLookupRepository : RepositoryBase<IpdLookup>, IIpdLookupRepository
     {
-        public IpdLookupRepository(AASTHA2Context AASTHAContext)
-            : base(AASTHAContext)
+        public IpdLookupRepository(AASTHA2Context AASTHA2Context)
+            : base(AASTHA2Context)
         {
         }
     }

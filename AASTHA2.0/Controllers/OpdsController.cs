@@ -2,6 +2,7 @@
 using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -14,7 +15,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class OpdsController : ControllerBase
     {
         private static OpdService _OpdService;
@@ -24,7 +25,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Opds
         [HttpGet]
-        public dynamic GetOpds([FromQuery]FilterModel filterModel)
+        public ActionResult GetOpds([FromQuery]FilterModel filterModel)
         {
             var result = _OpdService.GetOpds(filterModel);
             return Ok(result);

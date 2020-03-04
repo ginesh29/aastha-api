@@ -34,14 +34,14 @@ namespace AASTHA2.Common.Helpers
                 i++;
             }
         }
-        public static dynamic ToPageList(this IEnumerable source, int skip, int take)
+        public static PaginationModel ToPageList(this IEnumerable source, int skip, int take)
         {
             var query = source.AsQueryable();
             int totalCount = source != null ? query.Count() : 0;
             if (skip > 0)
-                source = query.Skip(skip);
+                query = query.Skip(skip);
             if (take > 0)
-                source = query.Take(take);
+                query = query.Take(take);
             int start = 0;
             int end = 0;
 
@@ -50,7 +50,7 @@ namespace AASTHA2.Common.Helpers
                 start = skip + 1;
                 end = totalCount > take ? skip + take : totalCount;
             }
-            return new { StartPage = start, EndPage = end, TotalCount = totalCount, Data = source };
+            return new PaginationModel { StartPage = start, EndPage = end, TotalCount = totalCount, Data = query };
         }
     }
 }

@@ -5,8 +5,8 @@ namespace AASTHA2.Repositories
 {
     public class LookupRepository : RepositoryBase<Lookup>, ILookupRepository
     {
-        public LookupRepository(AASTHA2Context AASTHAContext)
-            : base(AASTHAContext)
+        public LookupRepository(AASTHA2Context AASTHA2Context)
+            : base(AASTHA2Context)
         {
         }
     }

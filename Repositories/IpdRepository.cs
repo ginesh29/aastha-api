@@ -9,13 +9,13 @@ namespace AASTHA2.Repositories
 {
     public class IpdRepository : RepositoryBase<Ipd>, IIpdRepository
     {
-        public IpdRepository(AASTHA2Context AASTHAContext)
-            : base(AASTHAContext)
+        public IpdRepository(AASTHA2Context AASTHA2Context)
+            : base(AASTHA2Context)
         {
         }
         public IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year)
         {
-            var result = _AASTHAContext.Set<Sp_GetCollection_Result>().FromSql("GetIpdStatistics");
+            var result = _AASTHA2Context.Set<Sp_GetCollection_Result>().FromSql("GetIpdStatistics");
             if (Year > 0)
                 result = result.Where(m => m.Year == Year);
             return result;

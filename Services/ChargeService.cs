@@ -1,4 +1,5 @@
-﻿using AASTHA2.Common.Helpers;
+﻿using AASTHA2.Common;
+using AASTHA2.Common.Helpers;
 using AASTHA2.DTO;
 using AASTHA2.Entities;
 using AASTHA2.Interfaces;
@@ -17,9 +18,9 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public dynamic GetCharges(FilterModel filterModel)
+        public PaginationModel GetCharges(FilterModel filterModel)
         {
-            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
             return _mapper.Map<IEnumerable<ChargeDTO>>(Charge).ToPageList(filterModel.skip, filterModel.take);
         }
         public ChargeDTO GetCharge(long id, string filter = "", string includeProperties = "")

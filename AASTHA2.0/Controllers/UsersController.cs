@@ -17,7 +17,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Users
         [HttpGet]
-        public dynamic GetUsers([FromQuery]FilterModel filterModel)
+        public ActionResult GetUsers([FromQuery]FilterModel filterModel)
         {
             var result = _userService.GetUsers(filterModel);
             return Ok(result);
@@ -27,8 +27,7 @@ namespace AASTHA2.Controllers
         [HttpGet("{id}")]
         public ActionResult<UserDTO> GetUser(long id, string filter)
         {
-            var patient = _userService.GetUser(id, filter);
-
+            var patient = _userService.GetUser(id, filter);           
             if (patient == null)
             {
                 return NotFound();

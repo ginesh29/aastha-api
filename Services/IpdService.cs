@@ -20,9 +20,9 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public dynamic GetIpds(FilterModel filterModel)
+        public PaginationModel GetIpds(FilterModel filterModel)
         {
-            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
             return  _mapper.Map<IEnumerable<IpdDTO>>(Ipd).ToPageList(filterModel.skip, filterModel.take);
         }
         public bool IsIpdExist(string filter = "")
@@ -34,9 +34,9 @@ namespace AASTHA2.Services
             var Ipd = _unitOfWork.Ipds.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<IpdDTO>(Ipd);
         }
-        public IEnumerable<dynamic> GetIpdStatistics(int? Year = null)
+        public IQueryable GetIpdStatistics(int? Year = null)
         {
-            return _unitOfWork.Ipds.GetStatistics(Year);
+            return _unitOfWork.Ipds.GetStatistics(Year).AsQueryable();
         }
         public void PostIpd(IpdDTO IpdDto)
         {

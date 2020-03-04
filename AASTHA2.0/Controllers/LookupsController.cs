@@ -1,6 +1,7 @@
 ﻿using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
 
@@ -8,7 +9,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class LookupsController : ControllerBase
     {
         private static LookupService _LookupService;
@@ -18,7 +19,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Lookups
         [HttpGet]
-        public dynamic GetLookups([FromQuery]FilterModel filterModel)
+        public ActionResult GetLookups([FromQuery]FilterModel filterModel)
           {
             var result = _LookupService.GetLookups(filterModel);
             return Ok(result);

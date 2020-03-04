@@ -1,6 +1,7 @@
 ﻿using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
 
@@ -8,7 +9,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private static PatientService _patientService;
@@ -18,7 +19,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public dynamic GetPatients([FromQuery]FilterModel filterModel)
+        public ActionResult GetPatients([FromQuery]FilterModel filterModel)
         {
             var data = _patientService.GetPatients(filterModel);           
             return Ok(data);

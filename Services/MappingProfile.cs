@@ -8,32 +8,16 @@ namespace AASTHA2.Services
     {
         public MappingProfile()
         {
-            CreateMap<Patient, PatientDTO>();
-            CreateMap<PatientDTO, Patient>();
-
-            CreateMap<Opd, OpdDTO>();
-            CreateMap<OpdDTO, Opd>();
-
-            CreateMap<Ipd, IpdDTO>();
-            CreateMap<IpdDTO, Ipd>();
-
-            CreateMap<Lookup, LookupDTO>();
-            CreateMap<LookupDTO, Lookup>();
-
-            CreateMap<Delivery, DeliveryDTO>();
-            CreateMap<DeliveryDTO, Delivery>();
-
-            CreateMap<Operation, OperationDTO>();
-            CreateMap<OperationDTO, Operation>();
-
-            CreateMap<Charge, ChargeDTO>();
-            CreateMap<ChargeDTO, Charge>();
-
-            CreateMap<Appointment, AppointmentDTO>();
-            CreateMap<AppointmentDTO, Appointment>();
-
-            CreateMap<IpdLookup, IpdLookupDTO>();
-            CreateMap<IpdLookupDTO, IpdLookup>();
+            CreateMap<Patient, PatientDTO>().ReverseMap();
+            CreateMap<Opd, OpdDTO>().ReverseMap();
+            CreateMap<Ipd, IpdDTO>().ReverseMap();
+            CreateMap<Lookup, LookupDTO>().ReverseMap();
+            CreateMap<Delivery, DeliveryDTO>().ReverseMap();
+            CreateMap<Operation, OperationDTO>().ReverseMap();
+            CreateMap<Charge, ChargeDTO>().ReverseMap();
+            CreateMap<Appointment, AppointmentDTO>().ReverseMap();
+            CreateMap<IpdLookup, IpdLookupDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

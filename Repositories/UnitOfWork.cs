@@ -8,7 +8,7 @@ namespace AASTHA2.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private AASTHA2Context _AASTHAContext;
+        private AASTHA2Context _AASTHA2Context;
         private IUserRepository _user;
         private IPatientRepository _patient;
         private IOpdRepository _opd;
@@ -19,9 +19,9 @@ namespace AASTHA2.Repositories
         private IOperationRepository _operation;
         private IChargeRepository _charge;
         private IAppointmentRepository _appointment;
-        public UnitOfWork(AASTHA2Context AASTHAContext)
+        public UnitOfWork(AASTHA2Context AASTHA2Context)
         {
-            _AASTHAContext = AASTHAContext;
+            _AASTHA2Context = AASTHA2Context;
         }
 
         public IUserRepository Users
@@ -30,7 +30,7 @@ namespace AASTHA2.Repositories
             {
                 if (_user == null)
                 {
-                    _user = new UserRepository(_AASTHAContext);
+                    _user = new UserRepository(_AASTHA2Context);
                 }
                 return _user;
             }
@@ -41,7 +41,7 @@ namespace AASTHA2.Repositories
             {
                 if (_patient == null)
                 {
-                    _patient = new PatientRepository(_AASTHAContext);
+                    _patient = new PatientRepository(_AASTHA2Context);
                 }
                 return _patient;
             }
@@ -52,7 +52,7 @@ namespace AASTHA2.Repositories
             {
                 if (_opd == null)
                 {
-                    _opd = new OpdRepository(_AASTHAContext);
+                    _opd = new OpdRepository(_AASTHA2Context);
                 }
                 return _opd;
             }
@@ -63,7 +63,7 @@ namespace AASTHA2.Repositories
             {
                 if (_ipd == null)
                 {
-                    _ipd = new IpdRepository(_AASTHAContext);
+                    _ipd = new IpdRepository(_AASTHA2Context);
                 }
                 return _ipd;
             }
@@ -74,7 +74,7 @@ namespace AASTHA2.Repositories
             {
                 if (_ipdLookup == null)
                 {
-                    _ipdLookup = new IpdLookupRepository(_AASTHAContext);
+                    _ipdLookup = new IpdLookupRepository(_AASTHA2Context);
                 }
                 return _ipdLookup;
             }
@@ -85,7 +85,7 @@ namespace AASTHA2.Repositories
             {
                 if (_lookup == null)
                 {
-                    _lookup = new LookupRepository(_AASTHAContext);
+                    _lookup = new LookupRepository(_AASTHA2Context);
                 }
                 return _lookup;
             }
@@ -96,7 +96,7 @@ namespace AASTHA2.Repositories
             {
                 if (_delivery == null)
                 {
-                    _delivery = new DeliveryRepository(_AASTHAContext);
+                    _delivery = new DeliveryRepository(_AASTHA2Context);
                 }
                 return _delivery;
             }
@@ -107,7 +107,7 @@ namespace AASTHA2.Repositories
             {
                 if (_operation == null)
                 {
-                    _operation = new OperationRepository(_AASTHAContext);
+                    _operation = new OperationRepository(_AASTHA2Context);
                 }
                 return _operation;
             }
@@ -118,7 +118,7 @@ namespace AASTHA2.Repositories
             {
                 if (_charge == null)
                 {
-                    _charge = new ChargeRepository(_AASTHAContext);
+                    _charge = new ChargeRepository(_AASTHA2Context);
                 }
                 return _charge;
             }
@@ -129,7 +129,7 @@ namespace AASTHA2.Repositories
             {
                 if (_appointment == null)
                 {
-                    _appointment = new AppointmentRepository(_AASTHAContext);
+                    _appointment = new AppointmentRepository(_AASTHA2Context);
                 }
                 return _appointment;
             }
@@ -137,7 +137,7 @@ namespace AASTHA2.Repositories
 
         public void SaveChanges()
         {
-            _AASTHAContext.SaveChanges();
+            _AASTHA2Context.SaveChanges();
         }
     }
 }

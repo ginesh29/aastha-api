@@ -3,6 +3,7 @@ using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -15,7 +16,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class IpdsController : ControllerBase
     {
         private static IpdService _IpdService;
@@ -29,7 +30,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Ipds
         [HttpGet]
-        public dynamic GetIpds([FromQuery]FilterModel filterModel)
+        public ActionResult GetIpds([FromQuery]FilterModel filterModel)
         {
             var result = _IpdService.GetIpds(filterModel);
             return Ok(result);
@@ -60,9 +61,9 @@ namespace AASTHA2.Controllers
             if (Ipd == null)
             {
                 return NotFound();
-            }          
-            var removedLookup = Ipd.ipdLookups.Where(i => i.ipdId == IpdDTO.id && !IpdDTO.ipdLookups.Select(m=>m.id).Contains(i.id));
-            _IpdService.RemoveIpdLookup(removedLookup,"",true);
+            }
+            var removedLookup = Ipd.ipdLookups.Where(i => i.ipdId == IpdDTO.id && !IpdDTO.ipdLookups.Select(m => m.id).Contains(i.id));
+            _IpdService.RemoveIpdLookup(removedLookup, "", true);
             _IpdService.PutIpd(IpdDTO);
             Ipd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, Ipd);
@@ -98,7 +99,7 @@ namespace AASTHA2.Controllers
                 char alpha = 'F';
                 FilterModel filterModel = new FilterModel();
                 filterModel.filter = $"type-eq-{{{(int)LookupType.ChargeType}}}";
-                var charges = _LookupService.GetLookups(filterModel).ToDynamicList<LookupDTO>();
+                var charges = _LookupService.GetLookups(filterModel).Data.ToDynamicList<LookupDTO>(); ;
                 foreach (var item in charges)
                 {
                     workSheet.Cells[$"{alpha}1"].Value = $"{item.name.Substring(0, 3)}.";
@@ -124,6 +125,7 @@ namespace AASTHA2.Controllers
                     foreach (var charge in charges)
                     {
                         var amount = item.charges.FirstOrDefault(m => m.lookupId == charge.id)?.amount;
+                        var a = $"{ alpha }{ row}";
                         workSheet.Cells[$"{alpha}{row}"].Value = amount > 0 ? amount : 0;
                         alpha++;
                     }

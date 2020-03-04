@@ -1,10 +1,12 @@
 ﻿using AASTHA2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AASTHA2._0.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StatisticsController : ControllerBase
     {
         private static PatientService _patientService;
@@ -18,7 +20,7 @@ namespace AASTHA2._0.Controllers
         }
         [HttpGet]
         [Route("GetPatientStatistics")]
-        public ActionResult<dynamic> GetPatientStatistics(int? Year)
+        public ActionResult GetPatientStatistics(int? Year)
         {
             var result = new
             {
@@ -30,7 +32,7 @@ namespace AASTHA2._0.Controllers
         }
         [HttpGet]
         [Route("GetOpdIpdStatistics")]
-        public ActionResult<dynamic> GetStatistics()
+        public ActionResult GetStatistics()
         {
             var result = new
             {

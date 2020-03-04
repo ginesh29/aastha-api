@@ -13,5 +13,6 @@ namespace AASTHA2.Models
         public int take { get; set; }
         public string includeProperties { get; set; }
         public string fields { get; set; }
+        public bool isPage { get; set; }
     }
 }

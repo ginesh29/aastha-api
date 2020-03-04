@@ -12,15 +12,15 @@ namespace AASTHA2.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
-        protected AASTHA2Context _AASTHAContext { get; set; }
+        protected AASTHA2Context _AASTHA2Context { get; set; }
         public DbSet<T> _dbSet;
-        public RepositoryBase(AASTHA2Context AASTHAContext)
+        public RepositoryBase(AASTHA2Context AASTHA2Context)
         {
-            _AASTHAContext = AASTHAContext;
-            _dbSet = AASTHAContext.Set<T>();
+            _AASTHA2Context = AASTHA2Context;
+            _dbSet = AASTHA2Context.Set<T>();
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "", string order = "", int skip = 0, int take = 0)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "", string order = "")
         {
             IQueryable<T> query = _dbSet.AsNoTracking();
 
@@ -49,43 +49,43 @@ namespace AASTHA2.Repositories
         }
         public void Create(T entity)
         {
-            this._AASTHAContext.Set<T>().Add(entity);
+            this._AASTHA2Context.Set<T>().Add(entity);
         }
         //public void CreateRange(IEnumerable<T> entities)
         //{
         //    db.Configuration.AutoDetectChangesEnabled = false;
-        //    this._AASTHAContext.Set<T>().AddRange(entities);
+        //    this._AASTHA2Context.Set<T>().AddRange(entities);
         //}
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
         {
-            var dbEntityEntry = _AASTHAContext.Entry(entity);
+            var dbEntityEntry = _AASTHA2Context.Entry(entity);
             if (updatedProperties.Any())
                 foreach (var property in updatedProperties)
                     dbEntityEntry.Property(property).IsModified = true;
             else
-                this._AASTHAContext.Set<T>().Update(entity);
+                this._AASTHA2Context.Set<T>().Update(entity);
         }
         public void UpdateRange(IEnumerable<T> entities)
         {
-            this._AASTHAContext.Set<T>().UpdateRange(entities);
+            this._AASTHA2Context.Set<T>().UpdateRange(entities);
         }
         public void Delete(T entity, bool deletePhysical = false)
         {
             if ((bool)deletePhysical)
-                this._AASTHAContext.Set<T>().Remove(entity);
+                this._AASTHA2Context.Set<T>().Remove(entity);
             else
             {
-                var dbEntityEntry = _AASTHAContext.Entry(entity);
+                var dbEntityEntry = _AASTHA2Context.Entry(entity);
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }
         public void DeleteRange(IEnumerable<T> entities, bool deletePhysical = false)
         {
             if ((bool)deletePhysical)
-                this._AASTHAContext.Set<T>().RemoveRange(entities);
+                this._AASTHA2Context.Set<T>().RemoveRange(entities);
             else
             {
-                var dbEntityEntry = _AASTHAContext.Entry(entities);
+                var dbEntityEntry = _AASTHA2Context.Entry(entities);
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }

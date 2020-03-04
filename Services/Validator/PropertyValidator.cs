@@ -1,4 +1,6 @@
-﻿using AASTHA2.Services;
+﻿using AASTHA2.DTO;
+using AASTHA2.Entities;
+using AASTHA2.Services;
 using FluentValidation.Validators;
 using System;
 
@@ -29,7 +31,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic data = context.PropertyValue;
+            var data = (IpdDTO)context.PropertyValue;
             string filter = $"Id-neq-{{{data.id}}} and UniqueId-eq-{{{data.uniqueId}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _ipdService.IsIpdExist(filter))
                 return false;
@@ -45,7 +47,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic data = context.PropertyValue;
+            var data = (PatientDTO)context.PropertyValue;
             string filter = $"id-neq-{{{data.id}}} and Firstname-eq-{{{data.firstname}}} and Middlename-eq-{{{ data.middlename}}} and Lastname-eq-{{{data.lastname}}} and isDeleted-neq-{{{true}}}";
             if(!string.IsNullOrEmpty(data.fathername))
                 filter= $"{filter} and Fathername-eq-{{{ data.fathername}}}";
@@ -63,8 +65,8 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic data = context.PropertyValue;
-            string filter = $"id-neq-{{{data.id}}} and Username-eq-{{{data.firstname}}} and isDeleted-neq-{{{true}}}";
+            var data = (UserDTO)context.PropertyValue;
+            string filter = $"id-neq-{{{data.id}}} and Username-eq-{{{data.username}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _userService.IsUserExist(filter))
                 return false;
             return true;
@@ -79,7 +81,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic data = context.PropertyValue;
+            var data = (LookupDTO)context.PropertyValue;
             string filter = $"Id-neq-{{{data.id}}} and type-eq-{{{data.type}}} and name-eq-{{{ data.name}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _lookupService.IsLookupExist(filter))
                 return false;
@@ -95,7 +97,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic data = context.PropertyValue;
+            var data = (OpdDTO)context.PropertyValue;
             string filter = $"Id-neq-{{{data.id}}} and date-eq-{{{data.date}}} and patientId-eq-{{{data.patientId}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _opdService.IsOpdExist(filter))
                 return false;
@@ -111,7 +113,7 @@ namespace AASTHA2.Validator
         }
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            dynamic data = context.PropertyValue;
+            var data = (AppointmentDTO)context.PropertyValue;
             string filter = $"id-neq-{{{data.id}}} and date-eq-{{{data.date}}} and patientId-eq-{{{ data.patientId}}} and isDeleted-neq-{{{true}}}";
             if (context.PropertyValue != null && _appointmentService.IsAppointmentExist(filter))
                 return false;

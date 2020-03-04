@@ -8,7 +8,7 @@ namespace AASTHA2.Interfaces
     public interface IRepository<T>
     {
         // Sync Method
-        IQueryable<T> Find(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "", string order = "", int skip = 0, int take = 0);
+        IQueryable<T> Find(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "", string order = "");
         T FirstOrDefault(Expression<Func<T, bool>> predicate, string filter = "", string includeProperties = "");
         void Create(T entity);
         //void CreateRange(IEnumerable<T> entities);

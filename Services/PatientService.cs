@@ -1,10 +1,12 @@
-﻿using AASTHA2.Common.Helpers;
+﻿using AASTHA2.Common;
+using AASTHA2.Common.Helpers;
 using AASTHA2.DTO;
 using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AASTHA2.Services
 {
@@ -17,14 +19,14 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public dynamic GetPatients(FilterModel filterModel)
+        public PaginationModel GetPatients(FilterModel filterModel)
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
             return _mapper.Map<IEnumerable<PatientDTO>>(patient).ToPageList(filterModel.skip, filterModel.take);
         }
-        public IEnumerable<dynamic> GetPatientStatistics(int? Year = null)
+        public IQueryable GetPatientStatistics(int? Year = null)
         {
-            return _unitOfWork.Patients.GetStatistics(Year);
+            return _unitOfWork.Patients.GetStatistics(Year).AsQueryable();
         }
         public bool IsPatientExist(string filter = "")
         {

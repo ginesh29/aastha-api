@@ -1,4 +1,5 @@
-﻿using AASTHA2.Common.Helpers;
+﻿using AASTHA2.Common;
+using AASTHA2.Common.Helpers;
 using AASTHA2.DTO;
 using AASTHA2.Entities;
 using AASTHA2.Interfaces;
@@ -18,9 +19,9 @@ namespace AASTHA2.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public dynamic GetLookups(FilterModel filterModel)
+        public PaginationModel GetLookups(FilterModel filterModel)
         {
-            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort, filterModel.skip, filterModel.take);
+            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
             return _mapper.Map<IEnumerable<LookupDTO>>(Lookup).ToPageList(filterModel.skip, filterModel.take);
         }
 
