@@ -56,7 +56,13 @@ namespace AASTHA2
             services.AddSingleton(mapper);
             services
                 .AddMvc()
-                .AddJsonOptions(option =>
+                .AddFluentValidation(fv =>
+                {
+                    //fv.ImplicitlyValidateChildProperties = true;
+                    fv.RegisterValidatorsFromAssemblyContaining<PatientValidator>();
+                }
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2).
+                AddJsonOptions(option =>
                     {
                         option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
