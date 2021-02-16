@@ -37,7 +37,6 @@ namespace AASTHA2.Controllers
         {
             var Opd = _OpdService.GetOpd(id, filter);
 
-            string stringValue = Enum.GetName(typeof(CaseType), Opd.caseType);
             if (Opd == null)
             {
                 return NotFound();
@@ -110,7 +109,7 @@ namespace AASTHA2.Controllers
                     workSheet.Cells[$"C{row}"].Value = item.patient.fullname;
                     workSheet.Cells[$"D{row}"].Value = item.caseType;
                     workSheet.Cells[$"E{row}"].Value = item.date;
-                    workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd/mm/yyyy";
+                    workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd-mm-yyyy";
                     workSheet.Cells[$"F{row}"].Value = Convert.ToDecimal(item.consultCharge);
                     workSheet.Cells[$"G{row}"].Value = Convert.ToDecimal(item.usgCharge);
                     workSheet.Cells[$"H{row}"].Value = Convert.ToDecimal(item.uptCharge);

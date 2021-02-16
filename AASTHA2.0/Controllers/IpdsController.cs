@@ -131,8 +131,8 @@ namespace AASTHA2.Controllers
                         alpha++;
                     }
                     workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{ --alpha}{row})";
-                    workSheet.Cells[$"D{row}"].Style.Numberformat.Format = "dd/mm/yyyy";
-                    workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd/mm/yyyy";
+                    workSheet.Cells[$"D{row}"].Style.Numberformat.Format = "dd-mm-yyyy";
+                    workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd-mm-yyyy";
                     row++;
                 }
                 workSheet.Cells[$"A{row}"].Value = "Total";

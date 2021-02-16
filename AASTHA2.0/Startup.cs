@@ -41,11 +41,7 @@ namespace AASTHA2
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyOrigin",
-                    builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -54,8 +50,10 @@ namespace AASTHA2
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services
-                .AddMvc()
+            services.
+               AddMvc(option =>
+                {
+                })
                 .AddFluentValidation(fv =>
                 {
                     //fv.ImplicitlyValidateChildProperties = true;

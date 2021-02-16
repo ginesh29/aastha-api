@@ -34,9 +34,6 @@ namespace AASTHA2.Entities
         public DbSet<Operation> Operations { get; set; }
         public DbSet<IpdLookup> IpdLookups { get; set; }
         public DbSet<Charge> Charges { get; set; }
-        [NotMapped]
-        public  DbSet<Sp_GetCollection_Result> Sp_GetCollection { get; set; }
-
         public override int SaveChanges()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));

@@ -6,6 +6,7 @@
     <RootNamespace>AASTHA2</RootNamespace>
     <AssemblyName>AASTHA2</AssemblyName>
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <UserSecretsId>1c3737b9-9c8a-4657-a02d-19e52de48ad1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

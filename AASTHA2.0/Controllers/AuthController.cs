@@ -1,4 +1,5 @@
-﻿using AASTHA2.Common.Helpers;
+﻿using AASTHA2.Common;
+using AASTHA2.Common.Helpers;
 using AASTHA2.Models;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace AASTHA2.Controllers
             Configuration = configuration;
             _UserService = ServicesWrapper.UserService;
         }
-        // GET api/values  
+        // GET api/values          
         [HttpPost]
         public ActionResult GenerateToken(LoginModel loginModel)
         {
@@ -36,15 +37,16 @@ namespace AASTHA2.Controllers
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var claims = new List<Claim>();
                 claims.Add(new Claim("UserId", user.id.ToString()));
+                claims.Add(new Claim("Role", user.isSuperAdmin ? ((int)Role.Admin).ToString() : ((int)Role.Assistant).ToString()));
                 var tokenOptions = new JwtSecurityToken(
                     issuer: Configuration["Jwt:Issuer"],
                     audience: Configuration["Jwt:Audience"],
                     claims: claims,
-                    expires: DateTime.Now.AddMonths(1),
+                    expires: loginModel.RememberMe ? DateTime.Now.AddDays(1) : DateTime.Now.AddHours(1),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new { IsAuthenticated = true, Token = tokenString, ExpireTime = tokenOptions.ValidTo });
+                return Ok(new { Token = tokenString });
             }
             else
                 return Unauthorized("Enter valid credential");

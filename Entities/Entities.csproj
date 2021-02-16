@@ -7,13 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20191115122241_computed.cs" />
-    <Compile Remove="Migrations\20200216135834_re.cs" />
-    <Compile Remove="Migrations\20200216135834_re.Designer.cs" />
-    <Compile Remove="Migrations\20200216135934_re.cs" />
-    <Compile Remove="Migrations\20200216135934_re.Designer.cs" />
-    <Compile Remove="Migrations\20200216140033_re.cs" />
-    <Compile Remove="Migrations\20200216140033_re.Designer.cs" />
+    <Compile Remove="Migrations\20210213144435_initial1.cs" />
+    <Compile Remove="Migrations\20210213144435_initial1.Designer.cs" />
+    <Compile Remove="Migrations\20210214115241_initial.cs" />
+    <Compile Remove="Migrations\20210214115241_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

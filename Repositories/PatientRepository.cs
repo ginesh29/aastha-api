@@ -1,6 +1,7 @@
 ﻿using AASTHA2.Entities;
 using AASTHA2.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using StoredProcedureEFCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -15,10 +16,11 @@ namespace AASTHA2.Repositories
         }
         public IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year)
         {
-            var result = _AASTHA2Context.Set<Sp_GetCollection_Result>().FromSql("GetPatientStatistics");
+            IEnumerable<Sp_GetCollection_Result> rows = null;
+            _AASTHA2Context.LoadStoredProc("GetPatientStatistics").Exec(r => rows = r.ToList<Sp_GetCollection_Result>());
             if (Year > 0)
-                result = result.Where(m => m.Year == Year);
-            return result;
+                rows = rows.Where(m => m.Year == Year);
+            return rows;
         }
     }
 }

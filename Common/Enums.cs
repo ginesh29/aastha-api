@@ -51,24 +51,29 @@ namespace AASTHA2.Common
         Medicine = 6,
         ChargeType = 7,
         DeliveryDiagnosis = 8,
-        Address=9,
+        Address = 9,
         Advise = 10
     }
     public enum RoomType
     {
-        General=1,
-        Special=2,
-        SemiSpecial=3
+        General = 1,
+        Special = 2,
+        SemiSpecial = 3
     }
     public enum IpdType
     {
-        Delivery=1,
+        Delivery = 1,
         Operation = 2,
-        General=3
+        General = 3
     }
     public enum Gender
     {
-        Boy=1,
-        Girl=2
+        Boy = 1,
+        Girl = 2
+    }
+    public enum Role
+    {
+        Admin = 1,
+        Assistant = 2
     }
 }
