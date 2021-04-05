@@ -6,6 +6,7 @@ using AASTHA2.Interfaces;
 using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Services
@@ -21,15 +22,24 @@ namespace AASTHA2.Services
         }
         public PaginationModel GetLookups(FilterModel filterModel)
         {
-            IEnumerable<Lookup> Lookup = _unitOfWork.Lookups.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
-            return _mapper.Map<IEnumerable<LookupDTO>>(Lookup).ToPageList(filterModel.skip, filterModel.take);
+            var lookups = _unitOfWork.Lookups.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
+            var totalCount = lookups.Count();
+            var paged = lookups.ToPageList(filterModel.skip, filterModel.take);
+            var mapped = _mapper.Map<List<LookupDTO>>(paged).AsQueryable();
+            return new PaginationModel
+            {
+                Data = mapped,
+                StartPage = totalCount > 0 ? filterModel.skip + 1 : 0,
+                EndPage = totalCount > filterModel.take ? filterModel.skip + filterModel.take : totalCount,
+                TotalCount = lookups.Count()
+            };
         }
 
         public bool IsLookupExist(string filter = "")
         {
-            return _unitOfWork.Lookups.FirstOrDefault( null, filter) != null;
+            return _unitOfWork.Lookups.FirstOrDefault(null, filter) != null;
         }
-        public LookupDTO GetLookup(long id, string filter = "", string includeProperties="")
+        public LookupDTO GetLookup(long id, string filter = "", string includeProperties = "")
         {
             var Lookup = _unitOfWork.Lookups.FirstOrDefault(m => m.Id == id, filter, includeProperties);
             return _mapper.Map<LookupDTO>(Lookup);
@@ -56,6 +66,6 @@ namespace AASTHA2.Services
             var Lookup = _mapper.Map<Lookup>(LookupDto);
             _unitOfWork.Lookups.Delete(Lookup, removePhysical);
             _unitOfWork.SaveChanges();
-        }       
+        }
     }
 }

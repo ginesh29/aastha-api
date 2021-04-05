@@ -22,8 +22,17 @@ namespace AASTHA2.Services
         }
         public PaginationModel GetOpds(FilterModel filterModel)
         {
-            IEnumerable<Opd> Opd = _unitOfWork.Opds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
-            return _mapper.Map<IEnumerable<OpdDTO>>(Opd).ToPageList(filterModel.skip, filterModel.take);
+            var opds = _unitOfWork.Opds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
+            var totalCount = opds.Count();
+            var paged = opds.ToPageList(filterModel.skip, filterModel.take);
+            var mapped = _mapper.Map<List<OpdDTO>>(paged).AsQueryable();
+            return new PaginationModel
+            {
+                Data = mapped,
+                StartPage = totalCount > 0 ? filterModel.skip + 1 : 0,
+                EndPage = totalCount > filterModel.take ? filterModel.skip + filterModel.take : totalCount,
+                TotalCount = opds.Count()
+            };
         }
         public bool IsOpdExist(string filter = "")
         {
@@ -47,7 +56,7 @@ namespace AASTHA2.Services
         }
         public void PutOpd(OpdDTO OpdDto)
         {
-           var Opd = _mapper.Map<OpdDTO, Opd>(OpdDto);
+            var Opd = _mapper.Map<OpdDTO, Opd>(OpdDto);
             _unitOfWork.Opds.Update(Opd);
             _unitOfWork.SaveChanges();
         }
@@ -55,7 +64,7 @@ namespace AASTHA2.Services
         {
             var Opd = _mapper.Map<Opd>(OpdDto);
             _unitOfWork.Opds.Delete(Opd, removePhysical);
-            _unitOfWork.SaveChanges();            
+            _unitOfWork.SaveChanges();
         }
     }
 }

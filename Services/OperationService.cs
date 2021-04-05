@@ -6,6 +6,7 @@ using AASTHA2.Interfaces;
 using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Services
@@ -21,8 +22,17 @@ namespace AASTHA2.Services
         }
         public PaginationModel GetOperations(FilterModel filterModel)
         {
-            IEnumerable<Operation> Operation = _unitOfWork.Operations.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
-            return _mapper.Map<IEnumerable<OperationDTO>>(Operation).ToPageList(filterModel.skip, filterModel.take);
+            var operations = _unitOfWork.Operations.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
+            var totalCount = operations.Count();
+            var paged = operations.ToPageList(filterModel.skip, filterModel.take);
+            var mapped = _mapper.Map<List<OperationDTO>>(paged).AsQueryable();
+            return new PaginationModel
+            {
+                Data = mapped,
+                StartPage = totalCount > 0 ? filterModel.skip + 1 : 0,
+                EndPage = totalCount > filterModel.take ? filterModel.skip + filterModel.take : totalCount,
+                TotalCount = operations.Count()
+            };
         }
         //public bool IsOperationExist(long id, string filter = "", string includeProperties="")
         //{

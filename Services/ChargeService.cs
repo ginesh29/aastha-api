@@ -6,6 +6,7 @@ using AASTHA2.Interfaces;
 using AASTHA2.Models;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AASTHA2.Services
 {
@@ -20,8 +21,17 @@ namespace AASTHA2.Services
         }
         public PaginationModel GetCharges(FilterModel filterModel)
         {
-            IEnumerable<Charge> Charge = _unitOfWork.Charges.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
-            return _mapper.Map<IEnumerable<ChargeDTO>>(Charge).ToPageList(filterModel.skip, filterModel.take);
+            var charges = _unitOfWork.Charges.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
+            var totalCount = charges.Count();
+            var paged = charges.ToPageList(filterModel.skip, filterModel.take);
+            var mapped = _mapper.Map<List<ChargeDTO>>(paged).AsQueryable();
+            return new PaginationModel
+            {
+                Data = mapped,
+                StartPage = totalCount > 0 ? filterModel.skip + 1 : 0,
+                EndPage = totalCount > filterModel.take ? filterModel.skip + filterModel.take : totalCount,
+                TotalCount = charges.Count()
+            };
         }
         public ChargeDTO GetCharge(long id, string filter = "", string includeProperties = "")
         {

@@ -22,8 +22,17 @@ namespace AASTHA2.Services
         }
         public PaginationModel GetIpds(FilterModel filterModel)
         {
-            IEnumerable<Ipd> Ipd = _unitOfWork.Ipds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
-            return  _mapper.Map<IEnumerable<IpdDTO>>(Ipd).ToPageList(filterModel.skip, filterModel.take);
+            var ipds = _unitOfWork.Ipds.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
+            var totalCount = ipds.Count();
+            var paged = ipds.ToPageList(filterModel.skip, filterModel.take);
+            var mapped = _mapper.Map<List<IpdDTO>>(paged).AsQueryable();
+            return new PaginationModel
+            {
+                Data = mapped,
+                StartPage = totalCount > 0 ? filterModel.skip + 1 : 0,
+                EndPage = totalCount > filterModel.take ? filterModel.skip + filterModel.take : totalCount,
+                TotalCount = ipds.Count()
+            };
         }
         public bool IsIpdExist(string filter = "")
         {

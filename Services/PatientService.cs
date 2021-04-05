@@ -21,8 +21,17 @@ namespace AASTHA2.Services
         }
         public PaginationModel GetPatients(FilterModel filterModel)
         {
-            IEnumerable<Patient> patient = _unitOfWork.Patients.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
-            return _mapper.Map<IEnumerable<PatientDTO>>(patient).ToPageList(filterModel.skip, filterModel.take);
+            var patients = _unitOfWork.Patients.Find(null, filterModel.filter, filterModel.includeProperties, filterModel.sort);
+            var totalCount = patients.Count();
+            var paged = patients.ToPageList(filterModel.skip, filterModel.take);
+            var mapped = _mapper.Map<List<PatientDTO>>(paged).AsQueryable();
+            return new PaginationModel
+            {
+                Data = mapped,
+                StartPage = totalCount > 0 ? filterModel.skip + 1 : 0,
+                EndPage = totalCount > filterModel.take ? filterModel.skip + filterModel.take : totalCount,
+                TotalCount = patients.Count()
+            };
         }
         public IQueryable GetPatientStatistics(int? Year = null)
         {
