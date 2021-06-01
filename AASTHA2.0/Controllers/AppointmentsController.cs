@@ -1,14 +1,12 @@
 ﻿using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AppointmentsController : ControllerBase
     {
         private static AppointmentService _AppointmentService;

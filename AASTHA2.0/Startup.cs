@@ -15,9 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
-using Serilog.Events;
-using System;
 using System.Text;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -106,13 +103,6 @@ namespace AASTHA2
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            Log.Logger = new LoggerConfiguration()
-           .WriteTo.File($"Logs/Events/EventLog-{DateTime.Now.ToString("ddMMyyyy")}.log")
-           .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Error || y.Level == LogEventLevel.Fatal)
-           .WriteTo.File($"Logs/Exceptions/ExceptionLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
-           .WriteTo.Logger(x => x.Filter.ByIncludingOnly(y => y.Level == LogEventLevel.Warning)
-           .WriteTo.File($"Logs/Warnings/WarningLog-{DateTime.Now.ToString("ddMMyyyy")}.log"))
-           .CreateLogger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -124,11 +114,11 @@ namespace AASTHA2
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "AASTHA API V1");
             });
-            //app.UseWhen(context => !context.Request.Path.Value.Contains("Export"), appBuilder =>
-            //{
-            //    appBuilder.UseResponseWrapper();
-            //});
-            //app.UseExceptionWrapper();
+            app.UseWhen(context => !context.Request.Path.Value.Contains("Export"), appBuilder =>
+            {
+                appBuilder.UseResponseWrapper();
+            });
+            app.UseExceptionWrapper();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

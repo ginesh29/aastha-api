@@ -48,8 +48,7 @@ namespace AASTHA2.Controllers
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
                 return Ok(new { Token = tokenString });
             }
-            else
-                return Unauthorized("Enter valid credential");
+            return Unauthorized();
         }
     }
 }

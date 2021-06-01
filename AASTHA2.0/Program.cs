@@ -1,8 +1,11 @@
 ﻿using AASTHA2;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Serilog;
+using Microsoft.Extensions.Hosting;
 
-CreateWebHostBuilder(args).UseSerilog().Build().Run();
-static IWebHostBuilder CreateWebHostBuilder(string[] args) => WebHost.CreateDefaultBuilder(args)
-        .UseStartup<Startup>();
+CreateHostBuilder(args).Build().Run();
+
+static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
+       .ConfigureWebHostDefaults(webBuilder =>
+       {
+           webBuilder.UseStartup<Startup>();
+       });
