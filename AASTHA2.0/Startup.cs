@@ -22,6 +22,7 @@ using System.Text;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 namespace AASTHA2
 {
@@ -48,19 +49,19 @@ namespace AASTHA2
             services.AddDbContext<AASTHA2Context>(option => option.UseSqlServer(Configuration.GetConnectionString("AASTHADB")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ServicesWrapper>();
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = Configuration["Jwt:Issuer"],
-            //        ValidAudience = Configuration["Jwt:Audience"],
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-            //    };
-            //});
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -75,23 +76,31 @@ namespace AASTHA2
                     Version = "v1",
                     Description = "AASTHA Meternity Core Web API"
                 });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"Please enter into field the word 'Bearer' following by space and JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                  {
+                    new OpenApiSecurityScheme
+                    {
+                      Reference = new OpenApiReference
+                        {
+                          Type = ReferenceType.SecurityScheme,
+                          Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+                      }, new List<string>()
+                    }
+                });
             });
-            //services.AddSwaggerGen(c =>
-            //{
-            //   
-            //    c.AddSecurityDefinition("Bearer",
-            //        new ApiKeyScheme
-            //        {
-            //            In = "header",
-            //            Description = "Please enter into field the word 'Bearer' following by space and JWT",
-            //            Name = "Authorization",
-            //            Type = "apiKey"
-            //        });
-            //    c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>{
-            //    {
-            //            "Bearer", Enumerable.Empty<string>() }
-            //    });
-            //});
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,6 +129,12 @@ namespace AASTHA2
             //    appBuilder.UseResponseWrapper();
             //});
             //app.UseExceptionWrapper();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

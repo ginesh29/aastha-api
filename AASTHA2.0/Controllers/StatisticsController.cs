@@ -1,5 +1,4 @@
 ﻿using AASTHA2.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AASTHA2._0.Controllers
