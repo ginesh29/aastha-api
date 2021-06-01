@@ -42,7 +42,7 @@ namespace AASTHA2.Controllers
                     issuer: Configuration["Jwt:Issuer"],
                     audience: Configuration["Jwt:Audience"],
                     claims: claims,
-                    expires: loginModel.RememberMe ? DateTime.Now.AddDays(1) : DateTime.Now.AddHours(1),
+                    expires: loginModel.RememberMe ? DateTime.Now.AddMonths(1) : DateTime.Now.AddHours(1),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
