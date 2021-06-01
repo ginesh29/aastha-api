@@ -16,7 +16,7 @@ namespace AASTHA2.Interfaces
         void UpdateRange(IEnumerable<T> entities);
         void Delete(T entity, bool deletePhysical = false);
         void DeleteRange(IEnumerable<T> entities, bool deletePhysical = false);
-        IEnumerable<T> GetWithRawSql(string query, params object[] parameters);
+        //IEnumerable<T> GetWithRawSql(string query, params object[] parameters);
 
         //Async Method
         //Task<ICollection<T>> FindAsync(Expression<Func<T, bool>> filter = null);

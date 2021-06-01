@@ -89,10 +89,10 @@ namespace AASTHA2.Repositories
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }
-        public IEnumerable<T> GetWithRawSql(string query, params object[] parameters)
-        {
-            return _dbSet.FromSql(query, parameters).ToList();
-        }
+        //public IEnumerable<T> GetWithRawSql(string query, params object[] parameters)
+        //{
+        //    return _dbSet.FromSql(query, parameters).ToList();
+        //}
 
         //public async Task<ICollection<T>> FindAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
         //{

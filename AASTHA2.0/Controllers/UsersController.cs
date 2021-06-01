@@ -2,7 +2,6 @@
 using AASTHA2.Models;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
 {

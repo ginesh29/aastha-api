@@ -1,15 +1,12 @@
-﻿using AASTHA2.Common;
-using AASTHA2.DTO;
+﻿using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
 {

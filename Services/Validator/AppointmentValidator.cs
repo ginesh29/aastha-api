@@ -11,9 +11,9 @@ namespace AASTHA2.Validator
             RuleFor(m => m.date).NotEmpty().When(m => m.id < 1);
             RuleFor(m => m.type).NotEmpty().When(m => m.id < 1)
                                 .IsInEnum();
-            RuleFor(m => m.patientId).NotNull().When(m => m.id < 1)
-                                     .SetValidator(new ValidPatientValidator(ServicesWrapper));
-            RuleFor(m => new {m.id, m.date, m.patientId }).SetValidator(new ExistAppointmentValidator(ServicesWrapper)).WithMessage("Appointment already exist.");
+            //RuleFor(m => m.patientId).NotNull().When(m => m.id < 1)
+            //                         .SetValidator(new ValidPatientValidator(ServicesWrapper));
+            //RuleFor(m => new {m.id, m.date, m.patientId }).SetValidator(new ExistAppointmentValidator(ServicesWrapper)).WithMessage("Appointment already exist.");
         }
     }
 }

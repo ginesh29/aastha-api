@@ -1,9 +1,7 @@
 ﻿using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
 {

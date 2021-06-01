@@ -3,7 +3,6 @@ using AASTHA2.DTO;
 using AASTHA2.Models;
 using AASTHA2.Services;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -21,12 +20,10 @@ namespace AASTHA2.Controllers
     {
         private static IpdService _IpdService;
         private static LookupService _LookupService;
-        private readonly IMapper _mapper;
         public IpdsController(ServicesWrapper ServicesWrapper, IMapper mapper)
         {
             _IpdService = ServicesWrapper.IpdService;
             _LookupService = ServicesWrapper.LookupService;
-            _mapper = mapper;
         }
         // GET: api/Ipds
         [HttpGet]

@@ -16,10 +16,10 @@ namespace AASTHA2.Validator
                                 .IsInEnum();
             RuleFor(m => m.roomType).NotEmpty().When(m => m.id < 1).WithMessage("Room Type is required")
                                     .IsInEnum();
-            RuleFor(m => m.patientId).NotEmpty().When(m => m.id < 1).WithMessage("Select Patient")
-                                     .SetValidator(new ValidPatientValidator(ServicesWrapper));
-            RuleFor(m =>new {m.id, m.uniqueId }).NotEmpty().When(m => m.id < 1).WithMessage("Select Invoice No.")
-                                     .SetValidator(new ExistUniqueIdValidator(ServicesWrapper)).WithMessage("Invoice No. already exist.");
+            //RuleFor(m => m.patientId).NotEmpty().When(m => m.id < 1).WithMessage("Select Patient")
+            //                         .SetValidator(new ValidPatientValidator(ServicesWrapper));
+            //RuleFor(m =>new {m.id, m.uniqueId }).NotEmpty().When(m => m.id < 1).WithMessage("Select Invoice No.")
+            //                         .SetValidator(new ExistUniqueIdValidator(ServicesWrapper)).WithMessage("Invoice No. already exist.");
             RuleFor(m => m.addmissionDate).NotEmpty().When(m => m.id < 1).WithMessage("Addmission Date is required");
             RuleFor(m => m.dischargeDate).NotEmpty().When(m => m.id < 1).WithMessage("Discharge Date is required");
             RuleFor(m => m.operationDetail).NotNull().When(m => m.id < 1 && m.type == IpdType.Operation)
@@ -31,11 +31,11 @@ namespace AASTHA2.Validator
             RuleFor(m => m.ipdLookups).NotEmpty().When(m => m.id < 1);
             RuleFor(m => m.charges).NotEmpty().When(m => m.id < 1).WithMessage("please enter charges detail");
 
-            RuleForEach(m => m.charges).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Charges Details not valid")
-                                       .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
+            //RuleForEach(m => m.charges).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Charges Details not valid")
+            //                           .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
 
-            RuleForEach(m => m.ipdLookups).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Lookups Details not valid")
-                                          .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
+            //RuleForEach(m => m.ipdLookups).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Lookups Details not valid")
+            //                              .Must(collection => collection.lookupId > 0).SetValidator(new ValidLookupValidator(ServicesWrapper));
         }
     }
     public class OperationDetailValidator : AbstractValidator<OperationDTO>
