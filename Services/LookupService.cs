@@ -1,9 +1,8 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.Common.Helpers;
-using AASTHA2.DTO;
-using AASTHA2.Entities;
-using AASTHA2.Interfaces;
-using AASTHA2.Models;
+using AASTHA2.Entities.Models;
+using AASTHA2.Repositories.Interfaces;
+using AASTHA2.Services.DTO;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +60,7 @@ namespace AASTHA2.Services
             _unitOfWork.Lookups.Update(Lookup);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveLookup(LookupDTO LookupDto, string filter = "", bool removePhysical = false)
+        public void RemoveLookup(LookupDTO LookupDto, bool removePhysical = false)
         {
             var Lookup = _mapper.Map<Lookup>(LookupDto);
             _unitOfWork.Lookups.Delete(Lookup, removePhysical);

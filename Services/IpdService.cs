@@ -1,9 +1,8 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.Common.Helpers;
-using AASTHA2.DTO;
-using AASTHA2.Entities;
-using AASTHA2.Interfaces;
-using AASTHA2.Models;
+using AASTHA2.Entities.Models;
+using AASTHA2.Repositories.Interfaces;
+using AASTHA2.Services.DTO;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AASTHA2.Entities
+namespace AASTHA2.Entities.Models
 {
     public class Charge : BaseEntity
     {
@@ -11,7 +11,7 @@ namespace AASTHA2.Entities
         public decimal Days { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Rate { get; set; }
-       
+
         public long LookupId { get; set; }
         [ForeignKey("LookupId")]
         public Lookup ChargeDetail { get; set; }

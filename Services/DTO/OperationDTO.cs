@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class OperationDTO
     {

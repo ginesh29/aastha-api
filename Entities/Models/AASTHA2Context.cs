@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AASTHA2.Entities
+namespace AASTHA2.Entities.Models
 {
     public class AASTHA2Context : DbContext
     {

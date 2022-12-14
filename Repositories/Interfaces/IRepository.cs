@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace AASTHA2.Interfaces
+namespace AASTHA2.Repositories.Interfaces
 {
     public interface IRepository<T>
     {

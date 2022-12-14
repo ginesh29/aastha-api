@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AASTHA2.Models
+namespace AASTHA2.Common
 {
     public class FilterModel
     {

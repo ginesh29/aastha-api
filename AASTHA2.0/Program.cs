@@ -1,7 +1,7 @@
-﻿using AASTHA2.Entities;
-using AASTHA2.Interfaces;
+﻿using AASTHA2.Entities.Models;
 using AASTHA2.Middleware;
 using AASTHA2.Repositories;
+using AASTHA2.Repositories.Interfaces;
 using AASTHA2.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -92,8 +92,9 @@ namespace AASTHA2
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseCors("AllowAnyOrigin");
-           
+
             app.UseWhen(context => !context.Request.Path.Value.Contains("Export"), appBuilder =>
             {
                 appBuilder.UseResponseWrapper();

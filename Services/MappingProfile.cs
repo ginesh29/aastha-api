@@ -1,5 +1,5 @@
-﻿using AASTHA2.DTO;
-using AASTHA2.Entities;
+﻿using AASTHA2.Entities.Models;
+using AASTHA2.Services.DTO;
 using AutoMapper;
 
 namespace AASTHA2.Services

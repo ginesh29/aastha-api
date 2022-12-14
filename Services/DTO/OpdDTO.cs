@@ -2,15 +2,15 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class OpdDTO
     {
         public long id { get; set; }
         public DateTime? date { get; set; }
-        public string invoiceNo => $"OPD{this.id.ToString().PadLeft(7, '0')}";
+        public string invoiceNo => $"OPD{id.ToString().PadLeft(7, '0')}";
         public CaseType? caseType { get; set; }
-        public string caseTypeName => this.caseType.ToString();
+        public string caseTypeName => caseType.ToString();
         public decimal consultCharge { get; set; }
         public decimal usgCharge { get; set; }
         public decimal uptCharge { get; set; }

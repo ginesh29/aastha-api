@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AASTHA2.Models
+namespace AASTHA2.Common
 {
     public class LoginModel
     {

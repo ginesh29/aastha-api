@@ -1,15 +1,14 @@
-﻿using AASTHA2.DTO;
-using AASTHA2.Models;
+﻿using AASTHA2.Common;
 using AASTHA2.Services;
+using AASTHA2.Services.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class LookupsController : ControllerBase
     {
         private static LookupService _LookupService;
@@ -19,8 +18,8 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Lookups
         [HttpGet]
-        public ActionResult GetLookups([FromQuery]FilterModel filterModel)
-          {
+        public ActionResult GetLookups([FromQuery] FilterModel filterModel)
+        {
             var result = _LookupService.GetLookups(filterModel);
             return Ok(result);
         }
@@ -42,7 +41,7 @@ namespace AASTHA2.Controllers
         {
             _LookupService.PostLookup(LookupDTO);
             var lookup = _LookupService.GetLookup(LookupDTO.id, null, includeProperties);
-            return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, lookup);
+            return CreatedAtAction("GetLookup", new { LookupDTO.id }, lookup);
         }
         [HttpPut]
         public ActionResult<LookupDTO> PutLookup(LookupDTO LookupDTO, string includeProperties = "")
@@ -54,7 +53,7 @@ namespace AASTHA2.Controllers
             }
             _LookupService.PutLookup(LookupDTO);
             Lookup = _LookupService.GetLookup(LookupDTO.id, null, includeProperties);
-            return CreatedAtAction("GetLookup", new { id = LookupDTO.id }, Lookup);
+            return CreatedAtAction("GetLookup", new { LookupDTO.id }, Lookup);
         }
         [HttpDelete("{id}")]
         public ActionResult<LookupDTO> DeleteLookup(long id, bool isDeleted, bool removePhysical = false)
@@ -66,7 +65,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _LookupService.RemoveLookup(Lookup, "", removePhysical);
-            return CreatedAtAction("GetLookup", new { id = id }, Lookup);
+            return CreatedAtAction("GetLookup", new { id }, Lookup);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AASTHA2.Interfaces
+﻿namespace AASTHA2.Repositories.Interfaces
 {
     public interface IUnitOfWork
     {

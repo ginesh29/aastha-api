@@ -1,4 +1,4 @@
-﻿using AASTHA2.Interfaces;
+﻿using AASTHA2.Repositories.Interfaces;
 using AutoMapper;
 
 namespace AASTHA2.Services

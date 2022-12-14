@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AASTHA2.Entities
+namespace AASTHA2.Entities.Models
 {
     public class User : BaseEntity
     {

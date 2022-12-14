@@ -1,10 +1,7 @@
-﻿using AASTHA2.Entities;
-using System;
+﻿using AASTHA2.Entities.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace AASTHA2.Interfaces
+namespace AASTHA2.Repositories.Interfaces
 {
     public interface IIpdRepository : IRepository<Ipd>
     {

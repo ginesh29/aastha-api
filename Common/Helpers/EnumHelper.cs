@@ -17,7 +17,7 @@ namespace AASTHA2.Common.Helpers
                 typeof(DisplayAttribute), false) as DisplayAttribute[];
 
             if (descriptionAttributes[0].ResourceType != null)
-                return lookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Name);
+                return LookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Name);
 
             if (descriptionAttributes == null) return string.Empty;
             return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : enumValue.ToString();
@@ -30,12 +30,12 @@ namespace AASTHA2.Common.Helpers
                 typeof(DisplayAttribute), false) as DisplayAttribute[];
 
             if (descriptionAttributes[0].ResourceType != null)
-                return lookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Description);
+                return LookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Description);
 
             if (descriptionAttributes == null) return string.Empty;
             return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Description : enumValue.ToString();
         }
-        private static string lookupResource(Type resourceManagerProvider, string resourceKey)
+        private static string LookupResource(Type resourceManagerProvider, string resourceKey)
         {
             foreach (PropertyInfo staticProperty in resourceManagerProvider.GetProperties(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public))
             {

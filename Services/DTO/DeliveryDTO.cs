@@ -1,7 +1,7 @@
 ﻿using AASTHA2.Common;
 using System;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class DeliveryDTO
     {
@@ -10,7 +10,7 @@ namespace AASTHA2.DTO
         public DateTime date { get; set; }
         public TimeSpan time { get; set; }
         public Gender? gender { get; set; }
-        public string genderName => this.gender.ToString();
+        public string genderName => gender.ToString();
         public DateTime dateTime => date + time;
         public decimal babyWeight { get; set; }
         public bool? isDeleted { get; set; }

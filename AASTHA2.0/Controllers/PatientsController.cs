@@ -1,15 +1,14 @@
-﻿using AASTHA2.DTO;
-using AASTHA2.Models;
+﻿using AASTHA2.Common;
 using AASTHA2.Services;
+using AASTHA2.Services.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private static PatientService _patientService;
@@ -41,7 +40,7 @@ namespace AASTHA2.Controllers
         {
             _patientService.PostPatient(patientDTO);
             var patient = _patientService.GetPatient(patientDTO.id, null, includeProperties);
-            return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
+            return CreatedAtAction("GetPatient", new { patientDTO.id }, patient);
         }
         [HttpPut]
         public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO, string includeProperties = "")
@@ -53,7 +52,7 @@ namespace AASTHA2.Controllers
             }
             _patientService.PutPatient(patientDTO);
             patient = _patientService.GetPatient(patientDTO.id,null,includeProperties);
-            return CreatedAtAction("GetPatient", new { id = patientDTO.id }, patient);
+            return CreatedAtAction("GetPatient", new { patientDTO.id }, patient);
         }
         [HttpDelete("{id}")]
         public ActionResult<PatientDTO> DeletePatient(long id, bool isDeleted, bool removePhysical = false)
@@ -65,7 +64,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _patientService.RemovePatient(patient, "", removePhysical);
-            return CreatedAtAction("GetPatient", new { id = id }, patient);
+            return CreatedAtAction("GetPatient", new { id }, patient);
         }       
     }
 }

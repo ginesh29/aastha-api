@@ -1,6 +1,5 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.Common.Helpers;
-using AASTHA2.Models;
 using AASTHA2.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -35,9 +34,11 @@ namespace AASTHA2.Controllers
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var claims = new List<Claim>();
-                claims.Add(new Claim("UserId", user.id.ToString()));
-                claims.Add(new Claim("Role", user.isSuperAdmin ? ((int)Role.Admin).ToString() : ((int)Role.Assistant).ToString()));
+                var claims = new List<Claim>
+                {
+                    new Claim("UserId", user.id.ToString()),
+                    new Claim("Role", user.isSuperAdmin ? ((int)Role.Admin).ToString() : ((int)Role.Assistant).ToString())
+                };
                 var tokenOptions = new JwtSecurityToken(
                     issuer: Configuration["Jwt:Issuer"],
                     audience: Configuration["Jwt:Audience"],

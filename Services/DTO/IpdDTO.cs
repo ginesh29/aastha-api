@@ -2,17 +2,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class IpdDTO
     {
         public long id { get; set; }
         public long uniqueId { get; set; }
-        public string invoiceNo => $"IPD{this.uniqueId.ToString().PadLeft(7, '0')}";
+        public string invoiceNo => $"IPD{uniqueId.ToString().PadLeft(7, '0')}";
         public IpdType? type { get; set; }
-        public string ipdType => this.type.ToString();
+        public string ipdType => type.ToString();
         public RoomType? roomType { get; set; }
-        public string roomTypeName => this.roomType.ToString();
+        public string roomTypeName => roomType.ToString();
         public DateTime addmissionDate { get; set; }
         public DateTime dischargeDate { get; set; }
         public decimal discount { get; set; }

@@ -1,9 +1,8 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.Common.Helpers;
-using AASTHA2.DTO;
-using AASTHA2.Entities;
-using AASTHA2.Interfaces;
-using AASTHA2.Models;
+using AASTHA2.Entities.Models;
+using AASTHA2.Repositories.Interfaces;
+using AASTHA2.Services.DTO;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +50,7 @@ namespace AASTHA2.Services
             _unitOfWork.Charges.Update(Charge);
             _unitOfWork.SaveChanges();
         }
-        public void RemoveCharge(ChargeDTO ChargeDto, string filter = "", bool removePhysical = false)
+        public void RemoveCharge(ChargeDTO ChargeDto, bool removePhysical = false)
         {
             var Charge = _mapper.Map<Charge>(ChargeDto);
             _unitOfWork.Charges.Delete(Charge, removePhysical);

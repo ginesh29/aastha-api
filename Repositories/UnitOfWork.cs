@@ -1,5 +1,5 @@
-﻿using AASTHA2.Entities;
-using AASTHA2.Interfaces;
+﻿using AASTHA2.Entities.Models;
+using AASTHA2.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

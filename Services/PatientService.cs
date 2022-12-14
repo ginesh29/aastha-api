@@ -1,9 +1,8 @@
 ﻿using AASTHA2.Common;
 using AASTHA2.Common.Helpers;
-using AASTHA2.DTO;
-using AASTHA2.Entities;
-using AASTHA2.Interfaces;
-using AASTHA2.Models;
+using AASTHA2.Entities.Models;
+using AASTHA2.Repositories.Interfaces;
+using AASTHA2.Services.DTO;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +59,7 @@ namespace AASTHA2.Services
             _unitOfWork.Patients.Update(patient);
             _unitOfWork.SaveChanges();
         }
-        public void RemovePatient(PatientDTO patientDto, string filter = "", bool removePhysical = false)
+        public void RemovePatient(PatientDTO patientDto, bool removePhysical = false)
         {
             var patient = _mapper.Map<Patient>(patientDto);
             _unitOfWork.Patients.Delete(patient, removePhysical);

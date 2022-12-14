@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class LookupDTO
     {
         public long id { get; set; }
         public string name { get; set; }
         public LookupType type { get; set; }
-        public string typeName => this.type.ToString();
+        public string typeName => type.ToString();
         public long? parentId { get; set; }
         public bool? isDeleted { get; set; }
 

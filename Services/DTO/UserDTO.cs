@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class UserDTO
     {
@@ -10,7 +10,7 @@ namespace AASTHA2.DTO
         public string username { get; set; }
         public string password { get; set; }
         public string lastname { get; set; }
-        public string fullname => $"{this.firstname } {this.middlename} {this.lastname}";
+        public string fullname => $"{firstname} {middlename} {lastname}";
         public string mobile { get; set; }
         public int age { get; set; }
         public bool? isDeleted { get; set; }
@@ -18,7 +18,7 @@ namespace AASTHA2.DTO
         public bool isSuperAdmin { get; set; }
         public int calculatedAge
         {
-            get { return age + (modifiedDate != DateTime.MinValue ? (DateTime.UtcNow.Year - modifiedDate.Year) : 0); }
+            get { return age + (modifiedDate != DateTime.MinValue ? DateTime.UtcNow.Year - modifiedDate.Year : 0); }
             set { age = value; }
         }
     }

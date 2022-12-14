@@ -1,7 +1,6 @@
 ﻿using AASTHA2.Common;
-using AASTHA2.DTO;
-using AASTHA2.Models;
 using AASTHA2.Services;
+using AASTHA2.Services.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +15,19 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class IpdsController : ControllerBase
     {
         private static IpdService _IpdService;
         private static LookupService _LookupService;
-        private readonly IMapper _mapper;
-        public IpdsController(ServicesWrapper ServicesWrapper, IMapper mapper)
+        public IpdsController(ServicesWrapper ServicesWrapper)
         {
             _IpdService = ServicesWrapper.IpdService;
             _LookupService = ServicesWrapper.LookupService;
-            _mapper = mapper;
         }
         // GET: api/Ipds
         [HttpGet]
-        public ActionResult GetIpds([FromQuery]FilterModel filterModel)
+        public ActionResult GetIpds([FromQuery] FilterModel filterModel)
         {
             var result = _IpdService.GetIpds(filterModel);
             return Ok(result);
@@ -52,7 +49,7 @@ namespace AASTHA2.Controllers
         {
             _IpdService.PostIpd(IpdDTO);
             var opd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, opd);
+            return CreatedAtAction("GetIpd", new { IpdDTO.id }, opd);
         }
         [HttpPut]
         public ActionResult<IpdDTO> PutIpd(IpdDTO IpdDTO, string includeProperties = "")
@@ -66,7 +63,7 @@ namespace AASTHA2.Controllers
             _IpdService.RemoveIpdLookup(removedLookup, "", true);
             _IpdService.PutIpd(IpdDTO);
             Ipd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetIpd", new { id = IpdDTO.id }, Ipd);
+            return CreatedAtAction("GetIpd", new { IpdDTO.id }, Ipd);
         }
         [HttpDelete("{id}")]
         public ActionResult<IpdDTO> DeleteIpd(long id, bool isDeleted, bool removePhysical = false)
@@ -78,7 +75,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _IpdService.RemoveIpd(Ipd, "", removePhysical);
-            return CreatedAtAction("GetIpd", new { id = id }, Ipd);
+            return CreatedAtAction("GetIpd", new { id }, Ipd);
         }
         [HttpPost]
         [Route("ExportReport")]
@@ -97,12 +94,14 @@ namespace AASTHA2.Controllers
                 workSheet.Cells["E1"].Value = "Dis. Date";
 
                 char alpha = 'F';
-                FilterModel filterModel = new FilterModel();
-                filterModel.filter = $"type-eq-{{{(int)LookupType.ChargeType}}}";
+                FilterModel filterModel = new()
+                {
+                    filter = $"type-eq-{{{(int)LookupType.ChargeType}}}"
+                };
                 var charges = _LookupService.GetLookups(filterModel).Data.ToDynamicList<LookupDTO>(); ;
                 foreach (var item in charges)
                 {
-                    workSheet.Cells[$"{alpha}1"].Value = $"{item.name.Substring(0, 3)}.";
+                    workSheet.Cells[$"{alpha}1"].Value = $"{item.name[..3]}.";
                     alpha++;
                 }
 
@@ -126,11 +125,11 @@ namespace AASTHA2.Controllers
                     foreach (var charge in charges)
                     {
                         var amount = item.charges.FirstOrDefault(m => m.lookupId == charge.id)?.amount;
-                        var a = $"{ alpha }{ row}";
+                        var a = $"{alpha}{row}";
                         workSheet.Cells[$"{alpha}{row}"].Value = amount > 0 ? amount : 0;
                         alpha++;
                     }
-                    workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{ --alpha}{row})";
+                    workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{--alpha}{row})";
                     workSheet.Cells[$"D{row}"].Style.Numberformat.Format = "dd-mm-yyyy";
                     workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd-mm-yyyy";
                     row++;
@@ -142,7 +141,7 @@ namespace AASTHA2.Controllers
                     workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM({alpha}2:{alpha}{row - 1})";
                     alpha++;
                 }
-                workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{ --alpha}{row})";
+                workSheet.Cells[$"{alpha}{row}"].Formula = $"=SUM(F{row}:{--alpha}{row})";
 
                 var footerCell = workSheet.Cells[$"A{row}:{alpha}{row}"];
                 footerCell.Style.Fill.PatternType = ExcelFillStyle.Solid;

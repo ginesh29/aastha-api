@@ -1,7 +1,6 @@
 ﻿using AASTHA2.Common;
-using AASTHA2.DTO;
-using AASTHA2.Models;
 using AASTHA2.Services;
+using AASTHA2.Services.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -9,13 +8,12 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Dynamic.Core;
 
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class OpdsController : ControllerBase
     {
         private static OpdService _OpdService;
@@ -25,7 +23,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Opds
         [HttpGet]
-        public ActionResult GetOpds([FromQuery]FilterModel filterModel)
+        public ActionResult GetOpds([FromQuery] FilterModel filterModel)
         {
             var result = _OpdService.GetOpds(filterModel);
             return Ok(result);
@@ -48,7 +46,7 @@ namespace AASTHA2.Controllers
         {
             _OpdService.PostOpd(OpdDTO);
             var opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, opd);
+            return CreatedAtAction("GetOpd", new { OpdDTO.id }, opd);
         }
         [HttpPut]
         public ActionResult<OpdDTO> PutOpd(OpdDTO OpdDTO, string includeProperties = "")
@@ -60,7 +58,7 @@ namespace AASTHA2.Controllers
             }
             _OpdService.PutOpd(OpdDTO);
             Opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, Opd);
+            return CreatedAtAction("GetOpd", new { OpdDTO.id }, Opd);
         }
         [HttpDelete("{id}")]
         public ActionResult<OpdDTO> DeleteOpd(long id, bool isDeleted, bool removePhysical = false)
@@ -72,7 +70,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _OpdService.RemoveOpd(Opd, "", removePhysical);
-            return CreatedAtAction("GetOpd", new { id = id }, Opd);
+            return CreatedAtAction("GetOpd", new { id }, Opd);
         }
         [HttpPost]
         [Route("ExportReport")]

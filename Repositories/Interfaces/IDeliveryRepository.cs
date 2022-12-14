@@ -1,9 +1,6 @@
-﻿using AASTHA2.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AASTHA2.Entities.Models;
 
-namespace AASTHA2.Interfaces
+namespace AASTHA2.Repositories.Interfaces
 {
     public interface IDeliveryRepository : IRepository<Delivery>
     {

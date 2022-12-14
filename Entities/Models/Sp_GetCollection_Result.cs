@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace AASTHA2.Entities
+namespace AASTHA2.Entities.Models
 {
     public class Sp_GetCollection_Result
     {

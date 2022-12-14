@@ -3,7 +3,7 @@ using AASTHA2.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace AASTHA2.DTO
+namespace AASTHA2.Services.DTO
 {
     public class IpdLookupDTO
     {
@@ -11,5 +11,5 @@ namespace AASTHA2.DTO
         public long ipdId { get; set; }
         public long lookupId { get; set; }
         public LookupDTO lookup { get; set; }
-    }    
+    }
 }

@@ -23,7 +23,7 @@ namespace AASTHA2.Common.Helpers
                 Operator obj = (Operator)Enum.Parse(typeof(Operator), item);
                 query = query.Replace($"-{obj.GetDescription()}-", $"{ obj.GetDisplayName()} ");
             }
-            var regex = new Regex("{(.*?)}");
+            Regex regex = new("{(.*?)}");
             var matches = regex.Matches(filter).Distinct().ToList();
             int i = 0;
             param = new object[matches.Count];
