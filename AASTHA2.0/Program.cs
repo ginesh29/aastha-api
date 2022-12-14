@@ -82,6 +82,10 @@ namespace AASTHA2
                                 }
                 });
             });
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -90,10 +94,10 @@ namespace AASTHA2
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors("AllowAnyOrigin");
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("AllowAnyOrigin");
+            
 
             app.UseWhen(context => !context.Request.Path.Value.Contains("Export"), appBuilder =>
             {
