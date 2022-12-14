@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>AASTHA2.Common</AssemblyName>
     <RootNamespace>AASTHA2.Common</RootNamespace>
   </PropertyGroup>
