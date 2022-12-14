@@ -25,7 +25,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Opds
         [HttpGet]
-        public ActionResult GetOpds([FromQuery]FilterModel filterModel)
+        public ActionResult GetOpds([FromQuery] FilterModel filterModel)
         {
             var result = _OpdService.GetOpds(filterModel);
             return Ok(result);
@@ -45,7 +45,7 @@ namespace AASTHA2.Controllers
         }
         [HttpPost]
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO, string includeProperties = "")
-        {
+        {            
             _OpdService.PostOpd(OpdDTO);
             var opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetOpd", new { id = OpdDTO.id }, opd);

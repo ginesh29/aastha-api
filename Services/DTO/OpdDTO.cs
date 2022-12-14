@@ -1,6 +1,7 @@
 ﻿using AASTHA2.Common;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AASTHA2.DTO
 {
@@ -20,5 +21,7 @@ namespace AASTHA2.DTO
         public bool? isDeleted { get; set; }
         public long? patientId { get; set; }
         public PatientDTO patient { get; set; }
+        [NotMapped]
+        public bool checkExist { get; set; }
     }
 }
