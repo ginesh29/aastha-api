@@ -69,7 +69,7 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _OpdService.RemoveOpd(Opd, "", removePhysical);
+            _OpdService.RemoveOpd(Opd, removePhysical);
             return CreatedAtAction("GetOpd", new { id }, Opd);
         }
         [HttpPost]

@@ -18,7 +18,7 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Appointments
         [HttpGet]
-        public ActionResult GetAppointments([FromQuery]FilterModel filterModel)
+        public ActionResult GetAppointments([FromQuery] FilterModel filterModel)
         {
             var result = _AppointmentService.GetAppointments(filterModel);
             return Ok(result);
@@ -41,7 +41,7 @@ namespace AASTHA2.Controllers
         {
             _AppointmentService.PostAppointment(AppointmentDTO);
             var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id, null, includeProperties);
-            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.id }, Appointment);
+            return CreatedAtAction("GetAppointment", new { AppointmentDTO.id }, Appointment);
         }
         [HttpPut]
         public ActionResult<AppointmentDTO> PutAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
@@ -53,7 +53,7 @@ namespace AASTHA2.Controllers
             }
             _AppointmentService.PutAppointment(AppointmentDTO);
             Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id, null, includeProperties);
-            return CreatedAtAction("GetAppointment", new { id = AppointmentDTO.id }, Appointment);
+            return CreatedAtAction("GetAppointment", new { AppointmentDTO.id }, Appointment);
         }
         [HttpDelete("{id}")]
         public ActionResult<AppointmentDTO> DeleteAppointment(long id, bool isDeleted, bool removePhysical = false)
@@ -64,8 +64,8 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _AppointmentService.RemoveAppointment(Appointment, "");
-            return CreatedAtAction("GetAppointment", new { id = id }, Appointment);
+            _AppointmentService.RemoveAppointment(Appointment, removePhysical);
+            return CreatedAtAction("GetAppointment", new { id }, Appointment);
         }
     }
 }

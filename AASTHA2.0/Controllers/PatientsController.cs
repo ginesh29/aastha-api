@@ -18,9 +18,9 @@ namespace AASTHA2.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public ActionResult GetPatients([FromQuery]FilterModel filterModel)
+        public ActionResult GetPatients([FromQuery] FilterModel filterModel)
         {
-            var data = _patientService.GetPatients(filterModel);           
+            var data = _patientService.GetPatients(filterModel);
             return Ok(data);
         }
 
@@ -51,7 +51,7 @@ namespace AASTHA2.Controllers
                 return NotFound();
             }
             _patientService.PutPatient(patientDTO);
-            patient = _patientService.GetPatient(patientDTO.id,null,includeProperties);
+            patient = _patientService.GetPatient(patientDTO.id, null, includeProperties);
             return CreatedAtAction("GetPatient", new { patientDTO.id }, patient);
         }
         [HttpDelete("{id}")]
@@ -63,8 +63,8 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _patientService.RemovePatient(patient, "", removePhysical);
+            _patientService.RemovePatient(patient, removePhysical);
             return CreatedAtAction("GetPatient", new { id }, patient);
-        }       
+        }
     }
 }

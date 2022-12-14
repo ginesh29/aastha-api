@@ -64,7 +64,7 @@ namespace AASTHA2.Controllers
             {
                 return NotFound();
             }
-            _LookupService.RemoveLookup(Lookup, "", removePhysical);
+            _LookupService.RemoveLookup(Lookup, removePhysical);
             return CreatedAtAction("GetLookup", new { id }, Lookup);
         }
     }
