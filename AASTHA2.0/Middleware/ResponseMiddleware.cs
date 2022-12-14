@@ -77,7 +77,7 @@ namespace AASTHA2.Middleware
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Log.Error($"Message : { ex.Message},Stacktrace :{ex.StackTrace}");
             }

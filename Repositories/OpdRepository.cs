@@ -18,7 +18,7 @@ namespace AASTHA2.Repositories
         public IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year)
         {
             IEnumerable<Sp_GetCollection_Result> rows = null;
-            _AASTHA2Context.LoadStoredProc("GetOpdStatistics").Exec(r => rows = r.ToList<Sp_GetCollection_Result>());
+            AASTHA2Context.LoadStoredProc("GetOpdStatistics").Exec(r => rows = r.ToList<Sp_GetCollection_Result>());
             if (Year > 0)
                 rows = rows.Where(m => m.Year == Year);
             return rows;

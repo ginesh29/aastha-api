@@ -12,11 +12,11 @@ namespace AASTHA2.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
-        protected AASTHA2Context _AASTHA2Context { get; set; }
+        protected AASTHA2Context AASTHA2Context { get; set; }
         public DbSet<T> _dbSet;
         public RepositoryBase(AASTHA2Context AASTHA2Context)
         {
-            _AASTHA2Context = AASTHA2Context;
+            this.AASTHA2Context = AASTHA2Context;
             _dbSet = AASTHA2Context.Set<T>();
         }
 
@@ -34,9 +34,7 @@ namespace AASTHA2.Repositories
 
             if (!string.IsNullOrEmpty(filter) && filter != "0")
             {
-                string dynamicQuery;
-                object[] param;
-                DynamicLinqHelper.DynamicSearchQuery(filter, out dynamicQuery, out param);
+                DynamicLinqHelper.DynamicSearchQuery(filter, out string dynamicQuery, out object[] param);
                 query = query.Where(dynamicQuery, param);
             }
             if (!string.IsNullOrEmpty(order))
@@ -49,7 +47,7 @@ namespace AASTHA2.Repositories
         }
         public void Create(T entity)
         {
-            this._AASTHA2Context.Set<T>().Add(entity);
+            this.AASTHA2Context.Set<T>().Add(entity);
         }
         //public void CreateRange(IEnumerable<T> entities)
         //{
@@ -58,40 +56,40 @@ namespace AASTHA2.Repositories
         //}
         public void Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
         {
-            var dbEntityEntry = _AASTHA2Context.Entry(entity);
+            var dbEntityEntry = AASTHA2Context.Entry(entity);
             if (updatedProperties.Any())
                 foreach (var property in updatedProperties)
                     dbEntityEntry.Property(property).IsModified = true;
             else
-                this._AASTHA2Context.Set<T>().Update(entity);
+                this.AASTHA2Context.Set<T>().Update(entity);
         }
         public void UpdateRange(IEnumerable<T> entities)
         {
-            this._AASTHA2Context.Set<T>().UpdateRange(entities);
+            this.AASTHA2Context.Set<T>().UpdateRange(entities);
         }
         public void Delete(T entity, bool deletePhysical = false)
         {
             if ((bool)deletePhysical)
-                this._AASTHA2Context.Set<T>().Remove(entity);
+                this.AASTHA2Context.Set<T>().Remove(entity);
             else
             {
-                var dbEntityEntry = _AASTHA2Context.Entry(entity);
+                var dbEntityEntry = AASTHA2Context.Entry(entity);
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }
         public void DeleteRange(IEnumerable<T> entities, bool deletePhysical = false)
         {
             if ((bool)deletePhysical)
-                this._AASTHA2Context.Set<T>().RemoveRange(entities);
+                this.AASTHA2Context.Set<T>().RemoveRange(entities);
             else
             {
-                var dbEntityEntry = _AASTHA2Context.Entry(entities);
+                var dbEntityEntry = AASTHA2Context.Entry(entities);
                 dbEntityEntry.Property("IsDeleted").IsModified = true;
             }
         }
         public IEnumerable<T> GetWithRawSql(string query, params object[] parameters)
         {
-            return _dbSet.FromSql(query, parameters).ToList();
+            return _dbSet.FromSqlRaw(query, parameters).ToList();
         }
 
         //public async Task<ICollection<T>> FindAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
