@@ -1,4 +1,5 @@
 ﻿using AASTHA2.Common;
+using AASTHA2.Common.Helpers;
 using AASTHA2.Services;
 using AASTHA2.Services.DTO;
 using FluentValidation;
@@ -7,12 +8,10 @@ namespace AASTHA2.Validator
 {
     public class IpdValidator : AbstractValidator<IpdDTO>
     {
-        private static LookupService _lookupService;
         private static PatientService _patientService;
         private static IpdService _ipdService;
         public IpdValidator(ServicesWrapper ServicesWrapper)
         {
-            _lookupService = ServicesWrapper.LookupService;
             _patientService = ServicesWrapper.PatientService;
             _ipdService = ServicesWrapper.IpdService;
             RuleFor(m => m.type).NotEmpty().When(m => m.id < 1).WithMessage("Ipd Type is required").IsInEnum();
@@ -39,19 +38,8 @@ namespace AASTHA2.Validator
             RuleFor(m => m.ipdLookups).NotEmpty().When(m => m.id < 1);
             RuleFor(m => m.charges).NotEmpty().When(m => m.id < 1).WithMessage("please enter charges detail");
 
-            RuleForEach(m => m.charges).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Charges Details not valid")
-            .Must(collection => collection.lookupId > 0)
-            .Must((ipd, cancellation) =>
-            {
-                return _lookupService.IsLookupExist($"Id-eq-{{{ipd.lookupId}}}");
-            }).WithMessage("Lookup not valid.");
-
-            RuleForEach(m => m.ipdLookups).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Lookups Details not valid")
-            .Must(collection => collection.lookupId > 0)
-            .Must((ipd, cancellation) =>
-            {
-                return _lookupService.IsLookupExist($"Id-eq-{{{ipd.lookupId}}}");
-            }).WithMessage("Lookup not valid.");
+            RuleForEach(m => m.charges).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Charges Details not valid");
+            RuleForEach(m => m.ipdLookups).Must(collection => collection.lookupId > 0).When(m => m.id < 1).WithMessage("Lookups Details not valid");
         }
     }
     public class OperationDetailValidator : AbstractValidator<OperationDTO>
