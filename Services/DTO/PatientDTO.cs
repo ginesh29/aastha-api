@@ -21,7 +21,5 @@ namespace AASTHA2.Services.DTO
             get { return age + (modifiedDate != DateTime.MinValue ? DateTime.UtcNow.Year - modifiedDate.Year : 0); }
             set { age = value; }
         }
-        //public ICollection<OpdDTO> opds { get; set; }
-        //public ICollection<IpdDTO> ipds { get; set; }
     }
 }

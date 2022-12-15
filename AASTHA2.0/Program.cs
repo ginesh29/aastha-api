@@ -33,12 +33,8 @@ namespace AASTHA2
             });
             IMapper mapper = mappingConfig.CreateMapper();
             builder.Services.AddControllers();
-            //    .AddFluentValidation(m =>
-            //    {
-            //        m.ImplicitlyValidateChildProperties = true;
-            //        m.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-            //    });
-            //builder.Services.AddScoped<IValidator<PatientDTO>, PatientValidator>();
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<PatientValidator>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(option =>
             {
