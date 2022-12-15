@@ -3,7 +3,11 @@ using AASTHA2.Middleware;
 using AASTHA2.Repositories;
 using AASTHA2.Repositories.Interfaces;
 using AASTHA2.Services;
+using AASTHA2.Services.DTO;
+using AASTHA2.Validator;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -23,38 +27,19 @@ namespace AASTHA2
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
             var mappingConfig = new MapperConfiguration(mc =>
-                        {
-                            mc.AddProfile(new MappingProfile());
-                        });
-
+            {
+                mc.AddProfile(new MappingProfile());
+            });
             IMapper mapper = mappingConfig.CreateMapper();
-            builder.Services.AddSingleton(mapper);
-            builder.Services.AddDbContext<AASTHA2Context>(option =>
-            {
-                option.UseSqlServer(builder.Configuration.GetConnectionString("AASTHADB"));
-            });
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<ServicesWrapper>();
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-                };
-            });
+            builder.Services.AddControllers();
+            //    .AddFluentValidation(m =>
+            //    {
+            //        m.ImplicitlyValidateChildProperties = true;
+            //        m.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            //    });
+            //builder.Services.AddScoped<IValidator<PatientDTO>, PatientValidator>();
+            builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "AASTHA API", Description = "AASTHA Maternity .Net 6 API", Version = "v1" });
@@ -82,13 +67,32 @@ namespace AASTHA2
                                 }
                 });
             });
+            builder.Services.AddSingleton(mapper);
+            builder.Services.AddDbContext<AASTHA2Context>(option =>
+            {
+                option.UseSqlServer(builder.Configuration.GetConnectionString("AASTHADB"));
+            });
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ServicesWrapper>();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                };
+            });
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
-            var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -97,16 +101,12 @@ namespace AASTHA2
             app.UseCors("AllowAnyOrigin");
             app.UseAuthentication();
             app.UseAuthorization();
-            
-
             app.UseWhen(context => !context.Request.Path.Value.Contains("Export"), appBuilder =>
             {
                 appBuilder.UseResponseWrapper();
             });
             app.UseExceptionWrapper();
-
             app.MapControllers();
-
             app.Run();
         }
     }
