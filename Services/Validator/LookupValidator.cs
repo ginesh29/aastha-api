@@ -1,7 +1,6 @@
 ﻿using AASTHA2.Services;
 using AASTHA2.Services.DTO;
 using FluentValidation;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AASTHA2.Validator
 {

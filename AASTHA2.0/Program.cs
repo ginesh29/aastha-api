@@ -34,7 +34,7 @@ namespace AASTHA2
             IMapper mapper = mappingConfig.CreateMapper();
             builder.Services.AddControllers();
             builder.Services.AddFluentValidationAutoValidation();
-            builder.Services.AddValidatorsFromAssemblyContaining<ChargeValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<PatientValidator>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(option =>
             {

@@ -62,5 +62,16 @@ namespace AASTHA2.Validator
 
 
     }
-
+    public class LookupCheckValidator : AbstractValidator<LookupDTO>
+    {
+        private static LookupService _lookupService;
+        public LookupCheckValidator(ServicesWrapper ServicesWrapper)
+        {
+            _lookupService = ServicesWrapper.LookupService;
+            RuleFor(m => m.id).Must((ipd, cancellation) =>
+            {
+                return _lookupService.IsLookupExist($"Id-eq-{{{ipd.id}}}");
+            }).WithMessage("Lookup not valid.");
+        }
+    }
 }
