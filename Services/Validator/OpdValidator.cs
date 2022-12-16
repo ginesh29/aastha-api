@@ -1,7 +1,6 @@
 ﻿using AASTHA2.Services;
 using AASTHA2.Services.DTO;
 using FluentValidation;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AASTHA2.Validator
 {
@@ -24,7 +23,7 @@ namespace AASTHA2.Validator
             RuleFor(m => new { m.id, m.patientId, m.date })
             .Must((opd, cancellation) =>
             {
-                string filter = $"Id-neq-{{{opd.id}}} and date-eq-{{{opd.date.Value:MM-dd-yyyy}}} and patientId-eq-{{{opd.patientId}}} and isDeleted-neq-{{{true}}}";
+                string filter = $"Id-neq-{{{opd.id}}} and date-eq-{{{opd.date:MM-dd-yyyy}}} and patientId-eq-{{{opd.patientId}}} and isDeleted-neq-{{{true}}}";
                 return !_opdService.IsOpdExist(filter);
             }).WithMessage("Opd already exist.");
         }

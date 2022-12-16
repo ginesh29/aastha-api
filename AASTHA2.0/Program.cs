@@ -1,22 +1,18 @@
-﻿using AASTHA2.Common.Helpers;
-using AASTHA2.Entities.Models;
+﻿using AASTHA2.Entities.Models;
 using AASTHA2.Middleware;
 using AASTHA2.Repositories;
 using AASTHA2.Repositories.Interfaces;
 using AASTHA2.Services;
-using AASTHA2.Services.DTO;
 using AASTHA2.Validator;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -37,14 +33,8 @@ namespace AASTHA2
                 mc.AddProfile(new MappingProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
-            builder.Services.AddControllers();
 
-            //builder.Services.AddMvc().AddNewtonsoftJson(option =>
-            //    {
-            //        option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            //        option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            //        option.SerializerSettings.DateFormatString = "dd MMM yyyy h:mm:ss tt";
-            //    });
+            builder.Services.AddControllers();
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<PatientValidator>();
             builder.Services.AddEndpointsApiExplorer();
