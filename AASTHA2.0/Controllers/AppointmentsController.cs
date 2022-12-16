@@ -3,12 +3,13 @@ using AASTHA2.Services;
 using AASTHA2.Services.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Dynamic;
 
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AppointmentsController : ControllerBase
     {
         private static AppointmentService _AppointmentService;
@@ -20,6 +21,8 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public ActionResult GetAppointments([FromQuery] FilterModel filterModel)
         {
+            
+
             var result = _AppointmentService.GetAppointments(filterModel);
             return Ok(result);
         }
