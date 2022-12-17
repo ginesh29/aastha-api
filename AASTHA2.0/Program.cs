@@ -40,7 +40,6 @@ namespace AASTHA2
             builder.Services.AddControllers().
                 AddJsonOptions(config =>
                 {
-                    config.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                     config.JsonSerializerOptions.Converters.Add(new DateConvert());
                 });
             builder.Services.AddFluentValidationAutoValidation();
