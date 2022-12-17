@@ -9,7 +9,7 @@ namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class AppointmentsController : ControllerBase
     {
         private static AppointmentService _AppointmentService;

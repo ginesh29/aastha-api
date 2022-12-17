@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -39,6 +40,7 @@ namespace AASTHA2
             builder.Services.AddControllers().
                 AddJsonOptions(config =>
                 {
+                    config.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                     config.JsonSerializerOptions.Converters.Add(new DateConvert());
                 });
             builder.Services.AddFluentValidationAutoValidation();

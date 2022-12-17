@@ -49,19 +49,18 @@ namespace AASTHA2.Services
         public void PostIpd(IpdDTO IpdDto)
         {
             var Ipd = _mapper.Map<Ipd>(IpdDto);
-            _unitOfWork.Ipds.Create(Ipd);
+            
             if (IpdDto.Type == IpdType.Delivery)
             {
                 var delivery = _mapper.Map<Delivery>(IpdDto.DeliveryDetail);
-                delivery.IpdId = Ipd.Id;
-                _unitOfWork.Deliveries.Create(delivery);
+                Ipd.DeliveryDetail = delivery;
             }
-            if (IpdDto.Type == IpdType.Operation)
+            else if (IpdDto.Type == IpdType.Operation)
             {
                 var operation = _mapper.Map<Operation>(IpdDto.OperationDetail);
-                operation.IpdId = Ipd.Id;
-                _unitOfWork.Operations.Create(operation);
+                Ipd.OperationDetail= operation;
             }
+            _unitOfWork.Ipds.Create(Ipd);
             _unitOfWork.SaveChanges();
             IpdDto.Id = Ipd.Id;
         }

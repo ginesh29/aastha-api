@@ -1,4 +1,5 @@
 ﻿using AASTHA2.Common;
+using AASTHA2.Entities.Models;
 using AASTHA2.Services;
 using AASTHA2.Services.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -9,12 +10,13 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace AASTHA2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class OpdsController : ControllerBase
     {
         private static OpdService _OpdService;
@@ -25,7 +27,7 @@ namespace AASTHA2.Controllers
         // GET: api/Opds
         [HttpGet]
         public ActionResult GetOpds([FromQuery] FilterModel filterModel)
-        {
+        {            
             var result = _OpdService.GetOpds(filterModel);
             return Ok(result);
         }
@@ -44,7 +46,7 @@ namespace AASTHA2.Controllers
         }
         [HttpPost]
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO, string includeProperties = "")
-        {            
+        {
             _OpdService.PostOpd(OpdDTO);
             var opd = _OpdService.GetOpd(OpdDTO.Id, null, includeProperties);
             return CreatedAtAction("GetOpd", new { OpdDTO.Id }, opd);
