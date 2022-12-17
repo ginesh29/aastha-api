@@ -13,7 +13,7 @@ namespace AASTHA2.Common.Helpers
         }
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value);
+            writer.WriteStringValue(value.ToString("dd MMM yyyy hh:mm tt"));
         }
     }
 }

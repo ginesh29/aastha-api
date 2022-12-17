@@ -1,4 +1,5 @@
-﻿using AASTHA2.Entities.Models;
+﻿using AASTHA2.Common.Helpers;
+using AASTHA2.Entities.Models;
 using AASTHA2.Middleware;
 using AASTHA2.Repositories;
 using AASTHA2.Repositories.Interfaces;
@@ -34,7 +35,11 @@ namespace AASTHA2
             });
             IMapper mapper = mappingConfig.CreateMapper();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().
+                AddJsonOptions(config =>
+                {
+                    config.JsonSerializerOptions.Converters.Add(new DateConvert());
+                });
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<PatientValidator>();
             builder.Services.AddEndpointsApiExplorer();

@@ -14,8 +14,8 @@ namespace AASTHA2.Services.DTO
         public RoomType? roomType { get; set; }
         public string roomTypeName => roomType.ToString();
         public DateTime addmissionDate { get; set; }
-        public DateTime dischargeDate { get; set; }
-        public decimal discount { get; set; }
+        public DateTime? dischargeDate { get; set; }
+        public decimal? discount { get; set; }
         public bool? isDeleted { get; set; }
 
         public long? patientId { get; set; }

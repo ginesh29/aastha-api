@@ -45,26 +45,6 @@ namespace AASTHA2.Controllers
         [HttpPost]
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO, string includeProperties = "")
         {
-            var opd1 = new OpdDTO()
-            {
-            };
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                DateFormatString = "dd MMM yyyy h:mm:ss tt"
-            };
-            JsonSerializerSettings jsonSetting1 = new()
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                DateFormatString = "dd MMM yyyy h:mm:ss tt"
-            };
-
-            var json1 = JsonConvert.SerializeObject(opd1, jsonSetting1);
-            var json2 = JsonConvert.DeserializeObject(json1, jsonSetting1);
-
-            //var json3 = JsonConvert.SerializeObject(opd1, jsonSetting1);
-            //var json4 = JsonConvert.DeserializeObject(json1, jsonSetting1);
-
             _OpdService.PostOpd(OpdDTO);
             var opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
             return CreatedAtAction("GetOpd", new { OpdDTO.id }, opd);
