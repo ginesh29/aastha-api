@@ -44,7 +44,7 @@ namespace AASTHA2.Controllers
         }
         [HttpPost]
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO, string includeProperties = "")
-        {
+        {            
             _OpdService.PostOpd(OpdDTO);
             var opd = _OpdService.GetOpd(OpdDTO.Id, null, includeProperties);
             return CreatedAtAction("GetOpd", new { OpdDTO.Id }, opd);
