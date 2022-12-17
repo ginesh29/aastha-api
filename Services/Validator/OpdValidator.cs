@@ -24,7 +24,7 @@ namespace AASTHA2.Validator
             .Must((opd, cancellation) =>
             {
                 string filter = $"Id-neq-{{{opd.Id}}} and date-eq-{{{opd.Date:MM-dd-yyyy}}} and patientId-eq-{{{opd.PatientId}}} and isDeleted-neq-{{{true}}}";
-                return !_opdService.IsOpdExist(filter);
+                return !_opdService.IsOpdExist(filter) || !opd.CheckExist;
             }).WithMessage("Opd already exist.");
         }
     }

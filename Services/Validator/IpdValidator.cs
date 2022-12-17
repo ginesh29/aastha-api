@@ -28,7 +28,6 @@ namespace AASTHA2.Validator
                 return !_ipdService.IsIpdExist(filter);
             }).WithMessage("Invoice No. already exist.");
             RuleFor(m => m.AddmissionDate).NotEmpty().When(m => m.Id < 1).WithMessage("Addmission Date is required");
-            RuleFor(m => m.DischargeDate).NotEmpty().When(m => m.Id < 1).WithMessage("Discharge Date is required");
             RuleFor(m => m.OperationDetail).NotNull().When(m => m.Id < 1 && m.Type == IpdType.Operation)
             .SetValidator(new OperationDetailValidator()).When(m => m.Id < 1 && m.Type == IpdType.Operation);
 

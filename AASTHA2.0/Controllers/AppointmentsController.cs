@@ -21,8 +21,6 @@ namespace AASTHA2.Controllers
         [HttpGet]
         public ActionResult GetAppointments([FromQuery] FilterModel filterModel)
         {
-            
-
             var result = _AppointmentService.GetAppointments(filterModel);
             return Ok(result);
         }

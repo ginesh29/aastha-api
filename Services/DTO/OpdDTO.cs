@@ -21,5 +21,6 @@ namespace AASTHA2.Services.DTO
         public bool? IsDeleted { get; set; }
         public long? PatientId { get; set; }
         public PatientDTO Patient { get; set; }
+        public bool CheckExist { get; set; }
     }
 }
