@@ -36,8 +36,8 @@ namespace AASTHA2.Controllers
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var claims = new List<Claim>
                 {
-                    new Claim("UserId", user.id.ToString()),
-                    new Claim("Role", user.isSuperAdmin ? ((int)Role.Admin).ToString() : ((int)Role.Assistant).ToString())
+                    new Claim("UserId", user.Id.ToString()),
+                    new Claim("Role", user.IsSuperAdmin ? ((int)Role.Admin).ToString() : ((int)Role.Assistant).ToString())
                 };
                 var tokenOptions = new JwtSecurityToken(
                     issuer: Configuration["Jwt:Issuer"],

@@ -42,7 +42,7 @@ namespace AASTHA2.Services
             var Charge = _mapper.Map<Charge>(ChargeDto);
             _unitOfWork.Charges.Create(Charge);
             _unitOfWork.SaveChanges();
-            ChargeDto.id = Charge.Id;
+            ChargeDto.Id = Charge.Id;
         }
         public void PutCharge(ChargeDTO ChargeDto)
         {

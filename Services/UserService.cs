@@ -50,15 +50,15 @@ namespace AASTHA2.Services
 
         public void PostUser(UserDTO userDto)
         {
-            userDto.password = PasswordHash.GenerateHash(userDto.password);
+            userDto.Password = PasswordHash.GenerateHash(userDto.Password);
             var user = _mapper.Map<User>(userDto);
             _unitOfWork.Users.Create(user);
             _unitOfWork.SaveChanges();
-            userDto.id = user.Id;
+            userDto.Id = user.Id;
         }
         public void PutUser(UserDTO userDto)
         {
-            userDto.password = PasswordHash.GenerateHash(userDto.password);
+            userDto.Password = PasswordHash.GenerateHash(userDto.Password);
             var user = _mapper.Map<UserDTO, User>(userDto);
             _unitOfWork.Users.Update(user);
             _unitOfWork.SaveChanges();

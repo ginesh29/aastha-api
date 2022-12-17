@@ -52,7 +52,7 @@ namespace AASTHA2.Services
             var Lookup = _mapper.Map<Lookup>(LookupDto);
             _unitOfWork.Lookups.Create(Lookup);
             _unitOfWork.SaveChanges();
-            LookupDto.id = Lookup.Id;
+            LookupDto.Id = Lookup.Id;
         }
         public void PutLookup(LookupDTO LookupDto)
         {

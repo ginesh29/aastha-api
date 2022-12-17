@@ -51,7 +51,7 @@ namespace AASTHA2.Services
             var patient = _mapper.Map<Patient>(patientDto);
             _unitOfWork.Patients.Create(patient);
             _unitOfWork.SaveChanges();
-            patientDto.id = patient.Id;
+            patientDto.Id = patient.Id;
         }
         public void PutPatient(PatientDTO patientDto)
         {

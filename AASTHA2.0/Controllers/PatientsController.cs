@@ -39,26 +39,26 @@ namespace AASTHA2.Controllers
         public ActionResult<PatientDTO> PostPatient(PatientDTO patientDTO, string includeProperties = "")
         {
             _patientService.PostPatient(patientDTO);
-            var patient = _patientService.GetPatient(patientDTO.id, null, includeProperties);
-            return CreatedAtAction("GetPatient", new { patientDTO.id }, patient);
+            var patient = _patientService.GetPatient(patientDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetPatient", new { patientDTO.Id }, patient);
         }
         [HttpPut]
         public ActionResult<PatientDTO> PutPatient(PatientDTO patientDTO, string includeProperties = "")
         {
-            var patient = _patientService.GetPatient(patientDTO.id);
+            var patient = _patientService.GetPatient(patientDTO.Id);
             if (patient == null)
             {
                 return NotFound();
             }
             _patientService.PutPatient(patientDTO);
-            patient = _patientService.GetPatient(patientDTO.id, null, includeProperties);
-            return CreatedAtAction("GetPatient", new { patientDTO.id }, patient);
+            patient = _patientService.GetPatient(patientDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetPatient", new { patientDTO.Id }, patient);
         }
         [HttpDelete("{id}")]
         public ActionResult<PatientDTO> DeletePatient(long id, bool isDeleted, bool removePhysical = false)
         {
             var patient = _patientService.GetPatient(id, "");
-            patient.isDeleted = isDeleted;
+            patient.IsDeleted = isDeleted;
             if (patient == null)
             {
                 return NotFound();

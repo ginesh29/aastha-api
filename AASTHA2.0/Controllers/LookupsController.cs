@@ -40,26 +40,26 @@ namespace AASTHA2.Controllers
         public ActionResult<LookupDTO> PostLookup(LookupDTO LookupDTO, string includeProperties = "")
         {
             _LookupService.PostLookup(LookupDTO);
-            var lookup = _LookupService.GetLookup(LookupDTO.id, null, includeProperties);
-            return CreatedAtAction("GetLookup", new { LookupDTO.id }, lookup);
+            var lookup = _LookupService.GetLookup(LookupDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetLookup", new { LookupDTO.Id }, lookup);
         }
         [HttpPut]
         public ActionResult<LookupDTO> PutLookup(LookupDTO LookupDTO, string includeProperties = "")
         {
-            var Lookup = _LookupService.GetLookup(LookupDTO.id);
+            var Lookup = _LookupService.GetLookup(LookupDTO.Id);
             if (Lookup == null)
             {
                 return NotFound();
             }
             _LookupService.PutLookup(LookupDTO);
-            Lookup = _LookupService.GetLookup(LookupDTO.id, null, includeProperties);
-            return CreatedAtAction("GetLookup", new { LookupDTO.id }, Lookup);
+            Lookup = _LookupService.GetLookup(LookupDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetLookup", new { LookupDTO.Id }, Lookup);
         }
         [HttpDelete("{id}")]
         public ActionResult<LookupDTO> DeleteLookup(long id, bool isDeleted, bool removePhysical = false)
         {
             var Lookup = _LookupService.GetLookup(id);
-            Lookup.isDeleted = isDeleted;
+            Lookup.IsDeleted = isDeleted;
             if (Lookup == null)
             {
                 return NotFound();

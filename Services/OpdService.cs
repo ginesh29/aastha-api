@@ -51,7 +51,7 @@ namespace AASTHA2.Services
             var Opd = _mapper.Map<Opd>(OpdDto);
             _unitOfWork.Opds.Create(Opd);
             _unitOfWork.SaveChanges();
-            OpdDto.id = Opd.Id;
+            OpdDto.Id = Opd.Id;
         }
         public void PutOpd(OpdDTO OpdDto)
         {

@@ -1,15 +1,10 @@
-﻿using AASTHA2.Common;
-using AASTHA2.Entities;
-using System;
-using System.Collections.Generic;
-
-namespace AASTHA2.Services.DTO
+﻿namespace AASTHA2.Services.DTO
 {
     public class IpdLookupDTO
     {
-        public long id { get; set; }
-        public long ipdId { get; set; }
-        public long lookupId { get; set; }
-        public LookupDTO lookup { get; set; }
+        public long Id { get; set; }
+        public long IpdId { get; set; }
+        public long LookupId { get; set; }
+        public LookupDTO Lookup { get; set; }
     }
 }

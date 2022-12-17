@@ -10,9 +10,9 @@ namespace AASTHA2.Validator
         public ChargeValidator(ServicesWrapper ServicesWrapper)
         {
             _lookupService = ServicesWrapper.LookupService;
-            RuleFor(m => m.lookupId).Must((ipd, cancellation) =>
+            RuleFor(m => m.LookupId).Must((ipd, cancellation) =>
             {
-                return _lookupService.IsLookupExist($"Id-eq-{{{ipd.lookupId}}}");
+                return _lookupService.IsLookupExist($"Id-eq-{{{ipd.LookupId}}}");
             }).WithMessage("Lookup not valid.");
         }
     }

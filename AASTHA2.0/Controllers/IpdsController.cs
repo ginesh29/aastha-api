@@ -48,28 +48,28 @@ namespace AASTHA2.Controllers
         public ActionResult<IpdDTO> PostIpd(IpdDTO IpdDTO, string includeProperties = "")
         {
             _IpdService.PostIpd(IpdDTO);
-            var opd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetIpd", new { IpdDTO.id }, opd);
+            var opd = _IpdService.GetIpd(IpdDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetIpd", new { IpdDTO.Id }, opd);
         }
         [HttpPut]
         public ActionResult<IpdDTO> PutIpd(IpdDTO IpdDTO, string includeProperties = "")
         {
-            var Ipd = _IpdService.GetIpd(IpdDTO.id, "", includeProperties);
+            var Ipd = _IpdService.GetIpd(IpdDTO.Id, "", includeProperties);
             if (Ipd == null)
             {
                 return NotFound();
             }
-            var removedLookup = Ipd.ipdLookups.Where(i => i.ipdId == IpdDTO.id && !IpdDTO.ipdLookups.Select(m => m.id).Contains(i.id));
+            var removedLookup = Ipd.IpdLookups.Where(i => i.IpdId == IpdDTO.Id && !IpdDTO.IpdLookups.Select(m => m.Id).Contains(i.Id));
             _IpdService.RemoveIpdLookup(removedLookup, "", true);
             _IpdService.PutIpd(IpdDTO);
-            Ipd = _IpdService.GetIpd(IpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetIpd", new { IpdDTO.id }, Ipd);
+            Ipd = _IpdService.GetIpd(IpdDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetIpd", new { IpdDTO.Id }, Ipd);
         }
         [HttpDelete("{id}")]
         public ActionResult<IpdDTO> DeleteIpd(long id, bool isDeleted, bool removePhysical = false)
         {
             var Ipd = _IpdService.GetIpd(id);
-            Ipd.isDeleted = isDeleted;
+            Ipd.IsDeleted = isDeleted;
             if (Ipd == null)
             {
                 return NotFound();
@@ -101,7 +101,7 @@ namespace AASTHA2.Controllers
                 var charges = _LookupService.GetLookups(filterModel).Data.ToDynamicList<LookupDTO>(); ;
                 foreach (var item in charges)
                 {
-                    workSheet.Cells[$"{alpha}1"].Value = $"{item.name[..3]}.";
+                    workSheet.Cells[$"{alpha}1"].Value = $"{item.Name[..3]}.";
                     alpha++;
                 }
 
@@ -115,16 +115,16 @@ namespace AASTHA2.Controllers
                 int row = 2;
                 foreach (var item in ipds)
                 {
-                    workSheet.Cells[$"A{row}"].Value = item.uniqueId;
-                    workSheet.Cells[$"B{row}"].Value = item.patient.fullname;
-                    workSheet.Cells[$"C{row}"].Value = item.ipdType;
-                    workSheet.Cells[$"D{row}"].Value = item.addmissionDate;
-                    workSheet.Cells[$"E{row}"].Value = item.dischargeDate;
+                    workSheet.Cells[$"A{row}"].Value = item.UniqueId;
+                    workSheet.Cells[$"B{row}"].Value = item.Patient.Fullname;
+                    workSheet.Cells[$"C{row}"].Value = item.IpdType;
+                    workSheet.Cells[$"D{row}"].Value = item.AddmissionDate;
+                    workSheet.Cells[$"E{row}"].Value = item.DischargeDate;
 
                     alpha = 'F';
                     foreach (var charge in charges)
                     {
-                        var amount = item.charges.FirstOrDefault(m => m.lookupId == charge.id)?.amount;
+                        var amount = item.Charges.FirstOrDefault(m => m.LookupId == charge.Id)?.Amount;
                         var a = $"{alpha}{row}";
                         workSheet.Cells[$"{alpha}{row}"].Value = amount > 0 ? amount : 0;
                         alpha++;

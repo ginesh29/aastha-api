@@ -5,14 +5,14 @@ namespace AASTHA2.Services.DTO
 {
     public class DeliveryDTO
     {
-        public long id { get; set; }
-        public long ipdId { get; set; }
-        public DateTime date { get; set; }
-        public TimeSpan time { get; set; }
-        public Gender? gender { get; set; }
-        public string genderName => gender.ToString();
-        public DateTime dateTime => date + time;
-        public decimal babyWeight { get; set; }
-        public bool? isDeleted { get; set; }
+        public long Id { get; set; }
+        public long IpdId { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
+        public Gender? Gender { get; set; }
+        public string GenderName => Gender.ToString();
+        public DateTime DateTime => Date + Time;
+        public decimal BabyWeight { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

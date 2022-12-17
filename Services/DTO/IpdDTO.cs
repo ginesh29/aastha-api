@@ -6,23 +6,23 @@ namespace AASTHA2.Services.DTO
 {
     public class IpdDTO
     {
-        public long id { get; set; }
-        public long uniqueId { get; set; }
-        public string invoiceNo => $"IPD{uniqueId.ToString().PadLeft(7, '0')}";
-        public IpdType? type { get; set; }
-        public string ipdType => type.ToString();
-        public RoomType? roomType { get; set; }
-        public string roomTypeName => roomType.ToString();
-        public DateTime addmissionDate { get; set; }
-        public DateTime? dischargeDate { get; set; }
-        public decimal? discount { get; set; }
-        public bool? isDeleted { get; set; }
+        public long Id { get; set; }
+        public long UniqueId { get; set; }
+        public string InvoiceNo => $"IPD{UniqueId.ToString().PadLeft(7, '0')}";
+        public IpdType? Type { get; set; }
+        public string IpdType => Type.ToString();
+        public RoomType? RoomType { get; set; }
+        public string RoomTypeName => RoomType.ToString();
+        public DateTime AddmissionDate { get; set; }
+        public DateTime? DischargeDate { get; set; }
+        public decimal? Discount { get; set; }
+        public bool? IsDeleted { get; set; }
 
-        public long? patientId { get; set; }
-        public PatientDTO patient { get; set; }
-        public DeliveryDTO deliveryDetail { get; set; }
-        public OperationDTO operationDetail { get; set; }
-        public ICollection<ChargeDTO> charges { get; set; }
-        public ICollection<IpdLookupDTO> ipdLookups { get; set; }
+        public long? PatientId { get; set; }
+        public PatientDTO Patient { get; set; }
+        public DeliveryDTO DeliveryDetail { get; set; }
+        public OperationDTO OperationDetail { get; set; }
+        public ICollection<ChargeDTO> Charges { get; set; }
+        public ICollection<IpdLookupDTO> IpdLookups { get; set; }
     }
 }

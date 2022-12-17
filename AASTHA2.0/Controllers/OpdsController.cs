@@ -46,26 +46,26 @@ namespace AASTHA2.Controllers
         public ActionResult<OpdDTO> PostOpd(OpdDTO OpdDTO, string includeProperties = "")
         {
             _OpdService.PostOpd(OpdDTO);
-            var opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetOpd", new { OpdDTO.id }, opd);
+            var opd = _OpdService.GetOpd(OpdDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetOpd", new { OpdDTO.Id }, opd);
         }
         [HttpPut]
         public ActionResult<OpdDTO> PutOpd(OpdDTO OpdDTO, string includeProperties = "")
         {
-            var Opd = _OpdService.GetOpd(OpdDTO.id);
+            var Opd = _OpdService.GetOpd(OpdDTO.Id);
             if (Opd == null)
             {
                 return NotFound();
             }
             _OpdService.PutOpd(OpdDTO);
-            Opd = _OpdService.GetOpd(OpdDTO.id, null, includeProperties);
-            return CreatedAtAction("GetOpd", new { OpdDTO.id }, Opd);
+            Opd = _OpdService.GetOpd(OpdDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetOpd", new { OpdDTO.Id }, Opd);
         }
         [HttpDelete("{id}")]
         public ActionResult<OpdDTO> DeleteOpd(long id, bool isDeleted, bool removePhysical = false)
         {
             var Opd = _OpdService.GetOpd(id);
-            Opd.isDeleted = isDeleted;
+            Opd.IsDeleted = isDeleted;
             if (Opd == null)
             {
                 return NotFound();
@@ -103,17 +103,17 @@ namespace AASTHA2.Controllers
                 int row = 2;
                 foreach (var item in opds)
                 {
-                    workSheet.Cells[$"A{row}"].Value = item.id;
-                    workSheet.Cells[$"B{row}"].Value = item.invoiceNo;
-                    workSheet.Cells[$"C{row}"].Value = item.patient.fullname;
-                    workSheet.Cells[$"D{row}"].Value = item.caseType;
-                    workSheet.Cells[$"E{row}"].Value = item.date;
+                    workSheet.Cells[$"A{row}"].Value = item.Id;
+                    workSheet.Cells[$"B{row}"].Value = item.InvoiceNo;
+                    workSheet.Cells[$"C{row}"].Value = item.Patient.Fullname;
+                    workSheet.Cells[$"D{row}"].Value = item.CaseType;
+                    workSheet.Cells[$"E{row}"].Value = item.Date;
                     workSheet.Cells[$"E{row}"].Style.Numberformat.Format = "dd-mm-yyyy";
-                    workSheet.Cells[$"F{row}"].Value = Convert.ToDecimal(item.consultCharge);
-                    workSheet.Cells[$"G{row}"].Value = Convert.ToDecimal(item.usgCharge);
-                    workSheet.Cells[$"H{row}"].Value = Convert.ToDecimal(item.uptCharge);
-                    workSheet.Cells[$"I{row}"].Value = Convert.ToDecimal(item.injectionCharge);
-                    workSheet.Cells[$"J{row}"].Value = Convert.ToDecimal(item.otherCharge);
+                    workSheet.Cells[$"F{row}"].Value = Convert.ToDecimal(item.ConsultCharge);
+                    workSheet.Cells[$"G{row}"].Value = Convert.ToDecimal(item.UsgCharge);
+                    workSheet.Cells[$"H{row}"].Value = Convert.ToDecimal(item.UptCharge);
+                    workSheet.Cells[$"I{row}"].Value = Convert.ToDecimal(item.InjectionCharge);
+                    workSheet.Cells[$"J{row}"].Value = Convert.ToDecimal(item.OtherCharge);
                     workSheet.Cells[$"K{row}"].Formula = $"=SUM(F{row}:J{row})";
                     row++;
                 }

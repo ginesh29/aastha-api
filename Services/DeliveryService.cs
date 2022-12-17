@@ -44,7 +44,7 @@ namespace AASTHA2.Services
             _unitOfWork.Deliveries.Create(Delivery);
 
             _unitOfWork.SaveChanges();
-            DeliveryDto.id = Delivery.Id;
+            DeliveryDto.Id = Delivery.Id;
         }
         public void PutDelivery(DeliveryDTO DeliveryDto)
         {

@@ -52,7 +52,7 @@ namespace AASTHA2.Services
             _unitOfWork.Operations.Create(Operation);
 
             _unitOfWork.SaveChanges();
-            OperationDto.id = Operation.Id;
+            OperationDto.Id = Operation.Id;
         }
         public void PutOperation(OperationDTO OperationDto)
         {

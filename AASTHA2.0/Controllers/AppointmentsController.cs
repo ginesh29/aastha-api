@@ -43,26 +43,26 @@ namespace AASTHA2.Controllers
         public ActionResult<AppointmentDTO> PostAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
         {
             _AppointmentService.PostAppointment(AppointmentDTO);
-            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id, null, includeProperties);
-            return CreatedAtAction("GetAppointment", new { AppointmentDTO.id }, Appointment);
+            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetAppointment", new { AppointmentDTO.Id }, Appointment);
         }
         [HttpPut]
         public ActionResult<AppointmentDTO> PutAppointment(AppointmentDTO AppointmentDTO, string includeProperties = "")
         {
-            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id);
+            var Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id);
             if (Appointment == null)
             {
                 return NotFound();
             }
             _AppointmentService.PutAppointment(AppointmentDTO);
-            Appointment = _AppointmentService.GetAppointment(AppointmentDTO.id, null, includeProperties);
-            return CreatedAtAction("GetAppointment", new { AppointmentDTO.id }, Appointment);
+            Appointment = _AppointmentService.GetAppointment(AppointmentDTO.Id, null, includeProperties);
+            return CreatedAtAction("GetAppointment", new { AppointmentDTO.Id }, Appointment);
         }
         [HttpDelete("{id}")]
         public ActionResult<AppointmentDTO> DeleteAppointment(long id, bool isDeleted, bool removePhysical = false)
         {
             var Appointment = _AppointmentService.GetAppointment(id);
-            Appointment.isDeleted = isDeleted;
+            Appointment.IsDeleted = isDeleted;
             if (Appointment == null)
             {
                 return NotFound();

@@ -12,18 +12,18 @@ namespace AASTHA2.Validator
         {
             _patientService = ServicesWrapper.PatientService;
             _appointmentService = ServicesWrapper.AppointmentService;
-            RuleFor(m => m.date).NotEmpty().When(m => m.id < 1);
-            RuleFor(m => m.type).NotEmpty().When(m => m.id < 1)
+            RuleFor(m => m.Date).NotEmpty().When(m => m.Id < 1);
+            RuleFor(m => m.Type).NotEmpty().When(m => m.Id < 1)
                                 .IsInEnum();
-            RuleFor(m => m.patientId).NotNull().When(m => m.id < 1)
+            RuleFor(m => m.PatientId).NotNull().When(m => m.Id < 1)
             .Must((appoinment, cancellation) =>
             {
-                return _patientService.IsPatientExist($"Id-eq-{{{appoinment.patientId}}}");
+                return _patientService.IsPatientExist($"Id-eq-{{{appoinment.PatientId}}}");
             }).WithMessage("Patient not valid.");
-            RuleFor(m => new { m.id, m.date, m.patientId })
+            RuleFor(m => new { m.Id, m.Date, m.PatientId })
             .Must((appoinment, cancellation) =>
             {
-                string filter = $"id-neq-{{{appoinment.id}}} and date-eq-{{{appoinment.date:MM-dd-yyyy}}} and patientId-eq-{{{appoinment.patientId}}} and isDeleted-neq-{{{true}}}";
+                string filter = $"id-neq-{{{appoinment.Id}}} and date-eq-{{{appoinment.Date:MM-dd-yyyy}}} and patientId-eq-{{{appoinment.PatientId}}} and isDeleted-neq-{{{true}}}";
                 return !_appointmentService.IsAppointmentExist(filter);
             }).WithMessage("Appointment already exist.");
         }
