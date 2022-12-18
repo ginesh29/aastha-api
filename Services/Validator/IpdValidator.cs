@@ -21,7 +21,6 @@ namespace AASTHA2.Validator
             RuleFor(m =>new {m.id, m.uniqueId }).NotEmpty().When(m => m.id < 1).WithMessage("Select Invoice No.")
                                      .SetValidator(new ExistUniqueIdValidator(ServicesWrapper)).WithMessage("Invoice No. already exist.");
             RuleFor(m => m.addmissionDate).NotEmpty().When(m => m.id < 1).WithMessage("Addmission Date is required");
-            RuleFor(m => m.dischargeDate).NotEmpty().When(m => m.id < 1).WithMessage("Discharge Date is required");
             RuleFor(m => m.operationDetail).NotNull().When(m => m.id < 1 && m.type == IpdType.Operation)
                                            .SetValidator(new OperationDetailValidator()).When(m => m.id < 1 && m.type == IpdType.Operation);
 

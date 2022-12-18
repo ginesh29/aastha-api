@@ -12,7 +12,7 @@ namespace AASTHA2.Entities
         public IpdType Type { get; set; }
         public RoomType RoomType { get; set; }
         public DateTime AddmissionDate { get; set; }
-        public DateTime DischargeDate { get; set; }
+        public DateTime? DischargeDate { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Discount { get; set; }
 

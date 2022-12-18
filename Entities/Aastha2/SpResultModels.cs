@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace AASTHA2.Entities
 {
@@ -16,5 +14,22 @@ namespace AASTHA2.Entities
         public int TotalPatient { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalCollection { get; set; }
+    }
+    public class Sp_GetCalendarAppointments_Result
+    {
+        [Key]
+        public long Id { get; set; }
+        public long PatientId { get; set; }
+        public string Title { get; set; }
+        public DateTime Date { get; set; }
+        public string Start
+        {
+            get
+            {
+                return Date.ToString("yyyy-MM-dd");
+            }
+        }
+        public int Type { get; set; }
+        public string AppointmentType { get; set; }
     }
 }
