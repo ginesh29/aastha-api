@@ -7,6 +7,6 @@ namespace AASTHA2.Interfaces
 {
     public interface IPatientRepository : IRepository<Patient>
     {
-        IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year);
+        IEnumerable<Sp_GetStatistics_Result> GetStatistics(int? Year);
     }
 }

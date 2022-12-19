@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AASTHA2.Entities
 {
-    public class Sp_GetCollection_Result
+    public class Sp_GetStatistics_Result
     {
         [Key]
         public Guid Id { get; set; }

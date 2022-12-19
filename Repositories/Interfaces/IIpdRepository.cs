@@ -8,6 +8,6 @@ namespace AASTHA2.Interfaces
 {
     public interface IIpdRepository : IRepository<Ipd>
     {
-        IEnumerable<Sp_GetCollection_Result> GetStatistics(int? Year);
+        IEnumerable<Sp_GetStatistics_Result> GetStatistics(int? Year);
     }
 }
